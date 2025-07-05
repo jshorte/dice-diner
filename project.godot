@@ -12,8 +12,8 @@ config_version=5
 
 config/name="Dice Diner"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Art/icon.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copilot/plugin.cfg")
+enabled=PackedStringArray()
