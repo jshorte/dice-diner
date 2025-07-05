@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d1bd3e7avodog"]
+
+[ext_resource type="Script" uid="uid://tlp6wwagkgy7" path="res://Scripts/Dice/dice_resource_template.gd" id="1_lscw0"]
+
+[resource]
+script = ExtResource("1_lscw0")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Dice_template" load_steps=2 format=3 uid="uid://b2uvb152kdiy3"]
+
+[ext_resource type="Script" uid="uid://tlp6wwagkgy7" path="res://Scripts/Dice/dice_resource_template.gd" id="1_b4wed"]
+
+[resource]
+script = ExtResource("1_b4wed")
+dice_min = 0
+dice_max = 0
+dice_interval = 0
+dice_sprite_animation_path = ""
+dice_type = 0
+dice_name = ""
