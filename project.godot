@@ -11,9 +11,23 @@ config_version=5
 [application]
 
 config/name="Dice Diner"
+run/main_scene="uid://c2chpl83qlbgg"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Art/icon.svg"
+
+[autoload]
+
+SignalManager="*res://Scripts/Managers/signal_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
 
 [editor_plugins]
 
 enabled=PackedStringArray()
+
+[physics]
+
+2d/default_gravity=0.0

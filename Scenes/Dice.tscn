@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://c0b8anh0jl41u"]
+[gd_scene load_steps=3 format=3 uid="uid://c0b8anh0jl41u"]
 
-[node name="Dice" type="Node2D"]
+[ext_resource type="SpriteFrames" uid="uid://b7p5xj45h5fvf" path="res://Animations/pizza_spriteframe.tres" id="1_wpqjs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dcpc8"]
+radius = 32.0
+
+[node name="Dice" type="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dcpc8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_wpqjs")
+animation = &"All"
+frame = 2
+frame_progress = 0.478992
