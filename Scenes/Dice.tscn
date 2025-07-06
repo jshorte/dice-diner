@@ -1,11 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0b8anh0jl41u"]
+[gd_scene load_steps=5 format=3 uid="uid://c0b8anh0jl41u"]
 
+[ext_resource type="Script" uid="uid://bthg464woowxo" path="res://Scripts/Dice/dice.gd" id="1_dcpc8"]
 [ext_resource type="SpriteFrames" uid="uid://b7p5xj45h5fvf" path="res://Animations/pizza_spriteframe.tres" id="1_wpqjs"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wpqjs"]
+friction = 0.05
+bounce = 0.8
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcpc8"]
 radius = 32.0
 
 [node name="Dice" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_wpqjs")
+contact_monitor = true
+max_contacts_reported = 1
+linear_damp_mode = 1
+linear_damp = 0.25
+script = ExtResource("1_dcpc8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dcpc8")
