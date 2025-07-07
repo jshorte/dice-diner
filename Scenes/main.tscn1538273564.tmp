@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2chpl83qlbgg"]
+[gd_scene load_steps=5 format=3 uid="uid://c2chpl83qlbgg"]
 
-[ext_resource type="Script" uid="uid://dr3k335nwyl6p" path="res://Scripts/main.gd" id="1_8gbba"]
+[ext_resource type="PackedScene" uid="uid://c0b8anh0jl41u" path="res://Scenes/Dice.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://bdu3kdmck2ij3" path="res://Scenes/hud.tscn" id="2_bo1nx"]
-[ext_resource type="Script" uid="uid://dp8trb1b32k15" path="res://Scripts/Managers/deck_manager.gd" id="2_jjvhh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bo1nx"]
 size = Vector2(1920, 20)
@@ -10,15 +9,7 @@ size = Vector2(1920, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8gbba"]
 size = Vector2(20, 1080)
 
-[node name="main" type="Node"]
-script = ExtResource("1_8gbba")
-
-[node name="Managers" type="Node" parent="."]
-
-[node name="DeckManager" type="Node" parent="Managers"]
-script = ExtResource("2_jjvhh")
-
-[node name="HUD" parent="Managers" instance=ExtResource("2_bo1nx")]
+[node name="main" type="Node2D"]
 
 [node name="Walls" type="Node2D" parent="."]
 
@@ -49,3 +40,19 @@ position = Vector2(1300, 20)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D4"]
 position = Vector2(-10, 520)
 shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="Dice" parent="." instance=ExtResource("1_jjgbg")]
+position = Vector2(351, 222)
+angular_damp = 0.5
+
+[node name="Dice2" parent="." instance=ExtResource("1_jjgbg")]
+position = Vector2(413, 285)
+dice_selection = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HUD" parent="Control" instance=ExtResource("2_bo1nx")]

@@ -2,6 +2,8 @@ class_name Dice extends RigidBody2D
 
 @export var dice_selection: G_ENUM.DiceSelection = G_ENUM.DiceSelection.INACTIVE
 @export var dice_state: G_ENUM.DiceState = G_ENUM.DiceState.STATIONARY
+@export var dice_template: Resource = null
+@export var unique_id : int
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var dice_radius: float = $CollisionShape2D.shape.radius
 
@@ -16,6 +18,7 @@ const UNITS_TO_PIXELS : float = 3.2
 
 var arrow: Node2D = null
 var arrow_scene = preload("res://Scenes/arrow.tscn")
+var _cached_sprite_frames = null
 	
 func _ready() -> void:
 	arrow = arrow_scene.instantiate()
@@ -116,3 +119,10 @@ func set_dice_state(new_state):
 
 func get_input_vector() -> Vector2:
 	return get_global_mouse_position() - global_position
+
+func get_icon_texture():
+	if not _cached_sprite_frames and dice_template and dice_template.dice_sprite_animation_path:
+		_cached_sprite_frames = load(dice_template.dice_sprite_animation_path)
+	if _cached_sprite_frames:
+		return _cached_sprite_frames.get_frame_texture("All", 0)
+	return null

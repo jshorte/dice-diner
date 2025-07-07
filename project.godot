@@ -15,6 +15,10 @@ run/main_scene="uid://c2chpl83qlbgg"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Art/icon.svg"
 
+[aseprite_importers]
+
+aseprite_executable_path="G:/SteamLibrary/steamapps/common/Aseprite/Aseprite.exe"
+
 [autoload]
 
 SignalManager="*res://Scripts/Managers/signal_manager.gd"
@@ -27,7 +31,7 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/nklbdev.aseprite_importers/plugin.cfg")
 
 [physics]
 

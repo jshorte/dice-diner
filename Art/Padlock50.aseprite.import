@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cn7xpwo12vlrm"
-path="res://.godot/imported/Padlock50.aseprite-2f98b3653cc08b01d5fea847f8ef311d.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://Art/Padlock50.aseprite"
-dest_files=["res://.godot/imported/Padlock50.aseprite-2f98b3653cc08b01d5fea847f8ef311d.ctex"]
 
 [params]
 
