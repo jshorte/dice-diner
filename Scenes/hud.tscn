@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bdu3kdmck2ij3"]
 
 [ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
-[ext_resource type="Script" uid="uid://j7uhi1qdfoqv" path="res://Scripts/UI/hud.gd" id="2_t1xeu"]
 [ext_resource type="StyleBox" path="res://Art/Blackboard.tres" id="3_ioopo"]
 [ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/button_state.gd" id="4_owgk4"]
+[ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="4_t1xeu"]
 [ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="7_e1fvy"]
 
 [node name="HUD" type="Control"]
@@ -12,7 +12,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_rvbjj")
-script = ExtResource("2_t1xeu")
 
 [node name="Power Bar" type="Label" parent="."]
 layout_mode = 0
@@ -85,6 +84,7 @@ horizontal_alignment = 1
 [node name="Bottom Bar" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("4_t1xeu")
 
 [node name="Dice Area" type="Panel" parent="Bottom Bar"]
 layout_mode = 0
@@ -110,13 +110,12 @@ layout_mode = 2
 text = "Current"
 horizontal_alignment = 1
 
-[node name="Current_HBox" type="HBoxContainer" parent="Bottom Bar/Current Dice/VBoxContainer"]
+[node name="CurrentHBox" type="HBoxContainer" parent="Bottom Bar/Current Dice/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
 [node name="Deck" type="PanelContainer" parent="Bottom Bar"]
-visible = false
 layout_mode = 0
 offset_left = 15.0
 offset_top = 570.0
@@ -129,8 +128,22 @@ layout_mode = 2
 text = "Deck"
 horizontal_alignment = 1
 
-[node name="Discard" type="PanelContainer" parent="Bottom Bar"]
+[node name="Deck Preview" type="PanelContainer" parent="Bottom Bar"]
 visible = false
+layout_mode = 2
+offset_left = 16.0
+offset_top = 440.0
+offset_right = 46.0
+offset_bottom = 548.0
+theme_override_styles/panel = ExtResource("3_ioopo")
+
+[node name="DeckHBox" type="HBoxContainer" parent="Bottom Bar/Deck Preview"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Discard" type="PanelContainer" parent="Bottom Bar"]
 layout_mode = 0
 offset_left = 1159.0
 offset_top = 570.0
@@ -144,8 +157,21 @@ text = "Discard"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Upcoming Dice" type="PanelContainer" parent="Bottom Bar"]
+[node name="Discard Preview" type="PanelContainer" parent="Bottom Bar"]
 visible = false
+layout_mode = 2
+offset_left = 1237.0
+offset_top = 441.0
+offset_right = 1267.0
+offset_bottom = 549.0
+theme_override_styles/panel = ExtResource("3_ioopo")
+
+[node name="DiscardHBox" type="HBoxContainer" parent="Bottom Bar/Discard Preview"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Upcoming Dice" type="PanelContainer" parent="Bottom Bar"]
 layout_mode = 0
 offset_left = 135.0
 offset_top = 570.0
@@ -162,7 +188,8 @@ layout_mode = 2
 text = "Next"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Bottom Bar/Upcoming Dice/VBoxContainer"]
+[node name="NextHBox" type="HBoxContainer" parent="Bottom Bar/Upcoming Dice/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 

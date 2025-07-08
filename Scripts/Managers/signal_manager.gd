@@ -10,6 +10,8 @@ signal request_dice_impulse
 
 # Deck management
 signal request_deck_load
+signal request_deck_draw
 
 # GUI management
-signal add_to_playable_panel
+signal add_to_deck_panel
+signal remove_from_deck_panel

@@ -4,34 +4,79 @@ var _dice_scene = preload("res://Scenes/dice.tscn")
 var _pizza_dice_template_path = "res://Resources/Dice_types/pizza_dice.tres"
 var _garlic_dice_template_path = "res://Resources/Dice_types/garlic_dice.tres"
 
-var _player_inventory := [G_ENUM.DiceType.PIZZA, G_ENUM.DiceType.GARLIC, G_ENUM.DiceType.PIZZA]
+var _deck : Array = []
+var _next : Array = []
+var _current : Array = []
+var _discard : Array = []
+var _draw_amount : int = 5
+var _transfer_amount : int = 2
+var _player_inventory : Array = [
+	G_ENUM.DiceType.PIZZA, 
+	G_ENUM.DiceType.PIZZA, 
+	G_ENUM.DiceType.PIZZA, 
+	G_ENUM.DiceType.PIZZA, 
+	G_ENUM.DiceType.GARLIC, 
+	G_ENUM.DiceType.GARLIC,
+	G_ENUM.DiceType.GARLIC,
+]
 
 func _ready():
-	SignalManager.request_deck_load.connect(_on_request_deck_load)
+	SignalManager.request_deck_load.connect(_on_load_deck)
+	SignalManager.request_deck_draw.connect(_on_request_deck_draw)
 	SignalManager.emit_ready.connect(_emit_ready)
+
 
 func _emit_ready():
 	SignalManager.deck_manager_ready.emit()
 
-func _load_player_dice(dice_type_array):
-	var _dice_to_display = []
-	var uid = 1
-	for type in dice_type_array:
-		var _blank_dice = _dice_scene.instantiate()
+
+func _draw_to_next():
+	if _deck.size() < _draw_amount and _discard.size() > 0:
+		_reshuffle_discard_into_deck()
+	var drawn = []
+	for i in min(_draw_amount, _deck.size()):
+		var dice = _deck.pop_back()
+		SignalManager.remove_from_deck_panel.emit(G_ENUM.DeckArea.DECK, dice)
+		_next.append(dice)
+		drawn.append(dice)
+		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.NEXT, dice)
+	return drawn
+
+
+func _transfer_next_to_current():
+	for i in min(_transfer_amount, _next.size()):
+		var dice = _next.pop_front()
+		SignalManager.remove_from_deck_panel.emit(G_ENUM.DeckArea.NEXT, dice)
+		_current.append(dice)
+		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.CURRENT, dice)
+
+
+func _reshuffle_discard_into_deck():
+	_deck = _discard.duplicate()
+	_discard.clear()
+	_deck.shuffle()
+
+
+func _on_load_deck():
+	_deck.clear()
+	_next.clear()
+	_current.clear()
+	_discard.clear()
+
+	for type in _player_inventory:
+		var blank_dice = _dice_scene.instantiate()
 		match type:
 			G_ENUM.DiceType.PIZZA:
-				_blank_dice.dice_template = load(_pizza_dice_template_path)
+				blank_dice.dice_template = load(_pizza_dice_template_path)
 			G_ENUM.DiceType.GARLIC:
-				_blank_dice.dice_template = load(_garlic_dice_template_path)
-		_blank_dice.unique_id = uid
-		uid += 1
-		_dice_to_display.append(_blank_dice)
-		print("Dice to display: ", _dice_to_display)
-		if _dice_to_display.size() == 2:
-			break
-	for dice in _dice_to_display:
-		SignalManager.add_to_playable_panel.emit(dice)
+				blank_dice.dice_template = load(_garlic_dice_template_path)
+		_deck.append(blank_dice)
+		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DECK, blank_dice)
 
-func _on_request_deck_load():
-	print("Deck load requested, loading player dice")
-	_load_player_dice(_player_inventory)
+	_deck.shuffle()
+	_on_request_deck_draw()
+
+
+func _on_request_deck_draw():
+	_draw_to_next()
+	_transfer_next_to_current()
