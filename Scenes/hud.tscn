@@ -93,7 +93,16 @@ offset_top = 556.0
 offset_right = 1279.0
 offset_bottom = 720.0
 
-[node name="Current Dice" type="PanelContainer" parent="Bottom Bar"]
+[node name="PlayArea" type="Panel" parent="Bottom Bar"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 1.0
+offset_right = 1279.0
+offset_bottom = 554.0
+
+[node name="CurrentDice" type="PanelContainer" parent="Bottom Bar"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 695.0
 offset_top = 570.0
@@ -102,15 +111,15 @@ offset_bottom = 670.0
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("3_ioopo")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Bottom Bar/Current Dice"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Bottom Bar/CurrentDice"]
 layout_mode = 2
 
-[node name="Current Text" type="Label" parent="Bottom Bar/Current Dice/VBoxContainer"]
+[node name="Current Text" type="Label" parent="Bottom Bar/CurrentDice/VBoxContainer"]
 layout_mode = 2
 text = "Current"
 horizontal_alignment = 1
 
-[node name="CurrentHBox" type="HBoxContainer" parent="Bottom Bar/Current Dice/VBoxContainer"]
+[node name="CurrentHBox" type="HBoxContainer" parent="Bottom Bar/CurrentDice/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1

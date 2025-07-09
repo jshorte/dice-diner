@@ -7,6 +7,8 @@ signal emit_ready
 
 # Dice management
 signal request_dice_impulse
+signal dice_placed
+signal dice_turn_finished
 
 # Deck management
 signal request_deck_load

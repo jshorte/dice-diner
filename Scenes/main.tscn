@@ -49,3 +49,5 @@ position = Vector2(1300, 20)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D4"]
 position = Vector2(-10, 520)
 shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="Dice" type="Node2D" parent="."]

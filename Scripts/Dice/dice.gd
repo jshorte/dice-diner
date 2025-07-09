@@ -25,6 +25,12 @@ func _ready() -> void:
 	add_child(arrow)
 	hide_arrow()
 
+	if dice_template and dice_template.dice_sprite_animation_path:
+		$AnimatedSprite2D.sprite_frames = load(dice_template.dice_sprite_animation_path)
+		$AnimatedSprite2D.play("All")
+		$AnimatedSprite2D.frame = 0
+		$AnimatedSprite2D.pause()
+
 func _physics_process(delta: float) -> void:
 	if linear_velocity.length() < LERP_THRESHOLD and linear_velocity.length() > 0.1:
 		linear_velocity = linear_velocity.lerp(Vector2.ZERO, LERP_SPEED * delta)		
@@ -32,7 +38,15 @@ func _physics_process(delta: float) -> void:
 			linear_velocity = Vector2.ZERO
 
 	var new_state = G_ENUM.DiceState.STATIONARY if linear_velocity.length() == 0 else G_ENUM.DiceState.MOVING
-	set_dice_state(new_state)	
+
+	if dice_selection == G_ENUM.DiceSelection.ACTIVE \
+		and dice_state == G_ENUM.DiceState.MOVING \
+		and new_state == G_ENUM.DiceState.STATIONARY:
+
+		set_dice_selection(G_ENUM.DiceSelection.INACTIVE)
+		SignalManager.dice_turn_finished.emit(self)
+
+	set_dice_state(new_state)
 
 func _draw():	
 	if (dice_selection == G_ENUM.DiceSelection.ACTIVE and dice_state == G_ENUM.DiceState.STATIONARY):
@@ -99,6 +113,21 @@ func update_arrow():
 	var point_on_circle = calculate_circle_point(dice_radius, current_angle, center)
 	arrow.global_position = point_on_circle
 	arrow.rotation = current_angle - rotation
+
+func set_dice_selection(new_selection: G_ENUM.DiceSelection):
+	if dice_selection == new_selection:
+		return
+
+	dice_selection = new_selection
+
+	match dice_selection:
+		G_ENUM.DiceSelection.ACTIVE:
+			show_arrow()
+			update_arrow()
+		G_ENUM.DiceSelection.INACTIVE:
+			hide_arrow()
+
+	queue_redraw()
 
 func set_dice_state(new_state):
 	if dice_state == new_state:
