@@ -2,8 +2,19 @@ class_name Dice extends RigidBody2D
 
 @export var dice_selection: G_ENUM.DiceSelection = G_ENUM.DiceSelection.INACTIVE
 @export var dice_state: G_ENUM.DiceState = G_ENUM.DiceState.STATIONARY
-@export var dice_template: Resource = null
+@export var dice_template: DiceTemplate = null
 @export var unique_id : int
+
+# Template values
+var _dice_name: String
+var _min_value: int
+var _max_value: int
+var _interval: int
+var _type: G_ENUM.DiceType
+var _available_values: Array[int]
+var _available_values_index: int
+var _face_value: int
+
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var dice_radius: float = $CollisionShape2D.shape.radius
 
@@ -19,17 +30,32 @@ const UNITS_TO_PIXELS : float = 3.2
 var arrow: Node2D = null
 var arrow_scene = preload("res://Scenes/arrow.tscn")
 var _cached_sprite_frames = null
-	
+
+func initialise_values_from_template():
+	if dice_template:
+		_dice_name = dice_template.dice_name
+		_min_value = dice_template.dice_min
+		_max_value = dice_template.dice_max
+		_interval = dice_template.dice_interval
+		_type = dice_template.dice_type
+		_available_values.clear()
+		for n in range(_min_value, _max_value + 1, _interval):
+			_available_values.append(n)
+		_available_values_index = randi() % _available_values.size()
+		_face_value = _available_values[_available_values_index]
+
+func _initialise_visuals_from_template():
+	if dice_template and roll_animation and dice_template.dice_sprite_animation_path:
+		roll_animation.sprite_frames = load(dice_template.dice_sprite_animation_path)
+		roll_animation.frame = _available_values_index
+		roll_animation.pause()
+
 func _ready() -> void:
+	_initialise_visuals_from_template()
 	arrow = arrow_scene.instantiate()
 	add_child(arrow)
 	hide_arrow()
 
-	if dice_template and dice_template.dice_sprite_animation_path:
-		$AnimatedSprite2D.sprite_frames = load(dice_template.dice_sprite_animation_path)
-		$AnimatedSprite2D.play("All")
-		$AnimatedSprite2D.frame = 0
-		$AnimatedSprite2D.pause()
 
 func _physics_process(delta: float) -> void:
 	if linear_velocity.length() < LERP_THRESHOLD and linear_velocity.length() > 0.1:
@@ -38,13 +64,14 @@ func _physics_process(delta: float) -> void:
 			linear_velocity = Vector2.ZERO
 
 	var new_state = G_ENUM.DiceState.STATIONARY if linear_velocity.length() == 0 else G_ENUM.DiceState.MOVING
+	
+	if dice_state == new_state:
+		return
 
-	if dice_selection == G_ENUM.DiceSelection.ACTIVE \
-		and dice_state == G_ENUM.DiceState.MOVING \
-		and new_state == G_ENUM.DiceState.STATIONARY:
-
-		set_dice_selection(G_ENUM.DiceSelection.INACTIVE)
-		SignalManager.dice_turn_finished.emit(self)
+	if dice_state == G_ENUM.DiceState.STATIONARY and new_state == G_ENUM.DiceState.MOVING:
+		SignalManager.dice_started_moving.emit()
+	elif dice_state == G_ENUM.DiceState.MOVING and new_state == G_ENUM.DiceState.STATIONARY:
+		SignalManager.dice_finished_moving.emit()
 
 	set_dice_state(new_state)
 
@@ -74,7 +101,7 @@ func _handle_launch_input(event) -> bool:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var direction: Vector2 = -get_input_direction()
 		var strength: float = get_impulse_strength()
-		hide_arrow()
+		set_dice_selection(G_ENUM.DiceSelection.INACTIVE)
 		SignalManager.request_dice_impulse.emit(self, direction, strength)
 		return true
 	return false
@@ -149,9 +176,14 @@ func set_dice_state(new_state):
 func get_input_vector() -> Vector2:
 	return get_global_mouse_position() - global_position
 
-func get_icon_texture():
+
+func get_sprite_frame() -> int:
+	return _available_values_index
+	
+
+func get_icon_texture(sprite_frame: int = 0) -> Texture2D:
 	if not _cached_sprite_frames and dice_template and dice_template.dice_sprite_animation_path:
 		_cached_sprite_frames = load(dice_template.dice_sprite_animation_path)
 	if _cached_sprite_frames:
-		return _cached_sprite_frames.get_frame_texture("All", 0)
+		return _cached_sprite_frames.get_frame_texture("All", sprite_frame)
 	return null

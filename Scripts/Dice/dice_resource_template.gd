@@ -1,4 +1,4 @@
-class_name Dice_template extends Resource
+class_name DiceTemplate extends Resource
 
 var definitions = load("res://Scripts/g_enum.gd")
 

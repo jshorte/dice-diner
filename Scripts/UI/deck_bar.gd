@@ -4,6 +4,8 @@ var _sprite_to_dice : Dictionary = {}
 var _dice_to_sprite : Dictionary = {}
 var _selected_dice_rb: Dice = null
 var _selected_dice_sprite: TextureRect = null
+var _phase_state: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
+var _input_enabled: bool = true
 
 @onready var _current_hbox: HBoxContainer = get_node("%CurrentHBox")
 @onready var _next_hbox: HBoxContainer = get_node("%NextHBox")
@@ -15,6 +17,7 @@ var _selected_dice_sprite: TextureRect = null
 func _ready():
 	SignalManager.add_to_deck_panel.connect(_on_add_to_deck_panel)
 	SignalManager.remove_from_deck_panel.connect(_on_remove_from_deck_panel)
+	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	SignalManager.emit_ready.connect(_emit_ready)
 
 func _emit_ready():
@@ -25,7 +28,12 @@ func _process(delta):
 		_selected_dice_sprite.position = get_global_mouse_position() - _selected_dice_sprite.size / 2
 
 func _input(event):
-	if _selected_dice_sprite and event is InputEventMouseButton and event.pressed:
+	if not _input_enabled:
+		return
+
+	if _selected_dice_sprite and \
+		event is InputEventMouseButton and \
+		event.pressed:
 		if _is_over_play_area(get_global_mouse_position()):
 			var dice_to_remove = _sprite_to_dice.get(_selected_dice_sprite, null)
 
@@ -51,7 +59,12 @@ func _input(event):
 
 
 func _on_dice_sprite_input(event: InputEvent, sprite: TextureRect, dice: Dice, area: int) -> void:
-	if area == G_ENUM.DeckArea.CURRENT and event is InputEventMouseButton and event.pressed:
+	if not _input_enabled:
+		return
+
+	if area == G_ENUM.DeckArea.CURRENT and \
+		event is InputEventMouseButton and \
+		event.pressed:
 		if dice and _dice_to_sprite.has(dice) and _sprite_to_dice.has(sprite):
 			_selected_dice_rb = dice
 			_selected_dice_sprite = sprite
@@ -66,10 +79,10 @@ func _on_dice_sprite_input(event: InputEvent, sprite: TextureRect, dice: Dice, a
 			_selected_dice_sprite = null
 
 
-
 func _on_add_to_deck_panel(area: int, dice: Dice) -> void:
 	var dice_sprite = TextureRect.new()
-	dice_sprite.texture = dice.get_icon_texture()
+	var sprite_frame = dice.get_sprite_frame()
+	dice_sprite.texture = dice.get_icon_texture(sprite_frame)
 	dice_sprite.mouse_filter = Control.MOUSE_FILTER_STOP
 	dice_sprite.gui_input.connect(_on_dice_sprite_input.bind(dice_sprite, dice, area))
 	match area:
@@ -83,7 +96,6 @@ func _on_add_to_deck_panel(area: int, dice: Dice) -> void:
 			_discard_hbox.add_child(dice_sprite)
 	_sprite_to_dice[dice_sprite] = dice
 	_dice_to_sprite[dice] = dice_sprite
-	print("Added dice to area: ", area, " dice: ", dice, " icon: ", dice_sprite)
 
 
 func _is_over_play_area(pos: Vector2) -> bool:
@@ -109,3 +121,8 @@ func _on_remove_from_deck_panel(area: int, dice: Dice) -> void:
 		_dice_to_sprite.erase(dice)
 		_sprite_to_dice.erase(sprite)
 		sprite.queue_free()
+
+func _on_phase_state_changed(new_state: G_ENUM.PhaseState) -> void:
+	_phase_state = new_state
+	_input_enabled = (new_state == G_ENUM.PhaseState.PREPARE)
+	

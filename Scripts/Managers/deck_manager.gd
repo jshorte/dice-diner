@@ -70,9 +70,10 @@ func _on_load_deck():
 				blank_dice.dice_template = load(_pizza_dice_template_path)
 			G_ENUM.DiceType.GARLIC:
 				blank_dice.dice_template = load(_garlic_dice_template_path)
+		blank_dice.initialise_values_from_template()  # Ensure the dice is initialized with its template
 		_deck.append(blank_dice)
 		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DECK, blank_dice)
-
+	# TODO: Dice which have face values need to have new random values assigned when going into discard/draw pile
 	_deck.shuffle()
 	_on_request_deck_draw()
 
