@@ -6,6 +6,8 @@ var _selected_dice_rb: Dice = null
 var _selected_dice_sprite: TextureRect = null
 var _phase_state: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
 var _input_enabled: bool = true
+var _deck_preview_locked: bool = false
+var _discard_preview_locked: bool = false
 
 @onready var _current_hbox: HBoxContainer = get_node("%CurrentHBox")
 @onready var _next_hbox: HBoxContainer = get_node("%NextHBox")
@@ -14,11 +16,34 @@ var _input_enabled: bool = true
 @onready var _current_dice_panel: PanelContainer = get_node("%CurrentDice")
 @onready var _play_area_panel: Panel = get_node("%PlayArea")
 
+## Deck Panels
+@onready var _deck_panel: PanelContainer = get_node("%Deck")
+@onready var _deck_preview_panel: PanelContainer = get_node("%DeckPreview")
+
+## Discard Panels
+@onready var _discard_panel: PanelContainer = get_node("%Discard")
+@onready var _discard_preview_panel: PanelContainer = get_node("%DiscardPreview")
+
+
+
+
 func _ready():
 	SignalManager.add_to_deck_panel.connect(_on_add_to_deck_panel)
 	SignalManager.remove_from_deck_panel.connect(_on_remove_from_deck_panel)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	SignalManager.emit_ready.connect(_emit_ready)
+
+	## Deck Panel Signals
+	_deck_panel.mouse_entered.connect(_on_deck_mouse_entered)
+	_deck_panel.mouse_exited.connect(_on_deck_mouse_exited)
+	_deck_panel.gui_input.connect(_on_deck_panel_gui_input)
+	_deck_preview_panel.visible = false
+
+	## Discard Panel Signals
+	_discard_panel.mouse_entered.connect(_on_discard_mouse_entered)
+	_discard_panel.mouse_exited.connect(_on_discard_mouse_exited)
+	_discard_panel.gui_input.connect(_on_discard_panel_gui_input)
+	_discard_preview_panel.visible = false
 
 func _emit_ready():
 	SignalManager.hud_manager_ready.emit()
@@ -125,4 +150,37 @@ func _on_remove_from_deck_panel(area: int, dice: Dice) -> void:
 func _on_phase_state_changed(new_state: G_ENUM.PhaseState) -> void:
 	_phase_state = new_state
 	_input_enabled = (new_state == G_ENUM.PhaseState.PREPARE)
-	
+
+## DECK PANEL FUNCTIONS
+func _on_deck_mouse_entered():
+	_deck_preview_panel.visible = true
+
+
+func _on_deck_mouse_exited():
+	if not _deck_preview_locked:
+		_deck_preview_panel.visible = false	
+
+
+func _on_deck_panel_gui_input(event):
+	if event is InputEventMouseButton and \
+	event.pressed and \
+	event.button_index == MOUSE_BUTTON_LEFT:
+		_deck_preview_locked = not _deck_preview_locked
+		_deck_preview_panel.visible = _deck_preview_locked
+
+## DISCARD PANEL FUNCTIONS
+func _on_discard_mouse_entered():
+	_discard_preview_panel.visible = true	
+
+
+func _on_discard_mouse_exited():
+	if not _discard_preview_locked:
+		_discard_preview_panel.visible = false
+
+
+func _on_discard_panel_gui_input(event):
+	if event is InputEventMouseButton and \
+	event.pressed and \
+	event.button_index == MOUSE_BUTTON_LEFT:
+		_discard_preview_locked = not _discard_preview_locked
+		_discard_preview_panel.visible = _discard_preview_locked

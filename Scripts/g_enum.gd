@@ -6,4 +6,4 @@ enum DiceType { PIZZA, GARLIC }
 enum DiceSelection { DISABLED, ACTIVE, INACTIVE }
 enum DiceState { MOVING, STATIONARY }
 enum GameState { SELECT, PLAY, SCORE }
-enum PhaseState { PREPARE, ROLL, DRAW }
+enum PhaseState { PREPARE, ROLL, SCORE, DRAW }

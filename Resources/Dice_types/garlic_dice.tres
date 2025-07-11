@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Dice_template" load_steps=2 format=3 uid="uid://d1bd3e7avodog"]
+[gd_resource type="Resource" script_class="GarlicTemplate" load_steps=2 format=3 uid="uid://d1bd3e7avodog"]
 
-[ext_resource type="Script" uid="uid://tlp6wwagkgy7" path="res://Scripts/Dice/dice_resource_template.gd" id="1_lscw0"]
+[ext_resource type="Script" uid="uid://cq350s7x2jq0n" path="res://Scripts/Dice/Templates/garlic_template.gd" id="1_lscw0"]
 
 [resource]
 script = ExtResource("1_lscw0")

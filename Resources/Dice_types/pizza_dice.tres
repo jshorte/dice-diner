@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Dice_template" load_steps=2 format=3 uid="uid://b2uvb152kdiy3"]
+[gd_resource type="Resource" script_class="PizzaTemplate" load_steps=2 format=3 uid="uid://b2uvb152kdiy3"]
 
-[ext_resource type="Script" uid="uid://tlp6wwagkgy7" path="res://Scripts/Dice/dice_resource_template.gd" id="1_b4wed"]
+[ext_resource type="Script" uid="uid://cch8ohfe7e5n5" path="res://Scripts/Dice/Templates/pizza_template.gd" id="1_b4wed"]
 
 [resource]
 script = ExtResource("1_b4wed")

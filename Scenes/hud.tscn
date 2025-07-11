@@ -125,6 +125,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="Deck" type="PanelContainer" parent="Bottom Bar"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 15.0
 offset_top = 570.0
@@ -137,22 +138,23 @@ layout_mode = 2
 text = "Deck"
 horizontal_alignment = 1
 
-[node name="Deck Preview" type="PanelContainer" parent="Bottom Bar"]
-visible = false
+[node name="DeckPreview" type="PanelContainer" parent="Bottom Bar"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 16.0
 offset_top = 440.0
-offset_right = 46.0
+offset_right = 115.0
 offset_bottom = 548.0
 theme_override_styles/panel = ExtResource("3_ioopo")
 
-[node name="DeckHBox" type="HBoxContainer" parent="Bottom Bar/Deck Preview"]
+[node name="DeckHBox" type="HBoxContainer" parent="Bottom Bar/DeckPreview"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
 [node name="Discard" type="PanelContainer" parent="Bottom Bar"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1159.0
 offset_top = 570.0
@@ -166,16 +168,18 @@ text = "Discard"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Discard Preview" type="PanelContainer" parent="Bottom Bar"]
-visible = false
+[node name="DiscardPreview" type="PanelContainer" parent="Bottom Bar"]
+unique_name_in_owner = true
 layout_mode = 2
-offset_left = 1237.0
+offset_left = 1159.0
 offset_top = 441.0
-offset_right = 1267.0
+offset_right = 1260.0
 offset_bottom = 549.0
+grow_horizontal = 0
+pivot_offset = Vector2(99, 105)
 theme_override_styles/panel = ExtResource("3_ioopo")
 
-[node name="DiscardHBox" type="HBoxContainer" parent="Bottom Bar/Discard Preview"]
+[node name="DiscardHBox" type="HBoxContainer" parent="Bottom Bar/DiscardPreview"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -203,17 +207,17 @@ layout_mode = 2
 alignment = 1
 
 [node name="Active Panel" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Active" type="Panel" parent="Active Panel"]
+visible = false
 layout_mode = 0
-offset_top = 192.0
+offset_top = 123.0
 offset_right = 200.0
-offset_bottom = 492.0
+offset_bottom = 423.0
 theme_override_styles/panel = ExtResource("3_ioopo")
 
 [node name="Current Text" type="Label" parent="Active Panel/Active"]
@@ -239,7 +243,6 @@ icon_alignment = 1
 script = ExtResource("4_owgk4")
 
 [node name="Score Panel" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -248,9 +251,9 @@ offset_bottom = 40.0
 [node name="Score" type="Panel" parent="Score Panel"]
 layout_mode = 0
 offset_left = 1080.0
-offset_top = 192.0
+offset_top = 126.0
 offset_right = 1280.0
-offset_bottom = 492.0
+offset_bottom = 426.0
 
 [node name="Score_Show_Hide" type="Button" parent="Score Panel/Score"]
 layout_mode = 2

@@ -27,8 +27,11 @@ const PREDICT_LINE_WIDTH: float = 2.0
 const STRENGTH_MULTIPLIER: float = 10.0
 const UNITS_TO_PIXELS : float = 3.2
 
-var arrow: Node2D = null
-var arrow_scene = preload("res://Scenes/arrow.tscn")
+var score: int = 0
+var bonus_score: int = 0
+
+var _arrow: Node2D = null
+var _arrow_scene = preload("res://Scenes/arrow.tscn")
 var _cached_sprite_frames = null
 
 func initialise_values_from_template():
@@ -38,7 +41,6 @@ func initialise_values_from_template():
 		_max_value = dice_template.dice_max
 		_interval = dice_template.dice_interval
 		_type = dice_template.dice_type
-		_available_values.clear()
 		for n in range(_min_value, _max_value + 1, _interval):
 			_available_values.append(n)
 		_available_values_index = randi() % _available_values.size()
@@ -51,10 +53,12 @@ func _initialise_visuals_from_template():
 		roll_animation.pause()
 
 func _ready() -> void:
+	SignalManager.reset_dice_score.connect(_reset_score)
 	_initialise_visuals_from_template()
-	arrow = arrow_scene.instantiate()
-	add_child(arrow)
+	_arrow = _arrow_scene.instantiate()
+	add_child(_arrow)
 	hide_arrow()
+	connect("body_entered", _on_body_entered)
 
 
 func _physics_process(delta: float) -> void:
@@ -128,18 +132,18 @@ func get_input_direction() -> Vector2:
 	return get_input_vector().normalized()
 
 func show_arrow():
-	arrow.visible = true
+	_arrow.visible = true
 
 func hide_arrow():
-	arrow.visible = false
+	_arrow.visible = false
 
 func update_arrow():
 	show_arrow()
 	var center = global_position
 	var current_angle = center.angle_to_point(get_global_mouse_position())
 	var point_on_circle = calculate_circle_point(dice_radius, current_angle, center)
-	arrow.global_position = point_on_circle
-	arrow.rotation = current_angle - rotation
+	_arrow.global_position = point_on_circle
+	_arrow.rotation = current_angle - rotation
 
 func set_dice_selection(new_selection: G_ENUM.DiceSelection):
 	if dice_selection == new_selection:
@@ -187,3 +191,31 @@ func get_icon_texture(sprite_frame: int = 0) -> Texture2D:
 	if _cached_sprite_frames:
 		return _cached_sprite_frames.get_frame_texture("All", sprite_frame)
 	return null
+
+
+func get_score() -> int:
+	if not dice_template:
+		return 0
+	
+	return dice_template.calculate_score(self)
+
+
+func _reset_score():
+	score = 0
+	bonus_score = 0
+
+
+func _on_body_entered(body: Node) -> void:
+	if _type == G_ENUM.DiceType.PIZZA:
+		bonus_score += 1
+		print("Bonus score increased to: ", bonus_score)
+
+
+func roll_face():
+	if not dice_template:
+		return
+	_available_values_index = randi() % _available_values.size()
+	_face_value = _available_values[_available_values_index]
+	
+	if roll_animation:
+		roll_animation.frame = _available_values_index
