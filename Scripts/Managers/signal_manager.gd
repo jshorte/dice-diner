@@ -14,6 +14,7 @@ signal dice_finished_moving
 signal reset_dice_score
 
 # Deck management
+signal remove_placed_dice
 signal request_deck_load
 signal request_deck_draw
 signal draw_completed

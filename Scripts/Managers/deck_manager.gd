@@ -17,17 +17,17 @@ var _player_inventory : Array = [
 	G_ENUM.DiceType.PIZZA,
 	G_ENUM.DiceType.PIZZA, 
 	G_ENUM.DiceType.PIZZA, 
-	G_ENUM.DiceType.PIZZA, 
-	G_ENUM.DiceType.PIZZA, 
-	G_ENUM.DiceType.GARLIC, 
-	G_ENUM.DiceType.GARLIC,
 	G_ENUM.DiceType.GARLIC,
 ]
+
+@onready var _pending_dice_node = get_node("%PendingDice")
+
 
 func _ready():
 	SignalManager.request_deck_load.connect(_on_load_deck)
 	SignalManager.request_deck_draw.connect(_on_request_deck_draw)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
+	SignalManager.remove_placed_dice.connect(_remove_from_current)
 	SignalManager.emit_ready.connect(_emit_ready)
 
 
@@ -73,11 +73,26 @@ func _transfer_current_to_discard():
 
 
 func _reshuffle_discard_into_deck():
+	for dice in _deck:
+		_discard.append(dice)
+		SignalManager.remove_from_deck_panel.emit(G_ENUM.DeckArea.DECK, dice)
+		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DISCARD, dice)
+	_deck.clear()
+
+	for dice in _discard:
+		SignalManager.remove_from_deck_panel.emit(G_ENUM.DeckArea.DISCARD, dice)
+		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DECK, dice)
 	_deck = _discard.duplicate()
 	_discard.clear()
 	_deck.shuffle()
+
 	for dice in _deck:
 		dice.roll_face()
+
+
+func _remove_from_current(dice: Dice):
+	if dice in _current:
+		_current.erase(dice)
 
 
 func _on_load_deck():
@@ -87,7 +102,10 @@ func _on_load_deck():
 	_discard.clear()
 
 	for type in _player_inventory:
-		var blank_dice = _dice_scene.instantiate()
+		var blank_dice: Dice = _dice_scene.instantiate()
+		blank_dice.sleeping = true
+		blank_dice.contact_monitor = false
+		_pending_dice_node.add_child(blank_dice)
 		match type:
 			G_ENUM.DiceType.PIZZA:
 				blank_dice.dice_template = load(_pizza_dice_template_path)

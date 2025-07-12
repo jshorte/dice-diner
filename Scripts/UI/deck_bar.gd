@@ -67,7 +67,7 @@ func _input(event):
 
 			_sprite_to_dice.erase(_selected_dice_sprite)
 
-			if is_instance_valid(_selected_dice_sprite):
+			if is_instance_valid(_selected_dice_sprite):				
 				_selected_dice_sprite.queue_free()
 
 			SignalManager.dice_placed.emit(_selected_dice_rb, get_global_mouse_position())

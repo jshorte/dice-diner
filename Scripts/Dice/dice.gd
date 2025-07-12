@@ -7,11 +7,8 @@ class_name Dice extends RigidBody2D
 
 # Template values
 var _dice_name: String
-var _min_value: int
-var _max_value: int
-var _interval: int
 var _type: G_ENUM.DiceType
-var _available_values: Array[int]
+var _available_values: Array[G_ENUM.FoodQuality]
 var _available_values_index: int
 var _face_value: int
 
@@ -32,29 +29,19 @@ var bonus_score: int = 0
 
 var _arrow: Node2D = null
 var _arrow_scene = preload("res://Scenes/arrow.tscn")
-var _cached_sprite_frames = null
 
 func initialise_values_from_template():
 	if dice_template:
-		_dice_name = dice_template.dice_name
-		_min_value = dice_template.dice_min
-		_max_value = dice_template.dice_max
-		_interval = dice_template.dice_interval
+		_dice_name = dice_template.dice_name	
 		_type = dice_template.dice_type
-		for n in range(_min_value, _max_value + 1, _interval):
-			_available_values.append(n)
+		_available_values = dice_template.prepared_values.duplicate()
 		_available_values_index = randi() % _available_values.size()
 		_face_value = _available_values[_available_values_index]
-
-func _initialise_visuals_from_template():
-	if dice_template and roll_animation and dice_template.dice_sprite_animation_path:
-		roll_animation.sprite_frames = load(dice_template.dice_sprite_animation_path)
-		roll_animation.frame = _available_values_index
-		roll_animation.pause()
+		_create_custom_animation()
 
 func _ready() -> void:
 	SignalManager.reset_dice_score.connect(_reset_score)
-	_initialise_visuals_from_template()
+	# update_animation_from_values()
 	_arrow = _arrow_scene.instantiate()
 	add_child(_arrow)
 	hide_arrow()
@@ -172,7 +159,7 @@ func set_dice_state(new_state):
 			if dice_selection == G_ENUM.DiceSelection.ACTIVE:
 				update_arrow()
 		G_ENUM.DiceState.MOVING:
-			roll_animation.play()
+			roll_animation.play("Roll")
 			hide_arrow()
 
 	queue_redraw()
@@ -180,17 +167,13 @@ func set_dice_state(new_state):
 func get_input_vector() -> Vector2:
 	return get_global_mouse_position() - global_position
 
-
+## Returns the current sprite frame associated with the dice face value.
 func get_sprite_frame() -> int:
-	return _available_values_index
-	
+	return _face_value - 1
+
 
 func get_icon_texture(sprite_frame: int = 0) -> Texture2D:
-	if not _cached_sprite_frames and dice_template and dice_template.dice_sprite_animation_path:
-		_cached_sprite_frames = load(dice_template.dice_sprite_animation_path)
-	if _cached_sprite_frames:
-		return _cached_sprite_frames.get_frame_texture("All", sprite_frame)
-	return null
+	return roll_animation.sprite_frames.get_frame_texture("All", sprite_frame)
 
 
 func get_score() -> int:
@@ -213,9 +196,33 @@ func _on_body_entered(body: Node) -> void:
 
 func roll_face():
 	if not dice_template:
+		print("Error: Dice template not set up correctly.")
 		return
 	_available_values_index = randi() % _available_values.size()
 	_face_value = _available_values[_available_values_index]
 	
 	if roll_animation:
-		roll_animation.frame = _available_values_index
+		roll_animation.frame = get_sprite_frame()
+
+
+func _create_custom_animation():
+	if roll_animation and dice_template and dice_template.dice_sprite_animation_path:
+		var all_frames = load(dice_template.dice_sprite_animation_path)
+		var roll_frames = SpriteFrames.new()
+
+		roll_frames.add_animation("All")
+		for i in all_frames.get_frame_count("All"):
+			var tex = all_frames.get_frame_texture("All", i)
+			roll_frames.add_frame("All", tex)
+
+		roll_frames.add_animation("Roll")
+		for i in _available_values.size():
+			var frame_index = _available_values[i] - 1
+			var frame_sprite = all_frames.get_frame_texture("All", frame_index)
+			roll_frames.add_frame("Roll", frame_sprite)
+
+		roll_animation.sprite_frames = roll_frames
+		roll_animation.frame = get_sprite_frame()
+	else:
+		print("Error: Roll animation or dice template not set up correctly.")
+		return

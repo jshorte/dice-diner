@@ -54,5 +54,9 @@ position = Vector2(1300, 20)
 position = Vector2(-10, 520)
 shape = SubResource("RectangleShape2D_8gbba")
 
-[node name="Dice" type="Node2D" parent="."]
+[node name="ActiveDice" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="PendingDice" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-275, -7)

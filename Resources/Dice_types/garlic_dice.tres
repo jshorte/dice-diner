@@ -4,9 +4,7 @@
 
 [resource]
 script = ExtResource("1_lscw0")
-dice_min = 1
-dice_max = 2
-dice_interval = 1
-dice_sprite_animation_path = "res://Animations/garlic_spriteframe.tres"
-dice_type = 1
 dice_name = "Garlic"
+dice_type = 1
+prepared_values = Array[int]([1, 2])
+dice_sprite_animation_path = "res://Animations/garlic_spriteframe.tres"
