@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdu3kdmck2ij3"]
+[gd_scene load_steps=7 format=3 uid="uid://bdu3kdmck2ij3"]
 
 [ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
 [ext_resource type="StyleBox" path="res://Art/Blackboard.tres" id="3_ioopo"]
 [ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/button_state.gd" id="4_owgk4"]
 [ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="4_t1xeu"]
+[ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="5_36asn"]
 [ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="7_e1fvy"]
 
 [node name="HUD" type="Control"]
@@ -247,6 +248,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("5_36asn")
 
 [node name="Score" type="Panel" parent="Score Panel"]
 layout_mode = 0
@@ -285,32 +287,34 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="DiceVBox" type="VBoxContainer" parent="Score Panel/Score/Score Container/VBoxContainer"]
+[node name="DiceScoreVBox" type="VBoxContainer" parent="Score Panel/Score/Score Container/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Total Space" type="Control" parent="Score Panel/Score/Score Container/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer3" type="VBoxContainer" parent="Score Panel/Score/Score Container/VBoxContainer"]
+[node name="ScoreTextHBox" type="VBoxContainer" parent="Score Panel/Score/Score Container/VBoxContainer"]
 layout_mode = 2
 
-[node name="Total Text" type="Label" parent="Score Panel/Score/Score Container/VBoxContainer/HBoxContainer3"]
+[node name="RoundScoreText" type="Label" parent="Score Panel/Score/Score Container/VBoxContainer/ScoreTextHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
 size_flags_stretch_ratio = 2.0
-text = "Total
-"
+text = "Round: 0"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Total Score" type="Label" parent="Score Panel/Score/Score Container/VBoxContainer/HBoxContainer3"]
+[node name="TotalScoreText" type="Label" parent="Score Panel/Score/Score Container/VBoxContainer/ScoreTextHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 10
-text = "106
-"
+size_flags_vertical = 8
+size_flags_stretch_ratio = 2.0
+text = "Total: 0"
 horizontal_alignment = 1
 vertical_alignment = 2
 

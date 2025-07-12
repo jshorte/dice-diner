@@ -4,6 +4,7 @@ extends Node
 signal hud_manager_ready
 signal deck_manager_ready
 signal score_manager_ready
+signal score_bar_manager_ready
 signal emit_ready
 
 # Dice management
@@ -27,4 +28,5 @@ signal remove_from_deck_panel
 signal phase_state_changed
 
 # Scoring management
+signal score_updated
 signal score_completed

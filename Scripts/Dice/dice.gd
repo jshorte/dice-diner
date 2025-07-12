@@ -6,7 +6,7 @@ class_name Dice extends RigidBody2D
 @export var unique_id : int
 
 # Template values
-var _dice_name: String
+var dice_name: String
 var _type: G_ENUM.DiceType
 var _available_values: Array[G_ENUM.FoodQuality]
 var _available_values_index: int
@@ -26,13 +26,15 @@ const UNITS_TO_PIXELS : float = 3.2
 
 var score: int = 0
 var bonus_score: int = 0
-
+var flat_score: int = 0
+var calculated_score: int = 0
+var collision_log: Array[Dictionary] = []
 var _arrow: Node2D = null
 var _arrow_scene = preload("res://Scenes/arrow.tscn")
 
 func initialise_values_from_template():
 	if dice_template:
-		_dice_name = dice_template.dice_name	
+		dice_name = dice_template.dice_name	
 		_type = dice_template.dice_type
 		_available_values = dice_template.prepared_values.duplicate()
 		_available_values_index = randi() % _available_values.size()
@@ -58,11 +60,6 @@ func _physics_process(delta: float) -> void:
 	
 	if dice_state == new_state:
 		return
-
-	if dice_state == G_ENUM.DiceState.STATIONARY and new_state == G_ENUM.DiceState.MOVING:
-		SignalManager.dice_started_moving.emit()
-	elif dice_state == G_ENUM.DiceState.MOVING and new_state == G_ENUM.DiceState.STATIONARY:
-		SignalManager.dice_finished_moving.emit()
 
 	set_dice_state(new_state)
 
@@ -156,9 +153,12 @@ func set_dice_state(new_state):
 	match dice_state:
 		G_ENUM.DiceState.STATIONARY:
 			roll_animation.pause()
+			_face_value = _available_values[roll_animation.frame]
+			SignalManager.dice_finished_moving.emit()
 			if dice_selection == G_ENUM.DiceSelection.ACTIVE:
 				update_arrow()
 		G_ENUM.DiceState.MOVING:
+			SignalManager.dice_started_moving.emit()
 			roll_animation.play("Roll")
 			hide_arrow()
 
@@ -186,12 +186,26 @@ func get_score() -> int:
 func _reset_score():
 	score = 0
 	bonus_score = 0
+	flat_score = 0
+	calculated_score = 0
+	collision_log.clear()
 
 
 func _on_body_entered(body: Node) -> void:
+	if body is Dice:
+		log_collision(body)
+
 	if _type == G_ENUM.DiceType.PIZZA:
-		bonus_score += 1
-		print("Bonus score increased to: ", bonus_score)
+		score += 1
+		print("Score increased to: ", score)
+
+
+func log_collision(other_dice: Dice) -> void:
+	collision_log.append({
+		"other_dice": other_dice,
+		"processed": false,
+		"timestamp": Time.get_ticks_msec()
+	})
 
 
 func roll_face():

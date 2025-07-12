@@ -20,11 +20,30 @@ func _on_phase_state_changed(new_state: G_ENUM.PhaseState):
 
 func _calculate_score():
 	var round_score: int = 0
-
+	var dice_scores: Array[Dice] = []
 	for dice in dice_to_score:
-		round_score += dice.get_score()
-
+		_process_dice(dice)
+		dice.calculated_score = dice.get_score()
+		round_score += dice.calculated_score
+		dice_scores.append(dice)
 	total_score += round_score
-	print("Round Score: ", round_score)
-	print("Total Score: ", total_score)
+	SignalManager.score_updated.emit(round_score, total_score, dice_scores)
 	SignalManager.score_completed.emit()
+
+## Modify dice scores based on unique dice interactions
+func _process_dice(dice: Dice):
+	for entry in dice.collision_log:
+		if entry.get("processed", false):
+			continue
+
+		## Unique interaction logic
+
+		var other_dice = entry.get("other_dice")
+		entry["processed"] = true
+
+		for other_entry in other_dice.collision_log:
+			if other_entry.get("other_dice") == dice \
+			and other_entry.get("timestamp") == entry.get("timestamp") \
+			and not other_entry.get("processed", false):
+				other_entry["processed"] = true
+				break

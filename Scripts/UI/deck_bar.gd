@@ -1,4 +1,4 @@
-class_name Deck_Bar extends Control
+class_name DeckBar extends Control
 
 var _sprite_to_dice : Dictionary = {}
 var _dice_to_sprite : Dictionary = {}

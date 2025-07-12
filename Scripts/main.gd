@@ -5,6 +5,7 @@ var _stationary_dice_count: int = 0
 var _isHUDReady: bool = false
 var _isDeckReady: bool = false
 var _isScoreReady: bool = false
+var _isScoreBarReady: bool = false
 var _phase_state: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
 
 @onready var _active_dice_tree_node = get_node("%ActiveDice")
@@ -18,6 +19,7 @@ func _ready():
 	SignalManager.hud_manager_ready.connect(_on_hud_manager_ready)
 	SignalManager.deck_manager_ready.connect(_on_deck_manager_ready)
 	SignalManager.score_manager_ready.connect(_on_score_manager_ready)
+	SignalManager.score_bar_manager_ready.connect(_on_score_bar_manager_ready)
 	SignalManager.dice_placed.connect(_on_dice_placed)
 	SignalManager.dice_started_moving.connect(_on_dice_started_moving)
 	SignalManager.dice_finished_moving.connect(_on_dice_finished_moving)
@@ -40,9 +42,13 @@ func _on_score_manager_ready():
 	_isScoreReady = true
 	_check_all_ready()
 
+func _on_score_bar_manager_ready():
+	_isScoreBarReady = true
+	_check_all_ready()
+
 
 func _check_all_ready():
-	if _isHUDReady and _isDeckReady and _isScoreReady:
+	if _isHUDReady and _isDeckReady and _isScoreReady and _isScoreBarReady:
 		_phase_state = G_ENUM.PhaseState.PREPARE
 		SignalManager.request_deck_load.emit()
 #endregion Initialisation

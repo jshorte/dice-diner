@@ -8,3 +8,10 @@ dice_name = "Garlic"
 dice_type = 1
 prepared_values = Array[int]([1, 2])
 dice_sprite_animation_path = "res://Animations/garlic_spriteframe.tres"
+quality_multipliers = Dictionary[int, float]({
+0: 0.0,
+1: 0.5,
+2: 1.0,
+3: 1.5,
+4: 2.0
+})
