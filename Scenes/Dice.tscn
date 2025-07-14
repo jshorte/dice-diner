@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0b8anh0jl41u"]
+[gd_scene load_steps=11 format=3 uid="uid://c0b8anh0jl41u"]
 
 [ext_resource type="Script" uid="uid://bthg464woowxo" path="res://Scripts/Dice/dice.gd" id="1_dcpc8"]
 [ext_resource type="SpriteFrames" uid="uid://b7p5xj45h5fvf" path="res://Animations/pizza_spriteframe.tres" id="1_wpqjs"]
@@ -9,6 +9,54 @@ bounce = 0.8
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcpc8"]
 radius = 32.0
+
+[sub_resource type="Gradient" id="Gradient_7cx2c"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3jar1"]
+gradient = SubResource("Gradient_7cx2c")
+
+[sub_resource type="Curve" id="Curve_7cx2c"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 3), 0.0, -1.00043, 0, 1, Vector2(0.551502, 2.44826), -2.63703, -2.63703, 0, 0, Vector2(1, 0), -5.4588, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3jar1"]
+curve = SubResource("Curve_7cx2c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1kcbr"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 48.0
+emission_ring_inner_radius = 32.0
+emission_ring_cone_angle = 5.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_max = 24.21
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_3jar1")
+color_ramp = SubResource("GradientTexture1D_3jar1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7cx2c"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 48.0
+emission_ring_inner_radius = 32.0
+emission_ring_cone_angle = 5.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_max = 24.21
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_3jar1")
+color_ramp = SubResource("GradientTexture1D_3jar1")
 
 [node name="Dice" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_wpqjs")
@@ -27,3 +75,18 @@ sprite_frames = ExtResource("1_wpqjs")
 animation = &"All"
 frame = 2
 frame_progress = 0.478992
+
+[node name="ImpactParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_1kcbr")
+
+[node name="HighlightParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 48
+interp_to_end = 0.1
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_7cx2c")

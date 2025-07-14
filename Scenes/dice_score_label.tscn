@@ -10,21 +10,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_8o52e")
+alignment = 1
 script = ExtResource("2_uc8n5")
 
-[node name="DiceNameLabel" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DiceNameLabel" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-size_flags_stretch_ratio = 2.0
 theme = ExtResource("1_8o52e")
+text = "PIZZA
+"
 horizontal_alignment = 1
 
-[node name="DiceScoreLabel" type="Label" parent="."]
+[node name="DiceScoreLabel" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("1_8o52e")
+text = "100"
+horizontal_alignment = 1
+
+[node name="DiceQualityLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_8o52e")
+text = "EXCELLENT"
 horizontal_alignment = 1

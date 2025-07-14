@@ -33,6 +33,10 @@ window/size/viewport_height=720
 
 enabled=PackedStringArray("res://addons/nklbdev.aseprite_importers/plugin.cfg")
 
+[global_group]
+
+Wall=""
+
 [physics]
 
 2d/default_gravity=0.0

@@ -9,14 +9,14 @@ var _next : Array = []
 var _current : Array = []
 var _discard : Array = []
 var _draw_amount : int = 3
-# var _transfer_amount : int = 2
+
 var _player_inventory : Array = [
 	G_ENUM.DiceType.PIZZA, 
 	G_ENUM.DiceType.PIZZA, 
 	G_ENUM.DiceType.PIZZA, 
 	G_ENUM.DiceType.PIZZA,
 	G_ENUM.DiceType.PIZZA, 
-	G_ENUM.DiceType.PIZZA, 
+	G_ENUM.DiceType.GARLIC,
 	G_ENUM.DiceType.GARLIC,
 ]
 
@@ -109,8 +109,10 @@ func _on_load_deck():
 		match type:
 			G_ENUM.DiceType.PIZZA:
 				blank_dice.dice_template = load(_pizza_dice_template_path)
+				blank_dice.strategy = PizzaDiceScoringStrategy.new()
 			G_ENUM.DiceType.GARLIC:
 				blank_dice.dice_template = load(_garlic_dice_template_path)
+				blank_dice.strategy = GarlicDiceScoringStrategy.new()
 		blank_dice.initialise_values_from_template()  # Ensure the dice is initialized with its template
 		_deck.append(blank_dice)
 		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DECK, blank_dice)

@@ -74,7 +74,12 @@ func set_phase_state(state: G_ENUM.PhaseState):
 		return
 
 	_phase_state = state
+
+	await get_tree().create_timer(1.0).timeout
+
 	print("Phase state changed to: ", _phase_state)
+	
+		
 	SignalManager.phase_state_changed.emit(_phase_state)
 
 

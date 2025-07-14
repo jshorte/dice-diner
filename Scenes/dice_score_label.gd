@@ -1,34 +1,63 @@
 class_name DiceScoreLabel extends HBoxContainer
 
-var dice: Dice
+var _dice: Dice
 
 @onready var name_label: Label = get_node("%DiceNameLabel")
 @onready var score_label: Label = get_node("%DiceScoreLabel")
+@onready var quality_label: Label = get_node("%DiceQualityLabel")
 
 func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	pass
+	
 
 func set_dice(d: Dice):
-	dice = d
-	set_dice_score(d)
+	_dice = d
 
-func set_dice_score(d: Dice):
+
+func set_dice_score(d: Dice, initial: bool = false):
 	name_label.text = d.dice_name
-	score_label.text = str(d.calculated_score)
+	print("Setting score for dice: ", d.dice_name, " Score: ", d.reported_score)
+	score_label.text = str(d.reported_score)
+	# quality_label.text = ""
+	quality_label.visible = false
 
-func reset_dice_score():
-	if dice:
-		name_label.text = ""
-		score_label.text = ""
+	if not initial:
+		quality_label.visible = true
+		quality_label.text = d.get_food_quality()
+
+		var face_color = Color.BLACK
+
+		match d._face_value:
+			G_ENUM.FoodQuality.INEDIBLE:
+				face_color = Color.BLACK
+			G_ENUM.FoodQuality.POOR:
+				face_color = Color.RED
+			G_ENUM.FoodQuality.OK:
+				face_color = Color("FFA500") # Amber (orange)
+			G_ENUM.FoodQuality.GOOD:
+				face_color = Color.GREEN
+			G_ENUM.FoodQuality.EXCELLENT:
+				face_color = Color.CYAN
+
+		quality_label.add_theme_color_override("font_color", face_color)
+
+		
+
+func set_dice_live_score(d: Dice):
+	if d:
+		name_label.text = d.dice_name
+		score_label.text = str(d.score)
+
 
 func _on_mouse_entered():
-	if dice:
-		print("Mouse entered dice: ", dice.dice_name)
-		# dice.highlight(true)
+	if _dice:
+		name_label.add_theme_color_override("font_color", Color.YELLOW)
+		_dice.highlight(true)
+
 
 func _on_mouse_exited():
-	if dice:
-		print("Mouse exited dice: ", dice.dice_name)
-		# dice.highlight(false)
+	if _dice:
+		name_label.remove_theme_color_override("font_color")
+		_dice.highlight(false)

@@ -24,30 +24,30 @@ script = ExtResource("3_jjvhh")
 
 [node name="HUD" parent="Managers" instance=ExtResource("2_bo1nx")]
 
-[node name="Walls" type="Node2D" parent="."]
+[node name="Walls" type="Node2D" parent="." groups=["Wall"]]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, -20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
 position = Vector2(960, 10)
 shape = SubResource("RectangleShape2D_bo1nx")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, 721)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
 position = Vector2(960, -155)
 shape = SubResource("RectangleShape2D_bo1nx")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="Walls"]
+[node name="StaticBody2D3" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, 20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D3"]
 position = Vector2(-10, 520)
 shape = SubResource("RectangleShape2D_8gbba")
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="Walls"]
+[node name="StaticBody2D4" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(1300, 20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D4"]

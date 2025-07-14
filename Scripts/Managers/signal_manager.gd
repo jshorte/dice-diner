@@ -10,6 +10,7 @@ signal emit_ready
 # Dice management
 signal request_dice_impulse
 signal dice_placed
+signal dice_launched
 signal dice_started_moving
 signal dice_finished_moving
 signal reset_dice_score
@@ -29,4 +30,5 @@ signal phase_state_changed
 
 # Scoring management
 signal score_updated
+signal dice_score_updated
 signal score_completed
