@@ -3,6 +3,7 @@ extends Node
 var _dice_scene = preload("res://Scenes/dice.tscn")
 var _pizza_dice_template_path = "res://Resources/Dice_types/pizza_dice.tres"
 var _garlic_dice_template_path = "res://Resources/Dice_types/garlic_dice.tres"
+var _flatwhite_dice_template_path = "res://Resources/Dice_types/flat_white_dice.tres"
 
 var _deck : Array = []
 var _next : Array = []
@@ -18,6 +19,8 @@ var _player_inventory : Array = [
 	G_ENUM.DiceType.PIZZA, 
 	G_ENUM.DiceType.GARLIC,
 	G_ENUM.DiceType.GARLIC,
+	G_ENUM.DiceType.FLATWHITE,
+	G_ENUM.DiceType.FLATWHITE,
 ]
 
 @onready var _pending_dice_node = get_node("%PendingDice")
@@ -113,6 +116,9 @@ func _on_load_deck():
 			G_ENUM.DiceType.GARLIC:
 				blank_dice.dice_template = load(_garlic_dice_template_path)
 				blank_dice.strategy = GarlicDiceScoringStrategy.new()
+			G_ENUM.DiceType.FLATWHITE:
+				blank_dice.dice_template = load(_flatwhite_dice_template_path)
+				blank_dice.strategy = FlatWhiteDiceScoringStrategy.new()
 		blank_dice.initialise_values_from_template()  # Ensure the dice is initialized with its template
 		_deck.append(blank_dice)
 		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DECK, blank_dice)

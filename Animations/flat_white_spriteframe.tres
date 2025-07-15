@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://du3ddqm8j1ug3"]
+
+[ext_resource type="Texture2D" uid="uid://dt5pi6m4mv5be" path="res://Art/Flat White/Flat White.png" id="1_bqwf4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy5xi"]
+atlas = ExtResource("1_bqwf4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eujui"]
+atlas = ExtResource("1_bqwf4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycrxw"]
+atlas = ExtResource("1_bqwf4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_comqy"]
+atlas = ExtResource("1_bqwf4")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smk4g"]
+atlas = ExtResource("1_bqwf4")
+region = Rect2(64, 64, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fy5xi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eujui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycrxw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_comqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smk4g")
+}],
+"loop": true,
+"name": &"All",
+"speed": 6.0
+}]

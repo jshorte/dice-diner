@@ -19,5 +19,6 @@ func process_score(dice: Dice) -> void:
 			entry["processed"] = true
 			update_other_dice_log(dice, other_dice, timestamp)
 
+	print("Log Review:", collision_log)
 	dice.calculated_score = roundi(dice.get_calculated_score())
 	dice.reported_score = roundi(dice.get_reported_score())

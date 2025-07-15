@@ -1,0 +1,25 @@
+[remap]
+
+importer="Aseprite AnimatedSprite2D Import"
+type="PackedScene"
+uid="uid://cnqg8tv7nlodb"
+path="res://.godot/imported/Flat White.aseprite-f90e2368e2a9befacc164d3cd67338e7.scn"
+
+[deps]
+
+source_file="res://Art/Flat White/Flat White.aseprite"
+dest_files=["res://.godot/imported/Flat White.aseprite-f90e2368e2a9befacc164d3cd67338e7.scn"]
+
+[params]
+
+spritesheet/layout=0
+spritesheet/fixed_rows_count=1
+spritesheet/fixed_columns_count=1
+spritesheet/border_type=0
+spritesheet/trim=false
+spritesheet/ignore_empty=false
+spritesheet/merge_duplicates=false
+animation/default/name="default"
+animation/default/direction=0
+animation/default/repeat_count=0
+animation/autoplay=""

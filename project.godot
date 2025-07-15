@@ -31,7 +31,7 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/nklbdev.aseprite_importers/plugin.cfg")
+enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/nklbdev.aseprite_importers/plugin.cfg")
 
 [global_group]
 

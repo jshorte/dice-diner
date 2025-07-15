@@ -21,11 +21,11 @@ base_quality_multipliers = Dictionary[int, float]({
 4: 4.0
 })
 multiplier_quality_multipliers = Dictionary[int, float]({
-0: 0.0,
+0: 1.0,
 1: 1.0,
-2: 2.0,
-3: 3.0,
-4: 4.0
+2: 1.0,
+3: 1.0,
+4: 1.0
 })
 flat_quality_multipliers = Dictionary[int, float]({
 0: 1.0,

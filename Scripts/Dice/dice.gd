@@ -223,6 +223,7 @@ func get_food_quality() -> String:
 
 func _reset_score():
 	_multiplier_value = 1.0
+	_flat_value = 0
 	score = 0
 	bonus_score = 0
 	flat_score = 0
@@ -231,12 +232,10 @@ func _reset_score():
 	reported_score = 0
 	calculated_score = 0
 	
-	if _type == G_ENUM.DiceType.GARLIC:
-		for entry in collision_log:
-			print("Garlic Log Entry:", entry)
+	for entry in collision_log:
+		print("Log Entry:", entry)
 
 	collision_log.clear()
-	print("Log Cleared:", collision_log)
 
 
 func _on_body_entered(body: Node) -> void:
@@ -288,9 +287,11 @@ func _debug_draw_normal(point: Vector2, normal: Vector2, length: float = 40.0):
 
 func log_collision(other_dice: Dice) -> void:
 	collision_log.append({
+		"name": dice_name,
 		"other_dice": other_dice,
 		"processed": false,
-		"timestamp": Time.get_ticks_msec()
+		"timestamp": Time.get_ticks_msec(),
+		"current_flat_value": _flat_value,
 	})
 
 
@@ -363,10 +364,12 @@ func set_flat_value(value: int):
 
 
 func get_flat_value() -> int:
-	if _is_flat_preset:
+	if _score_type == G_ENUM.ScoreType.BASE:
+		return _flat_value
+	elif _is_flat_preset:
 		return clamp(_flat_quality_multipliers.get(_flat_value + _flat_conditional), 0, _flat_quality_multipliers[_flat_quality_multipliers.size() - 1])
 	else:
-		return _flat_value
+		return _flat_value + _flat_quality_multipliers.get(_face_value, 1)
 
 
 func get_multiplier_value() -> float:
@@ -378,7 +381,7 @@ func get_multiplier_value() -> float:
 
 func get_base_quality_multiplier() -> float:
 	if dice_template.base_quality_multipliers:
-		return dice_template.base_quality_multipliers.get(_face_value, 1.0)
+		return _base_quality_multipliers.get(_face_value, 1)
 	return 1.0
 
 

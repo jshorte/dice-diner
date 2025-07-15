@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="FlatWhiteTemplate" load_steps=2 format=3 uid="uid://c6k30wpfcl581"]
+
+[ext_resource type="Script" uid="uid://c5dx1ivnmkeyu" path="res://Scripts/Dice/Templates/flat_white_template.gd" id="1_5tgg0"]
+
+[resource]
+script = ExtResource("1_5tgg0")
+dice_name = "Flat White"
+is_flat_preset = false
+is_multiplier_preset = false
+base_flat = 0
+base_multiplier = 1.0
+dice_type = 2
+dice_score_type = 1
+prepared_values = Array[int]([1, 2, 3, 4])
+dice_sprite_animation_path = "res://Animations/flat_white_spriteframe.tres"
+base_quality_multipliers = Dictionary[int, float]({
+0: 0.0,
+1: 1.0,
+2: 2.0,
+3: 3.0,
+4: 4.0
+})
+multiplier_quality_multipliers = Dictionary[int, float]({
+0: 0.0,
+1: 1.0,
+2: 2.0,
+3: 3.0,
+4: 4.0
+})
+flat_quality_multipliers = Dictionary[int, float]({
+0: 1.0,
+1: 2.0,
+2: 3.0,
+3: 4.0,
+4: 5.0
+})
