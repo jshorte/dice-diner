@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn7xpwo12vlrm"
-path="res://.godot/imported/Padlock50.aseprite-2f98b3653cc08b01d5fea847f8ef311d.ctex"
+uid="uid://dqy8dliyqqant"
+path="res://.godot/imported/Garlic.png-c8d3b81c06fe4d28e13e2098b549d896.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Padlock50.aseprite"
-dest_files=["res://.godot/imported/Padlock50.aseprite-2f98b3653cc08b01d5fea847f8ef311d.ctex"]
+source_file="res://Art/Garlic/Garlic.png"
+dest_files=["res://.godot/imported/Garlic.png-c8d3b81c06fe4d28e13e2098b549d896.ctex"]
 
 [params]
 

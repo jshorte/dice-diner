@@ -25,7 +25,20 @@ func set_dice_score(d: Dice, initial: bool = false):
 
 	if not initial:
 		quality_label.visible = true
-		quality_label.text = d.get_food_quality()
+		var quality_text := d.get_food_quality()
+		var value_text := ""
+
+		match d._score_type:
+			G_ENUM.ScoreType.BASE:
+				value_text = "(x" + str(d.get_base_quality_multiplier()) + ")"
+			G_ENUM.ScoreType.MULTIPLIER:
+				value_text = "(x" + str(d.get_multiplier_value()) + ")"
+			G_ENUM.ScoreType.FLAT:
+				value_text =  "(+" + str(d.get_flat_value()) + ")"
+			_:
+				value_text = ""
+
+		quality_label.text = quality_text + " " + value_text
 
 		var face_color = Color.BLACK
 

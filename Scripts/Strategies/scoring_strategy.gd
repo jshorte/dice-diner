@@ -45,18 +45,20 @@ func process_garlic_interaction(dice: Dice, garlic_dice: Dice):
 		if entry.get("other_dice") == dice:
 			if not entry.get("processed", false) and not found_unprocessed:
 				dice.total_multiplier *= garlic_dice.get_multiplier_value()
-				update_multiplier_contribution(dice, garlic_dice)
-				print("Applied garlic: ", garlic_dice, " to dice: ", dice)
-				print("Current garlic logs:", garlic_dice.collision_log)
+				update_multiplier_reported_score(dice, garlic_dice)
 				found_unprocessed = true
-			# Set all entries as processed
+
 			entry["processed"] = true
 
 	for entry in dice.collision_log:
 		if entry.get("other_dice") == garlic_dice:
 			entry["processed"] = true
 
-func update_multiplier_contribution(base_dice: Dice, multiplier_dice: Dice):
-	var base_score = (base_dice.score + base_dice.get_flat_value()) * base_dice._base_quality_multipliers.get(base_dice._face_value, 1)
-	var multiplier_contribution = base_score * multiplier_dice.get_multiplier_value() - base_score
-	multiplier_dice.reported_score += multiplier_contribution
+func get_multiplier_contribution(base_dice: Dice, multiplier_dice: Dice) -> float:
+	return base_dice.get_base_score() * multiplier_dice.get_multiplier_value() - base_dice.get_base_score()
+
+func update_flat_reported_score(base_dice: Dice, flat_dice: Dice):
+	flat_dice.reported_score = flat_dice.get_flat_flat_value() * base_dice.get_base_quality_multiplier()
+
+func update_multiplier_reported_score(base_dice: Dice, multiplier_dice: Dice):
+	multiplier_dice.reported_score += get_multiplier_contribution(base_dice, multiplier_dice)

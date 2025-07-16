@@ -25,7 +25,6 @@ func _on_phase_state_changed(new_state: G_ENUM.PhaseState):
 func _calculate_score():
 	var round_score: int = 0
 	var dice_scores: Array[Dice] = []
-	print("Calculating score for %d dice" % dice_to_score.size())
 
 	for dice in dice_to_score:
 		if dice.strategy:

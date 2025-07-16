@@ -24,7 +24,7 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_3jar1"]
 curve = SubResource("Curve_7cx2c")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1kcbr"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3jar1"]
 particle_flag_disable_z = true
 emission_shape = 6
 emission_ring_axis = Vector3(0, 0, 1)
@@ -62,7 +62,7 @@ color_ramp = SubResource("GradientTexture1D_3jar1")
 physics_material_override = SubResource("PhysicsMaterial_wpqjs")
 continuous_cd = 2
 contact_monitor = true
-max_contacts_reported = 1
+max_contacts_reported = 5
 linear_damp_mode = 1
 linear_damp = 0.25
 script = ExtResource("1_dcpc8")
@@ -82,7 +82,7 @@ amount = 16
 lifetime = 0.2
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_1kcbr")
+process_material = SubResource("ParticleProcessMaterial_3jar1")
 
 [node name="HighlightParticles" type="GPUParticles2D" parent="."]
 emitting = false

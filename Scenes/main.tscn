@@ -1,18 +1,35 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2chpl83qlbgg"]
+[gd_scene load_steps=8 format=3 uid="uid://c2chpl83qlbgg"]
 
 [ext_resource type="Script" uid="uid://dr3k335nwyl6p" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://bdu3kdmck2ij3" path="res://Scenes/hud.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://dp8trb1b32k15" path="res://Scripts/Managers/deck_manager.gd" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://cx7jyyuceqadj" path="res://Scripts/Managers/score_manager.gd" id="3_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://bgucgf1fmab6p" path="res://Art/Flooring.png" id="5_kry3j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bo1nx"]
-size = Vector2(1920, 20)
+size = Vector2(1920, 100)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8gbba"]
-size = Vector2(20, 1080)
+size = Vector2(93, 1080)
 
 [node name="main" type="Node"]
 script = ExtResource("1_8gbba")
+
+[node name="Flooring" type="Sprite2D" parent="."]
+position = Vector2(455, 109)
+texture = ExtResource("5_kry3j")
+
+[node name="Flooring2" type="Sprite2D" parent="."]
+position = Vector2(1568, 110)
+texture = ExtResource("5_kry3j")
+
+[node name="Flooring3" type="Sprite2D" parent="."]
+position = Vector2(461, 500)
+texture = ExtResource("5_kry3j")
+
+[node name="Flooring4" type="Sprite2D" parent="."]
+position = Vector2(1574, 501)
+texture = ExtResource("5_kry3j")
 
 [node name="Managers" type="Node" parent="."]
 
@@ -30,28 +47,28 @@ script = ExtResource("3_jjvhh")
 position = Vector2(0, -20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
-position = Vector2(960, 10)
+position = Vector2(851, -32)
 shape = SubResource("RectangleShape2D_bo1nx")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, 721)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
-position = Vector2(960, -155)
+position = Vector2(951, -113)
 shape = SubResource("RectangleShape2D_bo1nx")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, 20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D3"]
-position = Vector2(-10, 520)
+position = Vector2(-46.5, 520)
 shape = SubResource("RectangleShape2D_8gbba")
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(1300, 20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D4"]
-position = Vector2(-10, 520)
+position = Vector2(26, 518)
 shape = SubResource("RectangleShape2D_8gbba")
 
 [node name="ActiveDice" type="Node2D" parent="."]

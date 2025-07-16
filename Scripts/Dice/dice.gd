@@ -43,6 +43,10 @@ var calculated_score: int = 0
 var reported_score: int = 0
 var strategy: ScoringStrategy = null
 
+var flat_contributions: Array = []
+var multiplier_contributions: Array = []
+var affected_base_dice: Array = []
+
 var score: int = 0
 var bonus_score: int = 0
 var flat_score: int = 0
@@ -66,6 +70,9 @@ func initialise_values_from_template():
 func _ready() -> void:
 	SignalManager.reset_dice_score.connect(_reset_score)
 	# update_animation_from_values()
+	var particles = $ImpactParticles
+	if particles and particles.process_material:
+		particles.process_material = particles.process_material.duplicate()
 	_arrow = _arrow_scene.instantiate()
 	add_child(_arrow)
 	hide_arrow()
@@ -231,6 +238,9 @@ func _reset_score():
 	total_multiplier = 1.0
 	reported_score = 0
 	calculated_score = 0
+	flat_contributions.clear()
+	multiplier_contributions.clear()
+	affected_base_dice.clear()
 	
 	for entry in collision_log:
 		print("Log Entry:", entry)
@@ -355,6 +365,15 @@ func spawn_impact_particles(position: Vector2, normal: Vector2, impact_strength:
 		particle_material.initial_velocity_min = min_velocity
 		particle_material.initial_velocity_max = max_velocity
 
+	# Set particle color based on dice type
+		match _type:
+			G_ENUM.DiceType.FLATWHITE:
+				particle_material.color = Color(0.4, 0.2, 0.05) # Brown
+			G_ENUM.DiceType.GARLIC:
+				particle_material.color = Color(1, 1, 1) # White
+			_:
+				particle_material.color = Color(1, 1, 0.5) # Default (e.g., yellowish)
+
 	particles.emitting = false # Reset
 	particles.emitting = true
 
@@ -371,32 +390,50 @@ func get_flat_value() -> int:
 	else:
 		return _flat_value + _flat_quality_multipliers.get(_face_value, 1)
 
+func get_base_flat_value() -> int:
+	return _flat_value
+
+func get_flat_flat_value() -> int:
+		return _flat_value + _flat_quality_multipliers.get(_face_value, 0)
 
 func get_multiplier_value() -> float:
-	if _is_multiplier_preset:
-		return _multiplier_value
-	else:
-		return _multiplier_value * _multiplier_quality_multipliers.get(_face_value, 1)
-
+	return _multiplier_value * _multiplier_quality_multipliers.get(_face_value, 1)
 
 func get_base_quality_multiplier() -> float:
 	if dice_template.base_quality_multipliers:
 		return _base_quality_multipliers.get(_face_value, 1)
 	return 1.0
 
-
-func get_reported_score() -> float:
+func get_base_reported_score() -> float:
 	print("Reported score: ", score * _base_quality_multipliers.get(_face_value, 1))
 	return score * _base_quality_multipliers.get(_face_value, 1)
 
-
 func get_base_score() -> float:
-	return (score + _flat_value) * _base_quality_multipliers.get(_face_value, 1)
+	return (score + get_base_flat_value()) * get_base_quality_multiplier() 
+
+func get_base_calculated_score() -> float:
+	return (score + get_flat_value()) * get_base_quality_multiplier() * total_multiplier
+
+func set_flat_contribution(value: Dictionary):
+	if not value.has("dice"):
+		print("Warning: Attempted to set flat contribution with missing 'dice' key, ignoring.")
+		return
+
+	if not value.has("type"):
+		print("Warning: Attempted to set flat contribution with missing 'type' key, ignoring.")
+		return
+
+	if not value.has("contribution"):
+		print("Warning: Attempted to set flat contribution with missing 'contribution' key, ignoring.")
+		return
+
+	flat_contributions.append(value)
 
 
-func get_calculated_score() -> float:
-	return (score + _flat_value) * _base_quality_multipliers.get(_face_value, 1) * total_multiplier
+	flat_contributions.append(value)
 
+func set_multiplier_contribution(value: Dictionary):
+	multiplier_contributions.append(value)
 
-func get_quality_multiplier() -> float:
-	return _base_quality_multipliers.get(_face_value, 1)
+func set_affected_base_dice(value: Dictionary):
+	affected_base_dice.append(value)

@@ -1,0 +1,25 @@
+[remap]
+
+importer="Aseprite AnimatedSprite2D Import"
+type="PackedScene"
+uid="uid://yg70063a2tt"
+path="res://.godot/imported/Garlic.aseprite-91bec92cc8ad36c1e388fc3341c2ad6b.scn"
+
+[deps]
+
+source_file="res://Art/Garlic/Garlic.aseprite"
+dest_files=["res://.godot/imported/Garlic.aseprite-91bec92cc8ad36c1e388fc3341c2ad6b.scn"]
+
+[params]
+
+spritesheet/layout=0
+spritesheet/fixed_rows_count=1
+spritesheet/fixed_columns_count=1
+spritesheet/border_type=0
+spritesheet/trim=false
+spritesheet/ignore_empty=false
+spritesheet/merge_duplicates=false
+animation/default/name="default"
+animation/default/direction=0
+animation/default/repeat_count=0
+animation/autoplay=""

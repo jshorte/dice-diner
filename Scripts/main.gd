@@ -103,7 +103,6 @@ func _on_dice_placed(dice: Dice, position: Vector2):
 
 func _on_dice_finished_moving():
 	_stationary_dice_count += 1
-	print("Stationary dice count: ", _stationary_dice_count, "/", _total_dice_in_play)
 
 	if _stationary_dice_count == _total_dice_in_play:
 		set_phase_state(G_ENUM.PhaseState.SCORE)
