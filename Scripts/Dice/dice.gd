@@ -53,6 +53,7 @@ var flat_score: int = 0
 var collision_log: Array[Dictionary] = []
 var _arrow: Node2D = null
 var _arrow_scene = preload("res://Scenes/arrow.tscn")
+var ghost_sprite: Sprite2D = null
 
 func initialise_values_from_template():
 	if dice_template:
@@ -80,10 +81,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if linear_velocity.length() < LERP_THRESHOLD and linear_velocity.length() > 0.1:
-		linear_velocity = linear_velocity.lerp(Vector2.ZERO, LERP_SPEED * delta)		
-		if linear_velocity.length() < 1:
-			linear_velocity = Vector2.ZERO
+	stop_slow_dice(delta)
 
 	var new_state = G_ENUM.DiceState.STATIONARY if linear_velocity.length() == 0 else G_ENUM.DiceState.MOVING
 	
@@ -92,19 +90,45 @@ func _physics_process(delta: float) -> void:
 
 	set_dice_state(new_state)
 
-func _draw():	
-	if (dice_selection == G_ENUM.DiceSelection.ACTIVE and dice_state == G_ENUM.DiceState.STATIONARY):
-		var mouse_to_dice_position: Vector2 = get_global_mouse_position() - global_position
-		var dir: Vector2 = mouse_to_dice_position.normalized()
-		var impulse_strength: float = get_impulse_strength()
-		var space_state = get_world_2d().direct_space_state
-		var global_points = DicePredict.predict_path(global_position, dir, impulse_strength, mass, space_state)
-		var local_points = []
+func stop_slow_dice(delta: float) -> void:
+	if linear_velocity.length() < LERP_THRESHOLD and linear_velocity.length() > 0.1:
+		linear_velocity = linear_velocity.lerp(Vector2.ZERO, LERP_SPEED * delta)		
+		if linear_velocity.length() < 1:
+			linear_velocity = Vector2.ZERO
 
-		for p in global_points:
-			local_points.append(to_local(p))
+func show_ghost_sprite(position: Vector2, rotation: float = 0.0):
+	if ghost_sprite == null or not is_instance_valid(ghost_sprite):
+		ghost_sprite = Sprite2D.new()
+		ghost_sprite.texture = roll_animation.sprite_frames.get_frame_texture("All", get_sprite_frame())
+		ghost_sprite.modulate = Color(1, 1, 1, 0.2) # 20% alpha
+		ghost_sprite.z_index = 999
+		get_tree().current_scene.add_child(ghost_sprite)
+	ghost_sprite.global_position = position
+	ghost_sprite.rotation = 0
 
-		draw_polyline(local_points, Color.GREEN, PREDICT_LINE_WIDTH)
+func _draw():
+	if dice_selection == G_ENUM.DiceSelection.ACTIVE and dice_state == G_ENUM.DiceState.STATIONARY:
+		var direction: Vector2 = -get_input_direction()
+		var strength: float = get_impulse_strength()
+
+		var result = DicePredict.get_prediction_points(
+			global_position,
+			direction,
+			strength,
+			mass,
+			dice_radius,
+			self.linear_damp,
+			$PredictCast,
+		)
+
+		for i in result.path_points.size():
+			draw_circle(to_local(result.path_points[i]), dice_radius * 0.1, Color(1, 1, 1, 0.5))
+
+		if result.collided:
+			show_ghost_sprite(result.ghost_pos, 0)
+		elif ghost_sprite and is_instance_valid(ghost_sprite):
+			ghost_sprite.queue_free()
+			ghost_sprite = null
 
 func _input(event):
 	if dice_selection != G_ENUM.DiceSelection.ACTIVE:
@@ -119,6 +143,9 @@ func _handle_launch_input(event) -> bool:
 		var direction: Vector2 = -get_input_direction()
 		var strength: float = get_impulse_strength()
 		set_dice_selection(G_ENUM.DiceSelection.INACTIVE)
+		if ghost_sprite and is_instance_valid(ghost_sprite):
+			ghost_sprite.queue_free()
+			ghost_sprite = null
 		SignalManager.request_dice_impulse.emit(self, direction, strength)
 		SignalManager.dice_launched.emit()
 		return true

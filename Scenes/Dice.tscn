@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0b8anh0jl41u"]
+[gd_scene load_steps=12 format=3 uid="uid://c0b8anh0jl41u"]
 
 [ext_resource type="Script" uid="uid://bthg464woowxo" path="res://Scripts/Dice/dice.gd" id="1_dcpc8"]
 [ext_resource type="SpriteFrames" uid="uid://b7p5xj45h5fvf" path="res://Animations/pizza_spriteframe.tres" id="1_wpqjs"]
@@ -58,6 +58,9 @@ gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_3jar1")
 color_ramp = SubResource("GradientTexture1D_3jar1")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7cx2c"]
+radius = 32.0
+
 [node name="Dice" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_wpqjs")
 continuous_cd = 2
@@ -90,3 +93,7 @@ amount = 48
 interp_to_end = 0.1
 explosiveness = 0.5
 process_material = SubResource("ParticleProcessMaterial_7cx2c")
+
+[node name="PredictCast" type="ShapeCast2D" parent="."]
+enabled = false
+shape = SubResource("CircleShape2D_7cx2c")
