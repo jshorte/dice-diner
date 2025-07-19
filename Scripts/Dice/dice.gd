@@ -54,6 +54,8 @@ var collision_log: Array[Dictionary] = []
 var _arrow: Node2D = null
 var _arrow_scene = preload("res://Scenes/arrow.tscn")
 var ghost_sprite: Sprite2D = null
+var contributions: Dictionary = {}
+var contributions_from: Dictionary = {}
 
 func initialise_values_from_template():
 	if dice_template:
@@ -100,7 +102,7 @@ func show_ghost_sprite(position: Vector2, rotation: float = 0.0):
 	if ghost_sprite == null or not is_instance_valid(ghost_sprite):
 		ghost_sprite = Sprite2D.new()
 		ghost_sprite.texture = roll_animation.sprite_frames.get_frame_texture("All", get_sprite_frame())
-		ghost_sprite.modulate = Color(1, 1, 1, 0.2) # 20% alpha
+		ghost_sprite.modulate = Color(1, 1, 1, 0.35)
 		ghost_sprite.z_index = 999
 		get_tree().current_scene.add_child(ghost_sprite)
 	ghost_sprite.global_position = position
@@ -268,7 +270,7 @@ func _reset_score():
 	flat_contributions.clear()
 	multiplier_contributions.clear()
 	affected_base_dice.clear()
-	
+
 	for entry in collision_log:
 		print("Log Entry:", entry)
 
@@ -435,6 +437,10 @@ func get_base_reported_score() -> float:
 	print("Reported score: ", score * _base_quality_multipliers.get(_face_value, 1))
 	return score * _base_quality_multipliers.get(_face_value, 1)
 
+
+func get_type_score() -> float:
+	return score
+
 func get_base_score() -> float:
 	return (score + get_base_flat_value()) * get_base_quality_multiplier() 
 
@@ -449,13 +455,6 @@ func set_flat_contribution(value: Dictionary):
 	if not value.has("type"):
 		print("Warning: Attempted to set flat contribution with missing 'type' key, ignoring.")
 		return
-
-	if not value.has("contribution"):
-		print("Warning: Attempted to set flat contribution with missing 'contribution' key, ignoring.")
-		return
-
-	flat_contributions.append(value)
-
 
 	flat_contributions.append(value)
 

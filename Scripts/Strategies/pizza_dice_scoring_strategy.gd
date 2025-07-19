@@ -8,11 +8,6 @@ func process_score(dice: Dice) -> void:
 		var other_dice: Dice = entry.get("other_dice")
 		if other_dice._score_type == G_ENUM.ScoreType.FLAT:
 			dice.set_flat_value(dice.get_base_flat_value() + other_dice.get_flat_flat_value())
-			other_dice.set_flat_contribution({
-				"dice": dice,
-				"type": dice._type,
-				"contribution": other_dice.get_flat_flat_value() * dice.get_base_quality_multiplier()
-			})
 			other_dice.reported_score += other_dice.get_flat_flat_value() * dice.get_base_quality_multiplier()
 		elif other_dice._score_type == G_ENUM.ScoreType.MULTIPLIER:
 			if other_dice._type == G_ENUM.DiceType.GARLIC:
@@ -26,3 +21,10 @@ func process_score(dice: Dice) -> void:
 
 	dice.calculated_score = roundi(dice.get_base_calculated_score())
 	dice.reported_score = roundi(dice.get_base_reported_score())
+
+func calculate_contributions(dice: Dice):
+	dice.contributions = {
+		"type": "SELF",
+		"base_score": dice.get_type_score(),
+		"quality_multiplier": dice.get_base_quality_multiplier()
+	}

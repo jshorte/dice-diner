@@ -3,6 +3,9 @@ class_name ScoringStrategy
 func process_score(_dice: Dice) -> void:
 	pass
 
+func calculate_contributions(_dice: Dice):
+	pass
+
 func sort_log_by_timestamp(collision_log: Array[Dictionary]):
 	collision_log.sort_custom(func(a, b): return a["timestamp"] < b["timestamp"])
 	return collision_log

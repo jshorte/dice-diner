@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://f4kxobliq4dt"]
+
+[ext_resource type="Texture2D" uid="uid://dxqeq6txw8iis" path="res://Art/Neapolitan/Neapolitan.png" id="1_p7kb6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flbm2"]
+atlas = ExtResource("1_p7kb6")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cor81"]
+atlas = ExtResource("1_p7kb6")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qvl2"]
+atlas = ExtResource("1_p7kb6")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsrci"]
+atlas = ExtResource("1_p7kb6")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgbw6"]
+atlas = ExtResource("1_p7kb6")
+region = Rect2(64, 64, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flbm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cor81")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qvl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsrci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgbw6")
+}],
+"loop": true,
+"name": &"All",
+"speed": 5.0
+}]

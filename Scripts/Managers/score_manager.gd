@@ -27,9 +27,24 @@ func _calculate_score():
 	var dice_scores: Array[Dice] = []
 
 	for dice in dice_to_score:
+		dice.contributions = {}
+		dice.contributions_from = {}
+
+	for dice in dice_to_score:
 		if dice.strategy:
 			dice.strategy.process_score(dice)
+
+	# Calculate contributions after processing scores
+	for dice in dice_to_score:
+		if dice.strategy:
+			dice.strategy.calculate_contributions(dice)
+
 		dice_scores.append(dice)
+		# BUG: contributions_from aren't being populated
+		if dice._type == G_ENUM.DiceType.PIZZA:
+			print("Contributions received ", dice.dice_name, ": ", dice.contributions_from)
+
+		print("Contributions given ", dice.dice_name, ": ", dice.contributions)
 		
 	for dice in dice_to_score:
 		round_score += dice.calculated_score
