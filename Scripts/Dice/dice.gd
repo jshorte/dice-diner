@@ -380,7 +380,7 @@ func highlight_contributing(active: bool):
 		$ContributingHighlights.emitting = true
 	else:
 		$ContributingHighlights.emitting = false
-		
+
 
 func highlight_contributed(active: bool):
 	if active:
@@ -434,47 +434,37 @@ func get_flat_value() -> int:
 	else:
 		return _flat_value + _flat_quality_multipliers.get(_face_value, 1)
 
+
 func get_base_flat_value() -> int:
 	return _flat_value
+
 
 func get_flat_flat_value() -> int:
 		return _flat_value + _flat_quality_multipliers.get(_face_value, 0)
 
+
 func get_multiplier_value() -> float:
 	return _multiplier_value * _multiplier_quality_multipliers.get(_face_value, 1)
 
-func get_base_quality_multiplier() -> float:
-	if dice_template.base_quality_multipliers:
-		return _base_quality_multipliers.get(_face_value, 1)
-	return 1.0
 
-func get_base_reported_score() -> float:
-	print("Reported score: ", score * _base_quality_multipliers.get(_face_value, 1))
-	return score * _base_quality_multipliers.get(_face_value, 1)
+# func get_base_quality_multiplier() -> float:
+# 	if dice_template.base_quality_multipliers:
+# 		return _base_quality_multipliers.get(_face_value, 1)
+# 	return 1.0
+
+
+# func get_base_reported_score() -> float:
+# 	print("Reported score: ", score * _base_quality_multipliers.get(_face_value, 1))
+# 	return score * _base_quality_multipliers.get(_face_value, 1)
 
 
 func get_type_score() -> float:
 	return score
 
-func get_base_score() -> float:
-	return (score + get_base_flat_value()) * get_base_quality_multiplier() 
 
-func get_base_calculated_score() -> float:
-	return (score + get_flat_value()) * get_base_quality_multiplier() * total_multiplier
+# func get_base_score() -> float:
+# 	return (score + get_base_flat_value()) * get_base_quality_multiplier() 
 
-func set_flat_contribution(value: Dictionary):
-	if not value.has("dice"):
-		print("Warning: Attempted to set flat contribution with missing 'dice' key, ignoring.")
-		return
 
-	if not value.has("type"):
-		print("Warning: Attempted to set flat contribution with missing 'type' key, ignoring.")
-		return
-
-	flat_contributions.append(value)
-
-func set_multiplier_contribution(value: Dictionary):
-	multiplier_contributions.append(value)
-
-func set_affected_base_dice(value: Dictionary):
-	affected_base_dice.append(value)
+# func get_base_calculated_score() -> float:
+# 	return (score + get_flat_value()) * get_base_quality_multiplier() * total_multiplier

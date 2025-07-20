@@ -4,7 +4,7 @@ var _dice: Dice
 
 @onready var name_label: Label = get_node("%DiceNameLabel")
 @onready var score_label: Label = get_node("%DiceScoreLabel")
-@onready var quality_label: Label = get_node("%DiceQualityLabel")
+# @onready var quality_label: Label = get_node("%DiceQualityLabel")
 
 func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
@@ -21,16 +21,16 @@ func set_dice_score(d: Dice, initial: bool = false):
 	print("Setting score for dice: ", d.dice_name, " Score: ", d.reported_score)
 	score_label.text = str(d.reported_score)
 	# quality_label.text = ""
-	quality_label.visible = false
+	# quality_label.visible = false
 
 	if not initial:
-		quality_label.visible = true
+		# quality_label.visible = true
 		var quality_text := d.get_food_quality()
 		var value_text := ""
 
 		match d._score_type:
 			G_ENUM.ScoreType.BASE:
-				value_text = "(x" + str(d.get_base_quality_multiplier()) + ")"
+				value_text = "(x" + str(d.strategy.get_quality_multiplier(d)) + ")"
 			G_ENUM.ScoreType.MULTIPLIER:
 				value_text = "(x" + str(d.get_multiplier_value()) + ")"
 			G_ENUM.ScoreType.FLAT:
@@ -38,7 +38,7 @@ func set_dice_score(d: Dice, initial: bool = false):
 			_:
 				value_text = ""
 
-		quality_label.text = quality_text + " " + value_text
+		# quality_label.text = quality_text + " " + value_text
 
 		var face_color = Color.BLACK
 
@@ -54,7 +54,7 @@ func set_dice_score(d: Dice, initial: bool = false):
 			G_ENUM.FoodQuality.EXCELLENT:
 				face_color = Color.CYAN
 
-		quality_label.add_theme_color_override("font_color", face_color)
+		# quality_label.add_theme_color_override("font_color", face_color)
 
 		
 

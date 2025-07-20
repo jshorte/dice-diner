@@ -5,7 +5,7 @@ func calculate_contributions(dice: Dice):
 		var other_dice: Dice = entry.get("other_dice")
 
 		if other_dice._score_type == G_ENUM.ScoreType.BASE:
-			var flat_to_base_contribution = dice.get_flat_flat_value() * other_dice.get_base_quality_multiplier()
+			var flat_to_base_contribution = dice.get_flat_flat_value() * other_dice.strategy.get_quality_multiplier(other_dice)
 			
 			if not dice.contributions.has(other_dice):
 				# First dice interaction between these two
@@ -13,14 +13,14 @@ func calculate_contributions(dice: Dice):
 					"type": G_ENUM.DiceType.keys()[other_dice._type],
 					"total_contribution": 0,
 					"flat_value": dice.get_flat_flat_value(), 
-					"base_quality": other_dice.get_base_quality_multiplier(), 
+					"base_quality": other_dice.strategy.get_quality_multiplier(other_dice), 
 					"collisions": 0
 				}
 				other_dice.contributions_from[dice] = {
 					"type": G_ENUM.DiceType.keys()[dice._type],
 					"total_contribution": 0,
 					"flat_value": dice.get_flat_flat_value(), 
-					"base_quality": other_dice.get_base_quality_multiplier(), 
+					"base_quality": other_dice.strategy.get_quality_multiplier(other_dice), 
 					"collisions": 0
 				}
 				print("Added to contributions_from for ", other_dice.dice_name, " from ", dice.dice_name)

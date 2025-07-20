@@ -12,7 +12,7 @@ base_multiplier = 2.0
 dice_type = 0
 dice_score_type = 0
 prepared_values = Array[int]([1, 2, 3, 4])
-dice_sprite_animation_path = "res://Animations/pizza_spriteframe.tres"
+dice_sprite_animation_path = "res://Animations/neapolitan_spriteframes.tres"
 base_quality_multipliers = Dictionary[int, float]({
 0: 0.0,
 1: 1.0,

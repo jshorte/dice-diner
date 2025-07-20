@@ -46,7 +46,4 @@ func _calculate_score():
 	
 	total_score += round_score
 
-	for dice in dice_scores:
-		print("Dice: ", dice.dice_name, " Score: ", dice.calculated_score, " Reported: ", dice.reported_score, " Base: ", dice.get_base_score(), " Multiplier: ", dice.get_multiplier_value(), " Flat: ", dice.get_flat_value())
-
 	SignalManager.score_updated.emit(round_score, total_score, dice_scores)

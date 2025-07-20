@@ -12,13 +12,13 @@ func calculate_contributions(dice: Dice):
 				dice.contributions[other_dice] = {
 					"type": G_ENUM.DiceType.keys()[other_dice._type],
 					"contribution": contribution, 
-					"base_score": other_dice.get_base_score(), 
+					"base_score": other_dice.strategy.get_score_with_flat(other_dice), 
 					"multiplier": dice.get_multiplier_value(), 
 				}
 				other_dice.contributions_from[dice] = {
 					"type": G_ENUM.DiceType.keys()[dice._type],
 					"contribution": contribution, 
-					"base_score": other_dice.get_base_score(), 
+					"base_score": other_dice.strategy.get_score_with_flat(other_dice),
 					"multiplier": dice.get_multiplier_value(),
 				}
 				print("Added to contributions_from for ", other_dice.dice_name, " from ", dice.dice_name)

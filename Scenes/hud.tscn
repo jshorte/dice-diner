@@ -272,7 +272,7 @@ script = ExtResource("5_36asn")
 
 [node name="Score" type="Panel" parent="Score Panel"]
 layout_mode = 0
-offset_left = 949.0
+offset_left = 1081.0
 offset_top = 126.0
 offset_right = 1280.0
 offset_bottom = 426.0
@@ -288,7 +288,7 @@ script = ExtResource("4_owgk4")
 
 [node name="Score Container" type="PanelContainer" parent="Score Panel/Score"]
 layout_mode = 0
-offset_right = 331.0
+offset_right = 197.0
 offset_bottom = 300.0
 theme_override_styles/panel = ExtResource("3_ioopo")
 

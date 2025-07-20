@@ -6,6 +6,21 @@ func process_score(_dice: Dice) -> void:
 func calculate_contributions(_dice: Dice):
 	pass
 
+func get_calculated_score(_dice: Dice) -> float:
+	return 0.0
+
+func get_reported_score(_dice: Dice) -> float:
+	return 0.0
+
+func get_quality_multiplier(_dice: Dice) -> float:
+	return 0.0
+
+func get_score(_dice: Dice) -> float:
+	return 0.0
+
+func get_score_with_flat(_dice: Dice) -> float:
+	return 0.0
+
 func sort_log_by_timestamp(collision_log: Array[Dictionary]):
 	collision_log.sort_custom(func(a, b): return a["timestamp"] < b["timestamp"])
 	return collision_log
@@ -58,10 +73,13 @@ func process_garlic_interaction(dice: Dice, garlic_dice: Dice):
 			entry["processed"] = true
 
 func get_multiplier_contribution(base_dice: Dice, multiplier_dice: Dice) -> float:
-	return base_dice.get_base_score() * multiplier_dice.get_multiplier_value() - base_dice.get_base_score()
+	return base_dice.strategy.get_score_with_flat(base_dice) * multiplier_dice.get_multiplier_value() - base_dice.strategy.get_score_with_flat(base_dice)
+
 
 func update_flat_reported_score(base_dice: Dice, flat_dice: Dice):
-	flat_dice.reported_score = flat_dice.get_flat_flat_value() * base_dice.get_base_quality_multiplier()
+	flat_dice.reported_score = flat_dice.get_flat_flat_value() * base_dice.strategy.get_quality_multiplier(base_dice)
+
 
 func update_multiplier_reported_score(base_dice: Dice, multiplier_dice: Dice):
 	multiplier_dice.reported_score += get_multiplier_contribution(base_dice, multiplier_dice)
+	
