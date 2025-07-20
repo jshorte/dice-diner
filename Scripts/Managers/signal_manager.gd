@@ -24,6 +24,7 @@ signal draw_completed
 # GUI management
 signal add_to_deck_panel
 signal remove_from_deck_panel
+signal update_highlight_related_dice
 
 # Game management
 signal phase_state_changed

@@ -40,11 +40,6 @@ func _calculate_score():
 			dice.strategy.calculate_contributions(dice)
 
 		dice_scores.append(dice)
-		# BUG: contributions_from aren't being populated
-		if dice._type == G_ENUM.DiceType.PIZZA:
-			print("Contributions received ", dice.dice_name, ": ", dice.contributions_from)
-
-		print("Contributions given ", dice.dice_name, ": ", dice.contributions)
 		
 	for dice in dice_to_score:
 		round_score += dice.calculated_score
@@ -55,4 +50,3 @@ func _calculate_score():
 		print("Dice: ", dice.dice_name, " Score: ", dice.calculated_score, " Reported: ", dice.reported_score, " Base: ", dice.get_base_score(), " Multiplier: ", dice.get_multiplier_value(), " Flat: ", dice.get_flat_value())
 
 	SignalManager.score_updated.emit(round_score, total_score, dice_scores)
-	SignalManager.score_completed.emit()

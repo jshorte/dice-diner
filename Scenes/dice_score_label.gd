@@ -68,9 +68,10 @@ func _on_mouse_entered():
 	if _dice:
 		name_label.add_theme_color_override("font_color", Color.YELLOW)
 		_dice.highlight(true)
-
+		SignalManager.update_highlight_related_dice.emit(_dice, true)
 
 func _on_mouse_exited():
 	if _dice:
 		name_label.remove_theme_color_override("font_color")
 		_dice.highlight(false)
+		SignalManager.update_highlight_related_dice.emit(_dice, false)

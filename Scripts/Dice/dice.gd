@@ -367,11 +367,26 @@ func _create_custom_animation():
 		print("Error: Roll animation or dice template not set up correctly.")
 		return
 
+
 func highlight(active: bool):
 	if active:
 		$HighlightParticles.emitting = true
 	else:
 		$HighlightParticles.emitting = false
+
+
+func highlight_contributing(active: bool):
+	if active:
+		$ContributingHighlights.emitting = true
+	else:
+		$ContributingHighlights.emitting = false
+		
+
+func highlight_contributed(active: bool):
+	if active:
+		$ContributedHighlights.emitting = true
+	else:
+		$ContributedHighlights.emitting = false
 
 
 func spawn_impact_particles(position: Vector2, normal: Vector2, impact_strength: float = 1.0) -> void:

@@ -23,8 +23,15 @@ func process_score(dice: Dice) -> void:
 	dice.reported_score = roundi(dice.get_base_reported_score())
 
 func calculate_contributions(dice: Dice):
-	dice.contributions = {
-		"type": "SELF",
+	# dice.contributions[dice] = {
+	# 	"type": G_ENUM.DiceType.keys()[dice._type],
+	# 	"total_contribution": dice.get_base_score(),
+	# 	"base_score": dice.get_type_score(),
+	# 	"quality_multiplier": dice.get_base_quality_multiplier()
+	# }
+	dice.contributions_from[dice] = {
+		"type": G_ENUM.DiceType.keys()[dice._type],
+		"total_contribution": dice.get_base_score(),
 		"base_score": dice.get_type_score(),
 		"quality_multiplier": dice.get_base_quality_multiplier()
 	}
