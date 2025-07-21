@@ -1,11 +1,14 @@
 class_name PizzaDiceScoringStrategy extends ScoringStrategy
 
 func get_score(dice: Dice) -> float:
+	return dice.score
+
+func get_score_mapped(dice: Dice) -> float:
 	return dice.score * get_quality_multiplier(dice)
 
 
 func get_score_with_flat(dice: Dice) -> float:
-	return (dice.score + dice.get_flat_value()) * get_quality_multiplier(dice)
+	return (get_score(dice) + get_flat(dice)) * get_quality_multiplier(dice)
 
 
 func get_quality_multiplier(dice: Dice) -> float:
@@ -17,8 +20,11 @@ func get_reported_score(dice: Dice) -> float:
 
 
 func get_calculated_score(dice: Dice) -> float:
-	return (dice.score + dice.get_flat_value()) * get_quality_multiplier(dice) * dice.total_multiplier
+	return (get_score(dice) + get_flat(dice)) * get_quality_multiplier(dice) * dice.total_multiplier
 
+
+func get_flat(dice: Dice) -> float:
+	return dice._flat_value
 
 func process_score(dice: Dice) -> void:
 	var collision_log = create_ordered_log(dice)
@@ -27,8 +33,8 @@ func process_score(dice: Dice) -> void:
 		var timestamp: int = entry.get("timestamp")
 		var other_dice: Dice = entry.get("other_dice")
 		if other_dice._score_type == G_ENUM.ScoreType.FLAT:
-			dice.set_flat_value(dice.get_base_flat_value() + other_dice.get_flat_flat_value())
-			other_dice.reported_score += other_dice.get_flat_flat_value() * get_quality_multiplier(dice)
+			dice.set_flat_value(get_flat(dice) + other_dice.strategy.get_flat_mapped(other_dice))
+			other_dice.reported_score += other_dice.strategy.get_flat_mapped(other_dice) * get_quality_multiplier(dice)
 		elif other_dice._score_type == G_ENUM.ScoreType.MULTIPLIER:
 			if other_dice._type == G_ENUM.DiceType.GARLIC:
 				process_garlic_interaction(dice, other_dice)							
@@ -51,7 +57,7 @@ func calculate_contributions(dice: Dice):
 	# }
 	dice.contributions_from[dice] = {
 		"type": G_ENUM.DiceType.keys()[dice._type],
-		"total_contribution": dice.strategy.get_score(dice),
-		"base_score": dice.get_type_score(),
+		"total_contribution": dice.strategy.get_score_mapped(dice),
+		"base_score": get_score(dice),
 		"quality_multiplier": dice.strategy.get_quality_multiplier(dice)
 	}

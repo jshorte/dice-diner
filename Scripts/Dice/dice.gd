@@ -235,11 +235,11 @@ func get_icon_texture(sprite_frame: int = 0) -> Texture2D:
 	return roll_animation.sprite_frames.get_frame_texture("All", sprite_frame)
 
 
-func get_score() -> int:
-	if not dice_template:
-		return 0
+# func get_score() -> int:
+# 	if not dice_template:
+# 		return 0
 	
-	return dice_template.calculate_score(self)
+# 	return dice_template.calculate_score(self)
 
 func get_food_quality() -> String:
 	match self._face_value:
@@ -424,47 +424,3 @@ func spawn_impact_particles(position: Vector2, normal: Vector2, impact_strength:
 
 func set_flat_value(value: int):
 	_flat_value = value
-
-
-func get_flat_value() -> int:
-	if _score_type == G_ENUM.ScoreType.BASE:
-		return _flat_value
-	elif _is_flat_preset:
-		return clamp(_flat_quality_multipliers.get(_flat_value + _flat_conditional), 0, _flat_quality_multipliers[_flat_quality_multipliers.size() - 1])
-	else:
-		return _flat_value + _flat_quality_multipliers.get(_face_value, 1)
-
-
-func get_base_flat_value() -> int:
-	return _flat_value
-
-
-func get_flat_flat_value() -> int:
-		return _flat_value + _flat_quality_multipliers.get(_face_value, 0)
-
-
-func get_multiplier_value() -> float:
-	return _multiplier_value * _multiplier_quality_multipliers.get(_face_value, 1)
-
-
-# func get_base_quality_multiplier() -> float:
-# 	if dice_template.base_quality_multipliers:
-# 		return _base_quality_multipliers.get(_face_value, 1)
-# 	return 1.0
-
-
-# func get_base_reported_score() -> float:
-# 	print("Reported score: ", score * _base_quality_multipliers.get(_face_value, 1))
-# 	return score * _base_quality_multipliers.get(_face_value, 1)
-
-
-func get_type_score() -> float:
-	return score
-
-
-# func get_base_score() -> float:
-# 	return (score + get_base_flat_value()) * get_base_quality_multiplier() 
-
-
-# func get_base_calculated_score() -> float:
-# 	return (score + get_flat_value()) * get_base_quality_multiplier() * total_multiplier

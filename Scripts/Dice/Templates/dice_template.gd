@@ -38,8 +38,3 @@ var definitions = load("res://Scripts/g_enum.gd")
     G_ENUM.FoodQuality.GOOD: 1.0,
     G_ENUM.FoodQuality.EXCELLENT: 1.0
 }
-func calculate_score(dice: Dice) -> int:
-    var _flat_value = dice._flat_value
-    var _multiplier_value = dice._multiplier_value
-    # var multiplier = quality_multipliers.get(dice._face_value, 1.0)
-    return int((dice.base_score + dice.get_flat_value()) * dice.get_multiplier_value())

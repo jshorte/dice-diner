@@ -32,9 +32,9 @@ func set_dice_score(d: Dice, initial: bool = false):
 			G_ENUM.ScoreType.BASE:
 				value_text = "(x" + str(d.strategy.get_quality_multiplier(d)) + ")"
 			G_ENUM.ScoreType.MULTIPLIER:
-				value_text = "(x" + str(d.get_multiplier_value()) + ")"
+				value_text = "(x" + str(d.strategy.get_multiplier_mapped(d)) + ")"
 			G_ENUM.ScoreType.FLAT:
-				value_text =  "(+" + str(d.get_flat_value()) + ")"
+				value_text =  "(+" + str(d.strategy.get_flat_mapped(d)) + ")"
 			_:
 				value_text = ""
 
