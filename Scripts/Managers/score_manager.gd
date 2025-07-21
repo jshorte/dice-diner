@@ -42,7 +42,7 @@ func _calculate_score():
 		dice_scores.append(dice)
 		
 	for dice in dice_to_score:
-		round_score += dice.calculated_score
+		round_score += dice.get_calculated_score()
 	
 	total_score += round_score
 

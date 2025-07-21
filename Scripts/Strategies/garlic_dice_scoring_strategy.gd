@@ -5,7 +5,7 @@ func get_multiplier(dice: Dice) -> float:
 
 
 func get_multiplier_map(dice: Dice) -> float:
-	return dice._multiplier_map.get(get_face_value(dice), 1)
+	return dice.get_multiplier_map().get(get_face_value(dice), 1)
 
 
 func get_multiplier_mapped(dice: Dice) -> float:

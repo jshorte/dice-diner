@@ -17,8 +17,8 @@ func set_dice(d: Dice):
 
 
 func set_dice_score(d: Dice, initial: bool = false):
-	name_label.text = d.dice_name
-	score_label.text = str(d.reported_score)
+	name_label.text = d.get_dice_name()
+	score_label.text = str(d.get_reported_score())
 	# quality_label.text = ""
 	# quality_label.visible = false
 
@@ -59,8 +59,8 @@ func set_dice_score(d: Dice, initial: bool = false):
 
 func set_dice_live_score(d: Dice):
 	if d:
-		name_label.text = d.dice_name
-		score_label.text = str(d.score)
+		name_label.text = d.get_dice_name()
+		score_label.text = str(d.get_score())
 
 
 func _on_mouse_entered():

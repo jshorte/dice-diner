@@ -98,8 +98,9 @@ offset_bottom = 720.0
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 1.0
-offset_right = 1279.0
+offset_left = 172.0
+offset_top = 161.0
+offset_right = 1108.0
 offset_bottom = 554.0
 
 [node name="CurrentDice" type="PanelContainer" parent="Bottom Bar"]
