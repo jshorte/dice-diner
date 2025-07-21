@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=3 uid="uid://c2chpl83qlbgg"]
 
 [ext_resource type="Script" uid="uid://dr3k335nwyl6p" path="res://Scripts/main.gd" id="1_8gbba"]
+[ext_resource type="Texture2D" uid="uid://ddg6u7u07ymxv" path="res://Art/Scenery/tablecloth-tilable.png" id="2_6bp64"]
 [ext_resource type="PackedScene" uid="uid://bdu3kdmck2ij3" path="res://Scenes/hud.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://dp8trb1b32k15" path="res://Scripts/Managers/deck_manager.gd" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://cx7jyyuceqadj" path="res://Scripts/Managers/score_manager.gd" id="3_jjvhh"]
-[ext_resource type="Texture2D" uid="uid://b0dquawupfsoi" path="res://Art/Scenery/Tablecloth.aseprite" id="4_6bp64"]
 [ext_resource type="Texture2D" uid="uid://bjkdf4cq7jghc" path="res://Art/Scenery/Plate.png" id="6_21xkr"]
 [ext_resource type="Texture2D" uid="uid://byt7dq04cwky7" path="res://Art/Scenery/Fork.aseprite" id="7_6bp64"]
 
@@ -48,7 +48,7 @@ offset_left = 136.0
 offset_top = 128.0
 offset_right = 1146.0
 offset_bottom = 560.0
-texture = ExtResource("4_6bp64")
+texture = ExtResource("2_6bp64")
 expand_mode = 1
 stretch_mode = 1
 
@@ -72,6 +72,7 @@ texture = ExtResource("6_21xkr")
 
 [node name="Fork" type="Sprite2D" parent="Scenery"]
 position = Vector2(496, 448)
+scale = Vector2(0.75, 1)
 texture = ExtResource("7_6bp64")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scenery/Fork"]
@@ -86,6 +87,7 @@ shape = SubResource("RectangleShape2D_ynf5e")
 
 [node name="Fork2" type="Sprite2D" parent="Scenery"]
 position = Vector2(1040, 448)
+scale = Vector2(0.75, 1)
 texture = ExtResource("7_6bp64")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scenery/Fork2"]
@@ -101,6 +103,7 @@ shape = SubResource("RectangleShape2D_ynf5e")
 [node name="Fork3" type="Sprite2D" parent="Scenery"]
 position = Vector2(816, 240)
 rotation = -3.14159
+scale = Vector2(0.75, 1)
 texture = ExtResource("7_6bp64")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scenery/Fork3"]
@@ -116,6 +119,7 @@ shape = SubResource("RectangleShape2D_ynf5e")
 [node name="Fork4" type="Sprite2D" parent="Scenery"]
 position = Vector2(272, 240)
 rotation = -3.14159
+scale = Vector2(0.75, 1)
 texture = ExtResource("7_6bp64")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scenery/Fork4"]

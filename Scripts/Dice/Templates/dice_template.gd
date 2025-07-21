@@ -17,21 +17,21 @@ var definitions = load("res://Scripts/g_enum.gd")
     G_ENUM.FoodQuality.EXCELLENT
 ]
 @export var dice_sprite_animation_path : String
-@export var base_quality_multipliers: Dictionary[G_ENUM.FoodQuality, float] = {
+@export var score_map: Dictionary[G_ENUM.FoodQuality, float] = {
     G_ENUM.FoodQuality.INEDIBLE: 0.0,
     G_ENUM.FoodQuality.POOR: 1.0,
     G_ENUM.FoodQuality.OK: 2.0,
     G_ENUM.FoodQuality.GOOD: 3.0,
     G_ENUM.FoodQuality.EXCELLENT: 4.0,
 }
-@export var multiplier_quality_multipliers: Dictionary[G_ENUM.FoodQuality, float] = {
+@export var multiplier_map: Dictionary[G_ENUM.FoodQuality, float] = {
     G_ENUM.FoodQuality.INEDIBLE: 0.0,
     G_ENUM.FoodQuality.POOR: 0.5,
     G_ENUM.FoodQuality.OK: 1.0,
     G_ENUM.FoodQuality.GOOD: 1.5,
     G_ENUM.FoodQuality.EXCELLENT: 2.0
 }
-@export var flat_quality_multipliers: Dictionary[G_ENUM.FoodQuality, float] = {
+@export var flat_map: Dictionary[G_ENUM.FoodQuality, float] = {
     G_ENUM.FoodQuality.INEDIBLE: 1.0,
     G_ENUM.FoodQuality.POOR: 1.0,
     G_ENUM.FoodQuality.OK: 1.0,

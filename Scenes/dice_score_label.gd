@@ -18,7 +18,6 @@ func set_dice(d: Dice):
 
 func set_dice_score(d: Dice, initial: bool = false):
 	name_label.text = d.dice_name
-	print("Setting score for dice: ", d.dice_name, " Score: ", d.reported_score)
 	score_label.text = str(d.reported_score)
 	# quality_label.text = ""
 	# quality_label.visible = false
@@ -30,7 +29,7 @@ func set_dice_score(d: Dice, initial: bool = false):
 
 		match d._score_type:
 			G_ENUM.ScoreType.BASE:
-				value_text = "(x" + str(d.strategy.get_quality_multiplier(d)) + ")"
+				value_text = "(x" + str(d.strategy.get_score_map(d)) + ")"
 			G_ENUM.ScoreType.MULTIPLIER:
 				value_text = "(x" + str(d.strategy.get_multiplier_mapped(d)) + ")"
 			G_ENUM.ScoreType.FLAT:
@@ -42,7 +41,7 @@ func set_dice_score(d: Dice, initial: bool = false):
 
 		var face_color = Color.BLACK
 
-		match d._face_value:
+		match d.strategy.get_flat(d):
 			G_ENUM.FoodQuality.INEDIBLE:
 				face_color = Color.BLACK
 			G_ENUM.FoodQuality.POOR:

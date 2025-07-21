@@ -8,22 +8,19 @@ class_name Dice extends RigidBody2D
 # Template values
 var dice_name: String
 
-var _is_flat_preset: bool = false
+var _face_value: int
 var _flat_value: int = 0
-var _flat_conditional: int = 0
-var _flat_quality_multipliers: Dictionary[G_ENUM.FoodQuality, float]
-
-var _is_multiplier_preset: bool = false
 var _multiplier_value: float = 1.0
-var _multiplier_quality_multipliers: Dictionary[G_ENUM.FoodQuality, float]
+var _total_multiplier: float = 1.0
 
-var _base_quality_multipliers: Dictionary[G_ENUM.FoodQuality, float]
+var _score_map: Dictionary[G_ENUM.FoodQuality, float]
+var _flat_map: Dictionary[G_ENUM.FoodQuality, float]
+var _multiplier_map: Dictionary[G_ENUM.FoodQuality, float]
 
-var _type: G_ENUM.DiceType
+var _dice_type: G_ENUM.DiceType
 var _score_type: G_ENUM.ScoreType
 var _available_values: Array[G_ENUM.FoodQuality]
 var _available_values_index: int
-var _face_value: int
 
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var dice_radius: float = $CollisionShape2D.shape.radius
@@ -37,10 +34,10 @@ const PREDICT_LINE_WIDTH: float = 2.0
 const STRENGTH_MULTIPLIER: float = 10.0
 const UNITS_TO_PIXELS : float = 3.2
 
-var base_score: int = 0
-var total_multiplier: float = 1.0
+# var base_score: int = 0
 var calculated_score: int = 0
 var reported_score: int = 0
+
 var strategy: ScoringStrategy = null
 
 var flat_contributions: Array = []
@@ -60,10 +57,10 @@ var contributions_from: Dictionary = {}
 func initialise_values_from_template():
 	if dice_template:
 		dice_name = dice_template.dice_name
-		_base_quality_multipliers = dice_template.base_quality_multipliers
-		_flat_quality_multipliers = dice_template.flat_quality_multipliers
-		_multiplier_quality_multipliers = dice_template.multiplier_quality_multipliers
-		_type = dice_template.dice_type
+		_score_map = dice_template.score_map
+		_flat_map = dice_template.flat_map
+		_multiplier_map = dice_template.multiplier_map
+		_dice_type = dice_template.dice_type
 		_score_type = dice_template.dice_score_type
 		_available_values = dice_template.prepared_values.duplicate()
 		_available_values_index = randi() % _available_values.size()
@@ -258,13 +255,13 @@ func get_food_quality() -> String:
 
 
 func _reset_score():
-	_multiplier_value = 1.0
 	_flat_value = 0
+	_total_multiplier = 1.0
+	_multiplier_value = 1.0
 	score = 0
 	bonus_score = 0
 	flat_score = 0
-	base_score = 0
-	total_multiplier = 1.0
+	# base_score = 0
 	reported_score = 0
 	calculated_score = 0
 	flat_contributions.clear()
@@ -285,7 +282,7 @@ func _on_body_entered(body: Node) -> void:
 		var impact_strength = clamp((linear_velocity - body.linear_velocity).length() / 1000.0, 0, 1)
 		spawn_impact_particles(impact_point, impact_normal, impact_strength)
 
-	if _type == G_ENUM.DiceType.PIZZA:
+	if _dice_type == G_ENUM.DiceType.PIZZA:
 		score += 1
 		SignalManager.dice_score_updated.emit(self, score)
 		print("Score increased to: ", score)
@@ -410,7 +407,7 @@ func spawn_impact_particles(position: Vector2, normal: Vector2, impact_strength:
 		particle_material.initial_velocity_max = max_velocity
 
 	# Set particle color based on dice type
-		match _type:
+		match _dice_type:
 			G_ENUM.DiceType.FLATWHITE:
 				particle_material.color = Color(0.4, 0.2, 0.05) # Brown
 			G_ENUM.DiceType.GARLIC:
@@ -424,3 +421,7 @@ func spawn_impact_particles(position: Vector2, normal: Vector2, impact_strength:
 
 func set_flat_value(value: int):
 	_flat_value = value
+
+
+func set_total_multiplier(value: float):
+	_total_multiplier = value

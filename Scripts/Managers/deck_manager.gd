@@ -14,9 +14,10 @@ var _draw_amount : int = 3
 var _player_inventory : Array = [
 	G_ENUM.DiceType.PIZZA, 
 	G_ENUM.DiceType.PIZZA, 
-	G_ENUM.DiceType.PIZZA, 
 	G_ENUM.DiceType.PIZZA,
 	G_ENUM.DiceType.PIZZA, 
+	G_ENUM.DiceType.GARLIC,
+	G_ENUM.DiceType.GARLIC, 
 	G_ENUM.DiceType.GARLIC,
 	G_ENUM.DiceType.GARLIC,
 	G_ENUM.DiceType.FLATWHITE,

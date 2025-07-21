@@ -1,7 +1,7 @@
 class_name FlatWhiteDiceScoringStrategy extends ScoringStrategy
 
 func get_flat_map(dice: Dice) -> float:
-	return dice._flat_quality_multipliers.get(dice._face_value, 1)
+	return dice._flat_map.get(get_face_value(dice), 1)
 
 func get_flat_mapped(dice: Dice) -> float:
 	return get_flat(dice) + get_flat_map(dice)
@@ -11,22 +11,22 @@ func calculate_contributions(dice: Dice):
 		var other_dice: Dice = entry.get("other_dice")
 
 		if other_dice._score_type == G_ENUM.ScoreType.BASE:
-			var flat_to_base_contribution = get_flat_mapped(dice) * other_dice.strategy.get_quality_multiplier(other_dice)
+			var flat_to_base_contribution = get_flat_mapped(dice) * other_dice.strategy.get_score_map(other_dice)
 			
 			if not dice.contributions.has(other_dice):
 				# First dice interaction between these two
 				dice.contributions[other_dice] = {
-					"type": G_ENUM.DiceType.keys()[other_dice._type],
+					"type": G_ENUM.DiceType.keys()[other_dice._dice_type],
 					"total_contribution": 0,
 					"flat_value": get_flat_mapped(dice), 
-					"base_quality": other_dice.strategy.get_quality_multiplier(other_dice), 
+					"base_quality": other_dice.strategy.get_score_map(other_dice), 
 					"collisions": 0
 				}
 				other_dice.contributions_from[dice] = {
-					"type": G_ENUM.DiceType.keys()[dice._type],
+					"type": G_ENUM.DiceType.keys()[dice._dice_type],
 					"total_contribution": 0,
 					"flat_value": get_flat_mapped(dice), 
-					"base_quality": other_dice.strategy.get_quality_multiplier(other_dice), 
+					"base_quality": other_dice.strategy.get_score_map(other_dice), 
 					"collisions": 0
 				}
 				print("Added to contributions_from for ", other_dice.dice_name, " from ", dice.dice_name)

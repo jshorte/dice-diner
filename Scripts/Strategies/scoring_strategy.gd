@@ -12,7 +12,13 @@ func get_calculated_score(_dice: Dice) -> float:
 func get_reported_score(_dice: Dice) -> float:
 	return 0.0
 
+func get_face_value(_dice: Dice) -> int:
+	return _dice._face_value
+
 func get_multiplier(_dice: Dice) -> float:
+	return 1.0
+
+func get_total_multiplier(_dice: Dice) -> float:
 	return 1.0
 
 func get_multiplier_map(_dice: Dice) -> float:
@@ -21,7 +27,7 @@ func get_multiplier_map(_dice: Dice) -> float:
 func get_multiplier_mapped(_dice: Dice) -> float:
 	return 1.0
 
-func get_flat(_dice: Dice) -> float:
+func get_flat(_dice: Dice) -> int:
 	return _dice._flat_value
 
 func get_flat_map(_dice: Dice) -> float:
@@ -30,10 +36,10 @@ func get_flat_map(_dice: Dice) -> float:
 func get_flat_mapped(_dice: Dice) -> float:
 	return 0.0
 
-func get_quality_multiplier(_dice: Dice) -> float:
+func get_score(_dice: Dice) -> float:
 	return 0.0
 
-func get_score(_dice: Dice) -> float:
+func get_score_map(_dice: Dice) -> float:
 	return 0.0
 
 func get_score_mapped(_dice: Dice) -> float:
@@ -83,7 +89,10 @@ func process_garlic_interaction(dice: Dice, garlic_dice: Dice):
 	for entry in garlic_dice.collision_log:
 		if entry.get("other_dice") == dice:
 			if not entry.get("processed", false) and not found_unprocessed:
-				dice.total_multiplier *= garlic_dice.strategy.get_multiplier_mapped(garlic_dice)
+				dice.set_total_multiplier(
+					dice.strategy.get_total_multiplier(dice) * 
+					garlic_dice.strategy.get_multiplier_mapped(garlic_dice)
+				)
 				update_multiplier_reported_score(dice, garlic_dice)
 				found_unprocessed = true
 
@@ -98,7 +107,7 @@ func get_multiplier_contribution(base_dice: Dice, multiplier_dice: Dice) -> floa
 
 
 func update_flat_reported_score(base_dice: Dice, flat_dice: Dice):
-	flat_dice.reported_score = flat_dice.strategy.get_flat_mapped(flat_dice) * base_dice.strategy.get_quality_multiplier(base_dice)
+	flat_dice.reported_score = flat_dice.strategy.get_flat_mapped(flat_dice) * base_dice.strategy.get_score_map(base_dice)
 
 
 func update_multiplier_reported_score(base_dice: Dice, multiplier_dice: Dice):

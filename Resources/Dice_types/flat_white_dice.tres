@@ -13,21 +13,21 @@ dice_type = 2
 dice_score_type = 1
 prepared_values = Array[int]([1, 2, 3, 4])
 dice_sprite_animation_path = "res://Animations/flat_white_spriteframe.tres"
-base_quality_multipliers = Dictionary[int, float]({
+score_map = Dictionary[int, float]({
 0: 0.0,
 1: 1.0,
 2: 2.0,
 3: 3.0,
 4: 4.0
 })
-multiplier_quality_multipliers = Dictionary[int, float]({
-0: 0.0,
+multiplier_map = Dictionary[int, float]({
+0: 1.0,
 1: 1.0,
-2: 2.0,
-3: 3.0,
-4: 4.0
+2: 1.0,
+3: 1.0,
+4: 1.0
 })
-flat_quality_multipliers = Dictionary[int, float]({
+flat_map = Dictionary[int, float]({
 0: 0.0,
 1: 1.0,
 2: 2.0,
