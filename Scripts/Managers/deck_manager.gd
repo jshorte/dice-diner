@@ -120,7 +120,7 @@ func _on_load_deck():
 			G_ENUM.DiceType.FLATWHITE:
 				blank_dice.dice_template = load(_flatwhite_dice_template_path)
 				blank_dice.strategy = FlatWhiteDiceScoringStrategy.new()
-		blank_dice.initialise_values_from_template()  # Ensure the dice is initialized with its template
+		blank_dice.initialise_values_from_template()
 		_deck.append(blank_dice)
 		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DECK, blank_dice)
 	# TODO: Dice which have face values need to have new random values assigned when going into discard/draw pile

@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://c0b8anh0jl41u"]
+[gd_scene load_steps=23 format=3 uid="uid://c0b8anh0jl41u"]
 
 [ext_resource type="Script" uid="uid://bthg464woowxo" path="res://Scripts/Dice/dice.gd" id="1_dcpc8"]
 [ext_resource type="SpriteFrames" uid="uid://b7p5xj45h5fvf" path="res://Animations/pizza_spriteframe.tres" id="1_wpqjs"]
+[ext_resource type="Script" uid="uid://ypl4ka8860sb" path="res://Scenes/dice_visual.gd" id="3_3jar1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wpqjs"]
 friction = 0.05
@@ -173,3 +174,6 @@ process_material = SubResource("ParticleProcessMaterial_cwike")
 [node name="PredictCast" type="ShapeCast2D" parent="."]
 enabled = false
 shape = SubResource("CircleShape2D_7cx2c")
+
+[node name="DiceVisual" type="Node2D" parent="."]
+script = ExtResource("3_3jar1")

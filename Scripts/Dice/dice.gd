@@ -35,12 +35,10 @@ var _score_type: G_ENUM.ScoreType
 var _available_values: Array[G_ENUM.FoodQuality]
 var _available_values_index: int
 
-var _arrow: Node2D = null
-var _arrow_scene = preload("res://Scenes/arrow.tscn")
-var _ghost_sprite: Sprite2D = null
-
+@onready var visual: DiceVisual = $DiceVisual
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var dice_radius: float = $CollisionShape2D.shape.radius
+
 
 func initialise_values_from_template():
 	if dice_template:
@@ -58,14 +56,12 @@ func initialise_values_from_template():
 
 func _ready() -> void:
 	SignalManager.reset_dice_score.connect(_reset_score)
-	# update_animation_from_values()
 	var particles = $ImpactParticles
 	if particles and particles.process_material:
 		particles.process_material = particles.process_material.duplicate()
-	_arrow = _arrow_scene.instantiate()
-	add_child(_arrow)
-	hide_arrow()
 	connect("body_entered", _on_body_entered)
+	visual._dice = self
+	visual.init_visual()
 
 
 func _physics_process(delta: float) -> void:
@@ -86,42 +82,6 @@ func stop_slow_dice(delta: float) -> void:
 			linear_velocity = Vector2.ZERO
 
 
-func show_ghost_sprite(position: Vector2, rotation: float = 0.0):
-	if _ghost_sprite == null or not is_instance_valid(_ghost_sprite):
-		_ghost_sprite = Sprite2D.new()
-		_ghost_sprite.texture = roll_animation.sprite_frames.get_frame_texture("All", get_sprite_frame())
-		_ghost_sprite.modulate = Color(1, 1, 1, 0.35)
-		_ghost_sprite.z_index = 999
-		get_tree().current_scene.add_child(_ghost_sprite)
-	_ghost_sprite.global_position = position
-	_ghost_sprite.rotation = 0
-
-
-func _draw():
-	if dice_selection == G_ENUM.DiceSelection.ACTIVE and dice_state == G_ENUM.DiceState.STATIONARY:
-		var direction: Vector2 = -get_input_direction()
-		var strength: float = get_impulse_strength()
-
-		var result = DicePredict.get_prediction_points(
-			global_position,
-			direction,
-			strength,
-			mass,
-			dice_radius,
-			self.linear_damp,
-			$PredictCast,
-		)
-
-		for i in result.path_points.size():
-			draw_circle(to_local(result.path_points[i]), dice_radius * 0.1, Color(1, 1, 1, 0.5))
-
-		if result.collided:
-			show_ghost_sprite(result.ghost_pos, 0)
-		elif _ghost_sprite and is_instance_valid(_ghost_sprite):
-			_ghost_sprite.queue_free()
-			_ghost_sprite = null
-
-
 func _input(event):
 	if dice_selection != G_ENUM.DiceSelection.ACTIVE:
 		return
@@ -136,9 +96,7 @@ func _handle_launch_input(event) -> bool:
 		var direction: Vector2 = -get_input_direction()
 		var strength: float = get_impulse_strength()
 		set_dice_selection(G_ENUM.DiceSelection.INACTIVE)
-		if _ghost_sprite and is_instance_valid(_ghost_sprite):
-			_ghost_sprite.queue_free()
-			_ghost_sprite = null
+		visual.reset_ghost_sprite()
 		SignalManager.request_dice_impulse.emit(self, direction, strength)
 		SignalManager.dice_launched.emit()
 		return true
@@ -147,8 +105,8 @@ func _handle_launch_input(event) -> bool:
 
 func _handle_prediction_input(event) -> bool:
 	if dice_state == G_ENUM.DiceState.STATIONARY and (event is InputEventMouseMotion or event is InputEventMouseButton):
-		update_arrow()
-		queue_redraw()
+		visual.update_arrow(dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
+		visual.queue_redraw()
 		return true
 	return false
 	
@@ -162,29 +120,8 @@ func get_impulse_strength() -> float:
 	)
 
 
-func calculate_circle_point(radius : float, angle : float, offset : Vector2) -> Vector2:
-	return offset + Vector2(radius * cos(angle), radius * sin(angle))
-
-
 func get_input_direction() -> Vector2:
 	return get_input_vector().normalized()
-
-
-func show_arrow():
-	_arrow.visible = true
-
-
-func hide_arrow():
-	_arrow.visible = false
-
-
-func update_arrow():
-	show_arrow()
-	var center = global_position
-	var current_angle = center.angle_to_point(get_global_mouse_position())
-	var point_on_circle = calculate_circle_point(dice_radius, current_angle, center)
-	_arrow.global_position = point_on_circle
-	_arrow.rotation = current_angle - rotation
 
 
 func set_dice_selection(new_selection: G_ENUM.DiceSelection):
@@ -195,12 +132,12 @@ func set_dice_selection(new_selection: G_ENUM.DiceSelection):
 
 	match dice_selection:
 		G_ENUM.DiceSelection.ACTIVE:
-			show_arrow()
-			update_arrow()
+			visual.show_arrow()
+			visual.update_arrow(dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
 		G_ENUM.DiceSelection.INACTIVE:
-			hide_arrow()
+			visual.hide_arrow()
 
-	queue_redraw()
+	visual.queue_redraw()
 
 
 func set_dice_state(new_state):
@@ -215,13 +152,13 @@ func set_dice_state(new_state):
 			_face_value = _available_values[roll_animation.frame]
 			SignalManager.dice_finished_moving.emit()
 			if dice_selection == G_ENUM.DiceSelection.ACTIVE:
-				update_arrow()
+				visual.update_arrow(dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
 		G_ENUM.DiceState.MOVING:
 			SignalManager.dice_started_moving.emit()
 			roll_animation.play("Roll")
-			hide_arrow()
+			visual.hide_arrow()
 
-	queue_redraw()
+	visual.queue_redraw()
 
 func get_input_vector() -> Vector2:
 	return get_global_mouse_position() - global_position
@@ -447,3 +384,4 @@ func get_flat_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 
 func get_multiplier_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 	return _multiplier_map
+
