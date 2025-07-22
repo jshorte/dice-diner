@@ -36,8 +36,9 @@ var _available_values: Array[G_ENUM.FoodQuality]
 var _available_values_index: int
 
 @onready var visual: DiceVisual = $DiceVisual
+@onready var vfx: DiceVFX = $DiceVFX
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
-@onready var dice_radius: float = $CollisionShape2D.shape.radius
+@onready var _dice_radius: float = $CollisionShape2D.shape.radius
 
 
 func initialise_values_from_template():
@@ -56,12 +57,11 @@ func initialise_values_from_template():
 
 func _ready() -> void:
 	SignalManager.reset_dice_score.connect(_reset_score)
-	var particles = $ImpactParticles
-	if particles and particles.process_material:
-		particles.process_material = particles.process_material.duplicate()
 	connect("body_entered", _on_body_entered)
 	visual._dice = self
+	vfx._dice = self
 	visual.init_visual()
+	vfx.init_vfx()
 
 
 func _physics_process(delta: float) -> void:
@@ -105,7 +105,7 @@ func _handle_launch_input(event) -> bool:
 
 func _handle_prediction_input(event) -> bool:
 	if dice_state == G_ENUM.DiceState.STATIONARY and (event is InputEventMouseMotion or event is InputEventMouseButton):
-		visual.update_arrow(dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
+		visual.update_arrow(_dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
 		visual.queue_redraw()
 		return true
 	return false
@@ -115,7 +115,7 @@ func get_impulse_strength() -> float:
 	var distance: float = get_input_vector().length()
 
 	return clampf((
-		clampf(distance, dice_radius, INF) - dice_radius
+		clampf(distance, _dice_radius, INF) - _dice_radius
 		) * STRENGTH_MULTIPLIER, MINIMUM_STRENGTH, MAXIMUM_STRENGTH
 	)
 
@@ -132,10 +132,10 @@ func set_dice_selection(new_selection: G_ENUM.DiceSelection):
 
 	match dice_selection:
 		G_ENUM.DiceSelection.ACTIVE:
-			visual.show_arrow()
-			visual.update_arrow(dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
+			visual.display_arrow(true)
+			visual.update_arrow(_dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
 		G_ENUM.DiceSelection.INACTIVE:
-			visual.hide_arrow()
+			visual.display_arrow(false)
 
 	visual.queue_redraw()
 
@@ -152,11 +152,11 @@ func set_dice_state(new_state):
 			_face_value = _available_values[roll_animation.frame]
 			SignalManager.dice_finished_moving.emit()
 			if dice_selection == G_ENUM.DiceSelection.ACTIVE:
-				visual.update_arrow(dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
+				visual.update_arrow(_dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
 		G_ENUM.DiceState.MOVING:
 			SignalManager.dice_started_moving.emit()
 			roll_animation.play("Roll")
-			visual.hide_arrow()
+			visual.display_arrow(false)
 
 	visual.queue_redraw()
 
@@ -204,45 +204,12 @@ func _on_body_entered(body: Node) -> void:
 		var impact_point = (global_position + body.global_position) / 2
 		var impact_normal = (global_position - body.global_position).normalized()
 		var impact_strength = clamp((linear_velocity - body.linear_velocity).length() / 1000.0, 0, 1)
-		spawn_impact_particles(impact_point, impact_normal, impact_strength)
+		vfx.spawn_impact_particles(impact_point, impact_normal, impact_strength)
 
 	if _dice_type == G_ENUM.DiceType.PIZZA:
 		_score += 1
 		SignalManager.dice_score_updated.emit(self, _score)
 		print("Score increased to: ", _score)
-
-func _debug_draw_impact_point(point: Vector2):
-	var indicator = ColorRect.new()
-	indicator.color = Color(1, 0, 0, 0.7)
-	indicator.size = Vector2(10, 10)
-	indicator.position = to_local(point) - indicator.size / 2
-	add_child(indicator)
-
-	indicator.set_z_as_relative(false)
-	indicator.z_index = 1000
-	var timer := Timer.new()
-	timer.wait_time = 0.5
-	timer.one_shot = true
-	timer.timeout.connect(func(): indicator.queue_free())
-	add_child(timer)
-	timer.start()
-
-
-func _debug_draw_normal(point: Vector2, normal: Vector2, length: float = 40.0):
-	var line = Line2D.new()
-	line.width = 2
-	line.default_color = Color(0, 0.7, 1, 1)
-	var start = to_local(point)
-	var end = to_local(point + normal.normalized() * length)
-	line.points = [start, end]
-	add_child(line)
-
-	var timer := Timer.new()
-	timer.wait_time = 0.5
-	timer.one_shot = true
-	timer.timeout.connect(func(): line.queue_free())
-	add_child(timer)
-	timer.start()
 
 
 func log_collision(other_dice: Dice) -> void:
@@ -289,60 +256,6 @@ func _create_custom_animation():
 		return
 
 
-func highlight(active: bool):
-	if active:
-		$HighlightParticles.emitting = true
-	else:
-		$HighlightParticles.emitting = false
-
-
-func highlight_contributing(active: bool):
-	if active:
-		$ContributingHighlights.emitting = true
-	else:
-		$ContributingHighlights.emitting = false
-
-
-func highlight_contributed(active: bool):
-	if active:
-		$ContributedHighlights.emitting = true
-	else:
-		$ContributedHighlights.emitting = false
-
-
-func spawn_impact_particles(position: Vector2, normal: Vector2, impact_strength: float = 1.0) -> void:
-	var particles = $ImpactParticles
-	particles.global_position = position
-	particles.rotation = normal.angle() + PI
-
-	var min_amount = 5
-	var max_amount = 30
-
-	impact_strength = clamp(impact_strength, 0, 1)
-	print("Impact strength: ", impact_strength)
-	particles.amount = int(lerp(min_amount, max_amount, impact_strength))
-
-	var min_velocity = lerp(100.0, 300.0, impact_strength)
-	var max_velocity = lerp(200.0, 1000.0, impact_strength)
-
-	var particle_material: ParticleProcessMaterial = particles.process_material
-	if particle_material is ParticleProcessMaterial:
-		particle_material.initial_velocity_min = min_velocity
-		particle_material.initial_velocity_max = max_velocity
-
-	# Set particle color based on dice type
-		match _dice_type:
-			G_ENUM.DiceType.FLATWHITE:
-				particle_material.color = Color(0.4, 0.2, 0.05) # Brown
-			G_ENUM.DiceType.GARLIC:
-				particle_material.color = Color(1, 1, 1) # White
-			_:
-				particle_material.color = Color(1, 1, 0.5) # Default (e.g., yellowish)
-
-	particles.emitting = false # Reset
-	particles.emitting = true
-
-
 func set_flat_value(value: int):
 	_flat_value = value
 
@@ -384,4 +297,3 @@ func get_flat_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 
 func get_multiplier_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 	return _multiplier_map
-

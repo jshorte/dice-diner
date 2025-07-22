@@ -1,7 +1,6 @@
 class_name DiceVisual extends Node2D
 
 var _dice: Dice
-var _dice_radius: float
 var _arrow: Node2D = null
 var _arrow_scene = preload("res://Scenes/arrow.tscn")
 var _ghost_sprite: Sprite2D = null
@@ -9,7 +8,11 @@ var _ghost_sprite: Sprite2D = null
 func _ready():	
 	_arrow = _arrow_scene.instantiate()
 	add_child(_arrow)
-	hide_arrow()
+	display_arrow(false)
+
+func init_visual():
+	if not _dice:
+		return	
 
 func _draw():
 	if not _dice:
@@ -25,26 +28,19 @@ func _draw():
 			direction,
 			strength,
 			mass,
-			_dice_radius,
+			_dice._dice_radius,
 			_dice.linear_damp,
-			_dice.get_node("PredictCast"),
+			_dice.get_node("%PredictCast"),
 		)
 
 		for i in result.path_points.size():
-			draw_circle(to_local(result.path_points[i]), _dice_radius * 0.1, Color(1, 1, 1, 0.5))
+			draw_circle(to_local(result.path_points[i]), _dice._dice_radius * 0.1, Color(1, 1, 1, 0.5))
 
 		if result.collided:
 			show_ghost_sprite(result.ghost_pos)
 		elif _ghost_sprite and is_instance_valid(_ghost_sprite):
 			_ghost_sprite.queue_free()
 			_ghost_sprite = null
-
-
-func init_visual():
-	if not _dice:
-		return	
-
-	_dice_radius = _dice.dice_radius
 
 
 func show_ghost_sprite(collision_position: Vector2):
@@ -63,18 +59,13 @@ func reset_ghost_sprite():
 			_ghost_sprite = null
 
 
-func show_arrow():
+func display_arrow(display: bool):
 	if _arrow:
-		_arrow.visible = true
-
-
-func hide_arrow():
-	if _arrow:
-		_arrow.visible = false
+		_arrow.visible = display
 
 
 func update_arrow(radius: float = 0.0, angle: float = 0.0, offset: Vector2 = Vector2.ZERO, ):
-	show_arrow()
+	display_arrow(true)
 	var center = global_position
 	var current_angle = center.angle_to_point(get_global_mouse_position())
 	var point_on_circle = offset + Vector2(radius * cos(angle), radius * sin(angle))

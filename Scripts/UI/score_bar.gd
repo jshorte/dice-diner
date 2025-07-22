@@ -9,6 +9,7 @@ var dice_score_labels: Array[DiceScoreLabel] = []
 @onready var total_score_text: Label = get_node("%TotalScoreText")
 @onready var dice_score_vbox: VBoxContainer = get_node("%DiceScoreVBox")
 @onready var next_round_button: Button = get_node("%NextRoundButton")
+var vfx: DiceVFX
 
 func _ready() -> void:
 	SignalManager.emit_ready.connect(_emit_ready)
@@ -66,10 +67,10 @@ func _on_highlight_related_dice(dice: Dice, highlight: bool):
 			if label._dice == contributing_dice:
 				if highlight:
 					label.name_label.add_theme_color_override("font_color", Color.GREEN)
-					contributing_dice.highlight_contributing(true)
+					contributing_dice.vfx.highlight_contributing(true)
 				else:
 					label.name_label.remove_theme_color_override("font_color")
-					contributing_dice.highlight_contributing(false)
+					contributing_dice.vfx.highlight_contributing(false)
 
 	for contributed_dice in dice_to_highlight_from:
 		if contributed_dice.get_dice_type() == G_ENUM.DiceType.PIZZA:
@@ -79,10 +80,10 @@ func _on_highlight_related_dice(dice: Dice, highlight: bool):
 			if label._dice == contributed_dice:
 				if highlight:
 					label.name_label.add_theme_color_override("font_color", Color.BLUE)
-					contributed_dice.highlight_contributed(true)
+					contributed_dice.vfx.highlight_contributed(true)
 				else:
 					label.name_label.remove_theme_color_override("font_color")
-					contributed_dice.highlight_contributed(false)
+					contributed_dice.vfx.highlight_contributed(false)
 
 
 # TODO: Put in bottom bar
