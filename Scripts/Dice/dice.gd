@@ -28,6 +28,7 @@ var _total_multiplier: float = 1.0
 var _score_map: Dictionary[G_ENUM.FoodQuality, float]
 var _flat_map: Dictionary[G_ENUM.FoodQuality, float]
 var _multiplier_map: Dictionary[G_ENUM.FoodQuality, float]
+var _phase_state: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
 
 var _dice_name: String
 var _dice_type: G_ENUM.DiceType
@@ -37,8 +38,10 @@ var _available_values_index: int
 
 @onready var visual: DiceVisual = $DiceVisual
 @onready var vfx: DiceVFX = $DiceVFX
+@onready var input: DiceInput = $DiceInput
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _dice_radius: float = $CollisionShape2D.shape.radius
+@onready var _dice_score_panel: DiceScore = get_node("/root/main/Managers/HUD/DiceScore")
 
 
 func initialise_values_from_template():
@@ -57,11 +60,11 @@ func initialise_values_from_template():
 
 func _ready() -> void:
 	SignalManager.reset_dice_score.connect(_reset_score)
+	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	connect("body_entered", _on_body_entered)
 	visual._dice = self
 	vfx._dice = self
-	visual.init_visual()
-	vfx.init_vfx()
+	input._dice = self
 
 
 func _physics_process(delta: float) -> void:
@@ -75,41 +78,50 @@ func _physics_process(delta: float) -> void:
 	set_dice_state(new_state)
 
 
+func _on_body_entered(body: Node) -> void:
+	if body is Dice:
+		log_collision(body)
+		var impact_point = (global_position + body.global_position) / 2
+		var impact_normal = (global_position - body.global_position).normalized()
+		var impact_strength = clamp((linear_velocity - body.linear_velocity).length() / 1000.0, 0, 1)
+		vfx.spawn_impact_particles(impact_point, impact_normal, impact_strength)
+
+	if _dice_type == G_ENUM.DiceType.PIZZA:
+		_score += 1
+		SignalManager.dice_score_updated.emit(self, _score)
+		print("Score increased to: ", _score)
+
+
+func _on_phase_state_changed(new_phase: G_ENUM.PhaseState) -> void:
+	_phase_state = new_phase
+
+	if _phase_state == G_ENUM.PhaseState.DRAW:
+		_dice_score_panel.hide()
+
+
+func _on_mouse_entered() -> void:
+	if _phase_state != G_ENUM.PhaseState.SCORE:
+		return
+
+	_dice_score_panel._dice = self
+	_dice_score_panel.update_score_display()
+	_dice_score_panel.global_position = global_position + Vector2(0, -50)
+	_dice_score_panel.show()
+
+
+func _on_mouse_exited() -> void:
+	if _phase_state != G_ENUM.PhaseState.SCORE:
+		return
+
+	_dice_score_panel.hide()
+
+
 func stop_slow_dice(delta: float) -> void:
 	if linear_velocity.length() < LERP_THRESHOLD and linear_velocity.length() > 0.1:
 		linear_velocity = linear_velocity.lerp(Vector2.ZERO, LERP_SPEED * delta)		
 		if linear_velocity.length() < 1:
 			linear_velocity = Vector2.ZERO
 
-
-func _input(event):
-	if dice_selection != G_ENUM.DiceSelection.ACTIVE:
-		return
-	if _handle_launch_input(event):
-		return
-	if _handle_prediction_input(event):
-		return
-
-
-func _handle_launch_input(event) -> bool:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var direction: Vector2 = -get_input_direction()
-		var strength: float = get_impulse_strength()
-		set_dice_selection(G_ENUM.DiceSelection.INACTIVE)
-		visual.reset_ghost_sprite()
-		SignalManager.request_dice_impulse.emit(self, direction, strength)
-		SignalManager.dice_launched.emit()
-		return true
-	return false
-
-
-func _handle_prediction_input(event) -> bool:
-	if dice_state == G_ENUM.DiceState.STATIONARY and (event is InputEventMouseMotion or event is InputEventMouseButton):
-		visual.update_arrow(_dice_radius, global_position.angle_to_point(get_global_mouse_position()), global_position)
-		visual.queue_redraw()
-		return true
-	return false
-	
 
 func get_impulse_strength() -> float:
 	var distance: float = get_input_vector().length()
@@ -122,6 +134,10 @@ func get_impulse_strength() -> float:
 
 func get_input_direction() -> Vector2:
 	return get_input_vector().normalized()
+
+
+func get_input_vector() -> Vector2:
+	return get_global_mouse_position() - global_position
 
 
 func set_dice_selection(new_selection: G_ENUM.DiceSelection):
@@ -160,9 +176,6 @@ func set_dice_state(new_state):
 
 	visual.queue_redraw()
 
-func get_input_vector() -> Vector2:
-	return get_global_mouse_position() - global_position
-
 
 func get_sprite_frame() -> int:
 	return _face_value - 1
@@ -170,46 +183,6 @@ func get_sprite_frame() -> int:
 
 func get_icon_texture(sprite_frame: int = 0) -> Texture2D:
 	return roll_animation.sprite_frames.get_frame_texture("All", sprite_frame)
-
-
-func get_food_quality() -> String:
-	match self._face_value:
-		G_ENUM.FoodQuality.INEDIBLE:
-			return "INEDIBLE"
-		G_ENUM.FoodQuality.POOR:
-			return "POOR"
-		G_ENUM.FoodQuality.OK:
-			return "OK"
-		G_ENUM.FoodQuality.GOOD:
-			return "GOOD"
-		G_ENUM.FoodQuality.EXCELLENT:
-			return "EXCELLENT"
-		_:
-			return "INEDIBLE"
-
-
-func _reset_score():
-	_score = 0
-	_flat_value = 0
-	_multiplier_value = 1.0
-	_total_multiplier = 1.0
-	_reported_score = 0
-	_calculated_score = 0
-	collision_log.clear()
-
-
-func _on_body_entered(body: Node) -> void:
-	if body is Dice:
-		log_collision(body)
-		var impact_point = (global_position + body.global_position) / 2
-		var impact_normal = (global_position - body.global_position).normalized()
-		var impact_strength = clamp((linear_velocity - body.linear_velocity).length() / 1000.0, 0, 1)
-		vfx.spawn_impact_particles(impact_point, impact_normal, impact_strength)
-
-	if _dice_type == G_ENUM.DiceType.PIZZA:
-		_score += 1
-		SignalManager.dice_score_updated.emit(self, _score)
-		print("Score increased to: ", _score)
 
 
 func log_collision(other_dice: Dice) -> void:
@@ -256,44 +229,84 @@ func _create_custom_animation():
 		return
 
 
-func set_flat_value(value: int):
-	_flat_value = value
+func _reset_score():
+	_score = 0
+	_flat_value = 0
+	_multiplier_value = 1.0
+	_total_multiplier = 1.0
+	_reported_score = 0
+	_calculated_score = 0
+	collision_log.clear()
 
-func get_total_multiplier() -> float:
-	return _total_multiplier
 
-func set_total_multiplier(value: float):
-	_total_multiplier = value
+#region Getters and Setters
+func get_food_quality() -> String:
+	match self._face_value:
+		G_ENUM.FoodQuality.INEDIBLE:
+			return "INEDIBLE"
+		G_ENUM.FoodQuality.POOR:
+			return "POOR"
+		G_ENUM.FoodQuality.OK:
+			return "OK"
+		G_ENUM.FoodQuality.GOOD:
+			return "GOOD"
+		G_ENUM.FoodQuality.EXCELLENT:
+			return "EXCELLENT"
+		_:
+			return "INEDIBLE"
+
 
 func get_dice_type() -> G_ENUM.DiceType:
 	return _dice_type
 
-func get_score_type() -> G_ENUM.ScoreType:
-	return _score_type
 
 func get_score() -> int:
 	return _score
 
+
+func get_score_type() -> G_ENUM.ScoreType:
+	return _score_type
+
 func get_reported_score() -> int:
 	return _reported_score
 
-func set_reported_score(value: int):
-	_reported_score = value
 
 func get_calculated_score() -> int:
 	return _calculated_score
 
-func set_calculated_score(value: int):
-	_calculated_score = value
 
 func get_dice_name() -> String:
 	return _dice_name
 
+
 func get_score_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 	return _score_map
+
 
 func get_flat_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 	return _flat_map
 
+
 func get_multiplier_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 	return _multiplier_map
+
+
+func get_total_multiplier() -> float:
+	return _total_multiplier
+
+
+func set_reported_score(value: int):
+	_reported_score = value
+
+
+func set_calculated_score(value: int):
+	_calculated_score = value
+
+
+func set_flat_value(value: int):
+	_flat_value = value
+
+
+func set_total_multiplier(value: float):
+	_total_multiplier = value
+#endregion

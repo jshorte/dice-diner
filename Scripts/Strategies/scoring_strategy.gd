@@ -48,6 +48,9 @@ func get_score_mapped(_dice: Dice) -> float:
 func get_score_with_flat(_dice: Dice) -> float:
 	return 0.0
 
+func get_score_breakdown(_dice: Dice) -> Dictionary:
+	return {}
+
 func sort_log_by_timestamp(collision_log: Array[Dictionary]):
 	collision_log.sort_custom(func(a, b): return a["timestamp"] < b["timestamp"])
 	return collision_log

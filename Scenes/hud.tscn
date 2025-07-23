@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdu3kdmck2ij3"]
+[gd_scene load_steps=8 format=3 uid="uid://bdu3kdmck2ij3"]
 
 [ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="3_ioopo"]
 [ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/button_state.gd" id="4_owgk4"]
 [ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="4_t1xeu"]
 [ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="5_36asn"]
+[ext_resource type="Script" uid="uid://y6taemufxrvy" path="res://Scenes/dice_score.gd" id="7_8jye8"]
 [ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="7_e1fvy"]
 
 [node name="HUD" type="Control"]
@@ -352,6 +353,83 @@ offset_left = -81.0
 offset_top = 1.0
 offset_right = -41.0
 offset_bottom = 41.0
+
+[node name="DiceScore" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+z_index = 100
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -113.0
+offset_top = -71.0
+offset_right = 117.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(114, 166)
+theme_override_styles/panel = ExtResource("3_ioopo")
+script = ExtResource("7_8jye8")
+
+[node name="DiceBreakdownVBox" type="VBoxContainer" parent="DiceScore"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BaseLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Base: 5"
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[node name="FlatLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Flat: 2"
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[node name="QualityLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Quality: 5"
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[node name="MultiplierLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Multi: 4"
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[node name="AppliedLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "THIS IS A LOT OF TEXT"
+horizontal_alignment = 1
+
+[node name="TotalLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Total: 50"
+horizontal_alignment = 1
+vertical_alignment = 3
 
 [connection signal="toggled" from="Top Bar/Information Bar/Info_Show_Hide" to="Top Bar" method="_on_info_show_hide_toggled"]
 [connection signal="pressed" from="Active Panel/Active/Active_Show_Hide" to="Active Panel" method="_on_active_show_hide_pressed"]

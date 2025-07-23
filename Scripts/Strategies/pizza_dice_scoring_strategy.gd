@@ -72,10 +72,18 @@ func process_score(dice: Dice) -> void:
 	dice.set_calculated_score(roundi(get_calculated_score(dice)))
 	dice.set_reported_score(roundi(get_reported_score(dice)))
 
+
 func calculate_contributions(dice: Dice):
 	dice.contributions_from[dice] = {
 		"type": G_ENUM.DiceType.keys()[dice.get_dice_type()],
 		"total_contribution": get_score_mapped(dice),
 		"base_score": get_score(dice),
 		"quality_multiplier": get_score_map(dice)
+	}
+
+func get_score_breakdown(dice: Dice) -> Dictionary:
+	return {
+		"base": get_score(dice),
+		"quality": get_score_map(dice),
+		"total": get_reported_score(dice),
 	}

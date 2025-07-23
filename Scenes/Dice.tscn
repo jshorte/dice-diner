@@ -1,15 +1,19 @@
-[gd_scene load_steps=24 format=3 uid="uid://c0b8anh0jl41u"]
+[gd_scene load_steps=25 format=3 uid="uid://c0b8anh0jl41u"]
 
 [ext_resource type="Script" uid="uid://bthg464woowxo" path="res://Scripts/Dice/dice.gd" id="1_dcpc8"]
 [ext_resource type="SpriteFrames" uid="uid://b7p5xj45h5fvf" path="res://Animations/pizza_spriteframe.tres" id="1_wpqjs"]
 [ext_resource type="Script" uid="uid://ypl4ka8860sb" path="res://Scenes/dice_visual.gd" id="3_3jar1"]
 [ext_resource type="Script" uid="uid://ueornv7efdpf" path="res://Scenes/dice_vfx.gd" id="4_1kcbr"]
+[ext_resource type="Script" uid="uid://rvf5e1uy3ndy" path="res://Scenes/dice_input.gd" id="5_b27ex"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wpqjs"]
 friction = 0.05
 bounce = 0.8
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dcpc8"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7cx2c"]
 radius = 32.0
 
 [sub_resource type="Gradient" id="Gradient_7cx2c"]
@@ -122,10 +126,8 @@ gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_pabcj")
 color_ramp = SubResource("GradientTexture1D_jwepb")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7cx2c"]
-radius = 32.0
-
 [node name="Dice" type="RigidBody2D"]
+input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_wpqjs")
 continuous_cd = 2
 contact_monitor = true
@@ -145,6 +147,11 @@ frame_progress = 0.478992
 
 [node name="DiceVisual" type="Node2D" parent="."]
 script = ExtResource("3_3jar1")
+
+[node name="PredictCast" type="ShapeCast2D" parent="."]
+unique_name_in_owner = true
+enabled = false
+shape = SubResource("CircleShape2D_7cx2c")
 
 [node name="DiceVFX" type="Node2D" parent="."]
 script = ExtResource("4_1kcbr")
@@ -182,7 +189,8 @@ interp_to_end = 0.1
 explosiveness = 0.5
 process_material = SubResource("ParticleProcessMaterial_cwike")
 
-[node name="PredictCast" type="ShapeCast2D" parent="."]
-unique_name_in_owner = true
-enabled = false
-shape = SubResource("CircleShape2D_7cx2c")
+[node name="DiceInput" type="Node2D" parent="."]
+script = ExtResource("5_b27ex")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

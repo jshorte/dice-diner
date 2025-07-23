@@ -35,3 +35,24 @@ func calculate_contributions(dice: Dice):
 			dice.contributions[other_dice]["total_contribution"] += flat_to_base_contribution
 			other_dice.contributions_from[dice]["collisions"] += 1
 			other_dice.contributions_from[dice]["total_contribution"] += flat_to_base_contribution
+
+func get_score_breakdown(dice: Dice) -> Dictionary:
+	var applied_str = ""
+	for pizza in dice.contributions.keys():
+		var details = dice.contributions[pizza]
+		var pizza_name = pizza.get_dice_name()
+		var multiplier = details.get("base_quality", 1)
+		var collisions = details.get("collisions", 1)
+		applied_str += "Applied to %s with quality (%d) %d Time(s)\n" % [pizza_name, multiplier, collisions]
+
+	var total_contribution = 0
+	for details in dice.contributions.values():
+		total_contribution += details.get("total_contribution", 0)
+
+	print("Flat White Score Breakdown: ", applied_str, total_contribution)
+
+	return {
+		"flat": get_flat_mapped(dice),
+		"applied": applied_str,
+		"total": total_contribution
+	}

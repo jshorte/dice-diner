@@ -8,11 +8,6 @@ var _dice: Dice
 @onready var _contributed_highlights = get_node("%ContributedHighlights")
 
 
-func init_vfx():
-	if not _dice:
-		return
-
-
 func _ready():
 	if _impact_particles and _impact_particles.process_material:
 		_impact_particles.process_material = _impact_particles.process_material.duplicate()

@@ -9,10 +9,7 @@ func _ready():
 	_arrow = _arrow_scene.instantiate()
 	add_child(_arrow)
 	display_arrow(false)
-
-func init_visual():
-	if not _dice:
-		return	
+	
 
 func _draw():
 	if not _dice:
