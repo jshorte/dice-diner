@@ -92,7 +92,7 @@ func _on_dice_placed(dice: Dice, position: Vector2):
 	dice.contact_monitor = true
 	dice.call_deferred("set_dice_selection", G_ENUM.DiceSelection.ACTIVE)
 	dice.call_deferred("set_dice_state", G_ENUM.DiceState.STATIONARY)
-	dice.position = position
+	dice.global_position = position
 
 	_total_dice_in_play = _active_dice_tree_node.get_child_count()
 	_stationary_dice_count = 0

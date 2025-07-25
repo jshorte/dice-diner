@@ -41,15 +41,17 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 	for pizza in dice.contributions.keys():
 		var details = dice.contributions[pizza]
 		var pizza_name = pizza.get_dice_name()
+		var flat_value = details.get("flat_value", 0)
 		var multiplier = details.get("base_quality", 1)
 		var collisions = details.get("collisions", 1)
-		applied_str += "Applied to %s with quality (%d) %d Time(s)\n" % [pizza_name, multiplier, collisions]
+		var contribution = details.get("total_contribution", 0)
+
+		applied_str += "%s: Multiplied by pizza's quality [x%d], collided [%d] time(s) = +%d\n" % [pizza_name, multiplier, collisions, contribution]
 
 	var total_contribution = 0
+
 	for details in dice.contributions.values():
 		total_contribution += details.get("total_contribution", 0)
-
-	print("Flat White Score Breakdown: ", applied_str, total_contribution)
 
 	return {
 		"flat": get_flat_mapped(dice),

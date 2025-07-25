@@ -31,7 +31,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Information Bar" type="Panel" parent="Top Bar"]
-visible = false
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 100.0
@@ -53,7 +52,6 @@ grow_vertical = 0
 rotation = -1.5708
 toggle_mode = true
 icon_alignment = 1
-script = ExtResource("4_owgk4")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Top Bar/Information Bar"]
 layout_mode = 2
@@ -263,23 +261,23 @@ grow_horizontal = 0
 grow_vertical = 2
 toggle_mode = true
 icon_alignment = 1
-script = ExtResource("4_owgk4")
 
 [node name="Score Panel" type="Control" parent="."]
-layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 1080.0
+offset_top = 96.0
+offset_right = 1080.0
+offset_bottom = 96.0
 script = ExtResource("5_36asn")
 
 [node name="Score" type="Panel" parent="Score Panel"]
 layout_mode = 0
-offset_left = 1081.0
-offset_top = 126.0
-offset_right = 1280.0
-offset_bottom = 426.0
+offset_top = 8.0
+offset_right = 199.0
+offset_bottom = 308.0
 
-[node name="Score_Show_Hide" type="Button" parent="Score Panel/Score"]
+[node name="ScoreButton" type="Button" parent="Score Panel/Score"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = -8.0
 offset_top = 120.0
@@ -288,39 +286,39 @@ toggle_mode = true
 icon_alignment = 1
 script = ExtResource("4_owgk4")
 
-[node name="Score Container" type="PanelContainer" parent="Score Panel/Score"]
+[node name="ScoreContainer" type="PanelContainer" parent="Score Panel/Score"]
 layout_mode = 0
 offset_right = 197.0
 offset_bottom = 300.0
 theme_override_styles/panel = ExtResource("3_ioopo")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Score Panel/Score/Score Container"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Score Panel/Score/ScoreContainer"]
 layout_mode = 2
 
-[node name="Score Title Text" type="Label" parent="Score Panel/Score/Score Container/VBoxContainer"]
+[node name="Score Title Text" type="Label" parent="Score Panel/Score/ScoreContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_rvbjj")
 theme_override_fonts/font = ExtResource("7_e1fvy")
 text = "Score"
 horizontal_alignment = 1
 
-[node name="Score Space" type="Control" parent="Score Panel/Score/Score Container/VBoxContainer"]
+[node name="Score Space" type="Control" parent="Score Panel/Score/ScoreContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="DiceScoreVBox" type="VBoxContainer" parent="Score Panel/Score/Score Container/VBoxContainer"]
+[node name="DiceScoreVBox" type="VBoxContainer" parent="Score Panel/Score/ScoreContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Total Space" type="Control" parent="Score Panel/Score/Score Container/VBoxContainer"]
+[node name="Total Space" type="Control" parent="Score Panel/Score/ScoreContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScoreTextHBox" type="VBoxContainer" parent="Score Panel/Score/Score Container/VBoxContainer"]
+[node name="ScoreTextHBox" type="VBoxContainer" parent="Score Panel/Score/ScoreContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="RoundScoreText" type="Label" parent="Score Panel/Score/Score Container/VBoxContainer/ScoreTextHBox"]
+[node name="RoundScoreText" type="Label" parent="Score Panel/Score/ScoreContainer/VBoxContainer/ScoreTextHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -330,7 +328,7 @@ text = "Round: 0"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="TotalScoreText" type="Label" parent="Score Panel/Score/Score Container/VBoxContainer/ScoreTextHBox"]
+[node name="TotalScoreText" type="Label" parent="Score Panel/Score/ScoreContainer/VBoxContainer/ScoreTextHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -356,20 +354,21 @@ offset_bottom = 41.0
 
 [node name="DiceScore" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 100
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -113.0
-offset_top = -71.0
-offset_right = 117.0
-offset_bottom = -41.0
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -220.0
+offset_right = -25.0
+offset_bottom = -26.0
 grow_horizontal = 2
-grow_vertical = 0
-pivot_offset = Vector2(114, 166)
+grow_vertical = 2
+pivot_offset = Vector2(115.5, 94)
 theme_override_styles/panel = ExtResource("3_ioopo")
 script = ExtResource("7_8jye8")
 
@@ -431,7 +430,4 @@ text = "Total: 50"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[connection signal="toggled" from="Top Bar/Information Bar/Info_Show_Hide" to="Top Bar" method="_on_info_show_hide_toggled"]
-[connection signal="pressed" from="Active Panel/Active/Active_Show_Hide" to="Active Panel" method="_on_active_show_hide_pressed"]
-[connection signal="toggled" from="Active Panel/Active/Active_Show_Hide" to="Active Panel" method="_on_active_show_hide_toggled"]
-[connection signal="toggled" from="Score Panel/Score/Score_Show_Hide" to="Score Panel" method="_on_score_show_hide_toggled"]
+[connection signal="toggled" from="Score Panel/Score/ScoreButton" to="Score Panel/Score/ScoreButton" method="_on_score_button_toggled"]

@@ -10,7 +10,7 @@ var _dice: Dice
 @onready var total_label: Label = get_node("%TotalLabel")
 @onready var vbox: VBoxContainer = get_node("%DiceBreakdownVBox")
 
-const ABOVE_OFFSET: float = -220
+const ABOVE_OFFSET: float = 50
 const BELOW_OFFSET: float = 50
 
 var _current_phase: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
@@ -30,30 +30,25 @@ func update_score_display() -> void:
 
 
 func update_score_position() -> void:
-	if _dice:
-		var panel_size = size
-		var screen_height = get_viewport_rect().size.y
-		var dice_y = _dice.global_position.y
-
-		var offset: Vector2
-		if dice_y < screen_height * 0.5:
-			offset = Vector2(-panel_size.x / 2, BELOW_OFFSET)
-		else:
-			offset = Vector2(-panel_size.x / 2, ABOVE_OFFSET)
-
-		global_position = _dice.global_position + offset
+	var screen_rect = get_viewport_rect().size
+	var panel_size = size
+	# Center the panel in the viewport
+	global_position = Vector2(
+		(screen_rect.x - panel_size.x) / 2,
+		screen_rect.y * 0.75 - panel_size.y
+	)
 
 func update_score_labels():
 	if _dice and _dice.strategy:        
 		var breakdown = _dice.strategy.get_score_breakdown(_dice)
 
 		var label_map: Dictionary = {
-            "base": [base_label, "Base: %d"],
-            "flat": [flat_label, "Flat Value: %d"],
-            "quality": [quality_label, "Quality: %d"],
-            "multiplier": [multiplier_label, "Multiplier: %d"],
-            "applied": [applied_label, "\n%s"],
-        }
+			"base": [base_label, "Base: %d"],
+			"flat": [flat_label, "Flat Value: +%d"],
+			"quality": [quality_label, "Quality: x%d"],
+			"multiplier": [multiplier_label, "Multiplier: x%d"],
+			"applied": [applied_label, "\n%s"],
+		}
 
 		for key in label_map.keys():
 			var label = label_map[key][0]

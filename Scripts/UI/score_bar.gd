@@ -9,6 +9,7 @@ var dice_score_labels: Array[DiceScoreLabel] = []
 @onready var total_score_text: Label = get_node("%TotalScoreText")
 @onready var dice_score_vbox: VBoxContainer = get_node("%DiceScoreVBox")
 @onready var next_round_button: Button = get_node("%NextRoundButton")
+@onready var score_button: Button = get_node("%ScoreButton")
 var vfx: DiceVFX
 
 func _ready() -> void:
