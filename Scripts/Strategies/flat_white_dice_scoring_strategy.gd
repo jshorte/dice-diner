@@ -11,8 +11,10 @@ func calculate_contributions(dice: Dice):
 		var other_dice: Dice = entry.get("other_dice")
 
 		if other_dice.get_score_type() == G_ENUM.ScoreType.BASE:
-			var flat_to_base_contribution = get_flat_mapped(dice) * other_dice.strategy.get_score_map(other_dice)
-			
+			var flat_to_base_contribution = get_flat_mapped(dice) * \
+			other_dice.strategy.get_score_map(other_dice) * \
+			other_dice.strategy.get_course_multiplier(other_dice)
+
 			if not dice.contributions.has(other_dice):
 				# First dice interaction between these two
 				dice.contributions[other_dice] = {
@@ -20,13 +22,15 @@ func calculate_contributions(dice: Dice):
 					"total_contribution": 0,
 					"flat_value": get_flat_mapped(dice), 
 					"base_quality": other_dice.strategy.get_score_map(other_dice), 
+					"course_multiplier": other_dice.strategy.get_course_multiplier(other_dice),
 					"collisions": 0
 				}
 				other_dice.contributions_from[dice] = {
 					"type": G_ENUM.DiceType.keys()[dice.get_dice_type()],
 					"total_contribution": 0,
 					"flat_value": get_flat_mapped(dice), 
-					"base_quality": other_dice.strategy.get_score_map(other_dice), 
+					"base_quality": other_dice.strategy.get_score_map(other_dice),
+					"course_multiplier": other_dice.strategy.get_course_multiplier(other_dice),
 					"collisions": 0
 				}
 
@@ -41,12 +45,14 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 	for pizza in dice.contributions.keys():
 		var details = dice.contributions[pizza]
 		var pizza_name = pizza.get_dice_name()
-		var flat_value = details.get("flat_value", 0)
-		var multiplier = details.get("base_quality", 1)
+		var course_multiplier = pizza.strategy.get_course_multiplier(pizza)
+		var quality_multiplier = details.get("base_quality", 1)
 		var collisions = details.get("collisions", 1)
+		var collision_str = "collision" if collisions == 1 else "collisions"
 		var contribution = details.get("total_contribution", 0)
 
-		applied_str += "%s: Multiplied by pizza's quality [x%d], collided [%d] time(s) = +%d\n" % [pizza_name, multiplier, collisions, contribution]
+		applied_str += "Flat value [%d] multiplied by %s's quality [x%d] and bonus [x%d] and %s [x%d] = %d\n" % [
+			get_flat_mapped(dice), pizza_name, quality_multiplier, course_multiplier, collision_str, collisions, contribution]
 
 	var total_contribution = 0
 
@@ -54,7 +60,7 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 		total_contribution += details.get("total_contribution", 0)
 
 	return {
-		"flat": get_flat_mapped(dice),
+		# "flat": get_flat_mapped(dice),
 		"applied": applied_str,
 		"total": total_contribution
 	}

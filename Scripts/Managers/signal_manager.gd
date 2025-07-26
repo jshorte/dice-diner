@@ -33,3 +33,4 @@ signal phase_state_changed
 signal score_updated
 signal dice_score_updated
 signal score_completed
+signal clear_global_collision_log

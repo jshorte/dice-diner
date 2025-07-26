@@ -2,11 +2,13 @@ extends Node
 
 var dice_to_score: Array[Dice] = []
 var total_score: int = 0
+var global_collision_log: Array[Dictionary] = []
 
 func _ready() -> void:
 	SignalManager.emit_ready.connect(_emit_ready)
 	SignalManager.dice_placed.connect(_on_dice_placed)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
+	SignalManager.clear_global_collision_log.connect(_clear_global_collision_log)
 
 
 func _emit_ready():
@@ -15,11 +17,18 @@ func _emit_ready():
 
 func _on_dice_placed(dice: Dice, position: Vector2):
 	dice_to_score.append(dice)
-
+	
 
 func _on_phase_state_changed(new_state: G_ENUM.PhaseState):
 	if new_state == G_ENUM.PhaseState.SCORE:
 		_calculate_score()
+
+func get_global_collision_log() -> Array[Dictionary]:
+	return global_collision_log
+
+
+func _clear_global_collision_log():
+	global_collision_log.clear()
 
 
 func _calculate_score():

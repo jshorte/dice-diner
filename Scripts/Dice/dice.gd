@@ -24,6 +24,9 @@ var _face_value: int
 var _flat_value: int = 0
 var _multiplier_value: float = 1.0
 var _total_multiplier: float = 1.0
+var _course_multiplier: float = 1.0
+var _starter_bonus_applied: bool = false
+var _dessert_bonus_applied: bool = false
 
 var _score_map: Dictionary[G_ENUM.FoodQuality, float]
 var _flat_map: Dictionary[G_ENUM.FoodQuality, float]
@@ -33,6 +36,9 @@ var _phase_state: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
 var _dice_name: String
 var _dice_type: G_ENUM.DiceType
 var _score_type: G_ENUM.ScoreType
+var _dice_taste: Array[G_ENUM.Tastes]
+var _dice_preparation: Array[G_ENUM.Preparation]
+var _dice_courses: Array[G_ENUM.Course]
 var _available_values: Array[G_ENUM.FoodQuality]
 var _available_values_index: int
 
@@ -52,10 +58,30 @@ func initialise_values_from_template():
 		_multiplier_map = dice_template.multiplier_map
 		_dice_type = dice_template.dice_type
 		_score_type = dice_template.dice_score_type
+		_dice_taste = dice_template.dice_taste.duplicate()
+		_dice_preparation = dice_template.dice_preparation.duplicate()
+		_dice_courses = dice_template.dice_course.duplicate()
 		_available_values = dice_template.prepared_values.duplicate()
 		_available_values_index = randi() % _available_values.size()
 		_face_value = _available_values[_available_values_index]
 		_create_custom_animation()
+
+		# Print enum keys for Taste, Preparation, Course
+		var taste_keys = []
+		for t in _dice_taste:
+			taste_keys.append(G_ENUM.Tastes.keys()[t])
+		var prep_keys = []
+		for p in _dice_preparation:
+			prep_keys.append(G_ENUM.Preparation.keys()[p])
+		var course_keys = []
+		for c in _dice_courses:
+			course_keys.append(G_ENUM.Course.keys()[c])
+		print("Name: %s, Taste: %s, Preparation: %s, Course: %s" % [
+			_dice_name,
+			String(", ").join(taste_keys),
+			String(", ").join(prep_keys),
+			String(", ").join(course_keys)
+		])
 
 
 func _ready() -> void:
@@ -193,6 +219,11 @@ func log_collision(other_dice: Dice) -> void:
 		"timestamp": Time.get_ticks_msec(),
 		"current_flat_value": _flat_value,
 	})
+	ScoreManager.global_collision_log.append({
+		"timestamp": Time.get_ticks_msec(),
+		"dice": self,
+		"other_dice": other_dice,
+	})
 
 
 func roll_face():
@@ -233,10 +264,14 @@ func _reset_score():
 	_score = 0
 	_flat_value = 0
 	_multiplier_value = 1.0
+	_course_multiplier = 1.0
 	_total_multiplier = 1.0
 	_reported_score = 0
 	_calculated_score = 0
+	_starter_bonus_applied = false
+	_dessert_bonus_applied = false
 	collision_log.clear()
+	SignalManager.clear_global_collision_log.emit()
 
 
 #region Getters and Setters
@@ -289,6 +324,21 @@ func get_flat_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 
 func get_multiplier_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 	return _multiplier_map
+
+func set_course_multiplier(value: float) -> void:
+	_course_multiplier = value
+
+func set_applied_courses(courses: Array[G_ENUM.Course]) -> void:
+	_starter_bonus_applied = G_ENUM.Course.STARTER in courses
+	_dessert_bonus_applied = G_ENUM.Course.DESSERT in courses
+
+func get_applied_courses() -> Array[G_ENUM.Course]:
+	var courses = []
+	if _starter_bonus_applied:
+		courses.append(G_ENUM.Course.STARTER)
+	if _dessert_bonus_applied:
+		courses.append(G_ENUM.Course.DESSERT)
+	return courses
 
 
 func get_total_multiplier() -> float:

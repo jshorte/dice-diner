@@ -27,6 +27,12 @@ func get_multiplier_map(_dice: Dice) -> float:
 func get_multiplier_mapped(_dice: Dice) -> float:
 	return 1.0
 
+func get_starter_multiplier() -> float:
+	return 2.0
+
+func get_dessert_multiplier() -> float:
+	return 2.0
+
 func get_flat(_dice: Dice) -> int:
 	return _dice._flat_value
 

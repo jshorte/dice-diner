@@ -16,6 +16,7 @@ offset_bottom = 40.0
 theme = ExtResource("1_rvbjj")
 
 [node name="Power Bar" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -25,6 +26,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="Top Bar" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -401,6 +403,15 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Quality: 5"
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[node name="CourseLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Bonus: 0"
 horizontal_alignment = 1
 vertical_alignment = 3
 

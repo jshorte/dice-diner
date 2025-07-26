@@ -6,6 +6,7 @@ var _dice: Dice
 @onready var flat_label: Label = get_node("%FlatLabel")
 @onready var quality_label: Label = get_node("%QualityLabel")
 @onready var multiplier_label: Label = get_node("%MultiplierLabel")
+@onready var course_label: Label = get_node("%CourseLabel")
 @onready var applied_label: Label = get_node("%AppliedLabel")
 @onready var total_label: Label = get_node("%TotalLabel")
 @onready var vbox: VBoxContainer = get_node("%DiceBreakdownVBox")
@@ -47,7 +48,8 @@ func update_score_labels():
 			"flat": [flat_label, "Flat Value: +%d"],
 			"quality": [quality_label, "Quality: x%d"],
 			"multiplier": [multiplier_label, "Multiplier: x%d"],
-			"applied": [applied_label, "\n%s"],
+			"applied": [applied_label, "%s"],
+			"course": [course_label, "%s"],
 		}
 
 		for key in label_map.keys():
