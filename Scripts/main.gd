@@ -1,7 +1,10 @@
 extends Node
 
+const MAX_SETUP_DICE: int = 1
+
 var _total_dice_in_play: int = 0
 var _stationary_dice_count: int = 0
+var _setup_dice_count: int = 0
 var _isHUDReady: bool = false
 var _isDeckReady: bool = false
 var _isScoreReady: bool = false
@@ -49,7 +52,8 @@ func _on_score_bar_manager_ready():
 
 func _check_all_ready():
 	if _isHUDReady and _isDeckReady and _isScoreReady and _isScoreBarReady:
-		_phase_state = G_ENUM.PhaseState.PREPARE
+		_phase_state = G_ENUM.PhaseState.SETUP
+		set_phase_state(_phase_state)
 		SignalManager.request_deck_load.emit()
 #endregion Initialisation
 #region Dice Logic
@@ -74,23 +78,26 @@ func set_phase_state(state: G_ENUM.PhaseState):
 		return
 
 	_phase_state = state
-
-	await get_tree().create_timer(1.0).timeout
-
-	print("Phase state changed to: ", _phase_state)
-	
-		
+	await get_tree().create_timer(0.1).timeout
 	SignalManager.phase_state_changed.emit(_phase_state)
 
+func set_setup_count():
+	_setup_dice_count += 1
+	if _setup_dice_count == MAX_SETUP_DICE:
+		set_phase_state(G_ENUM.PhaseState.PREPARE)
+		_setup_dice_count = 0
 
 func _on_dice_placed(dice: Dice, position: Vector2):
 	SignalManager.remove_placed_dice.emit(dice)
-	set_phase_state(G_ENUM.PhaseState.ROLL)
 	_pending_dice_node.remove_child(dice)
 	_active_dice_tree_node.add_child(dice)
 	dice.sleeping = false
 	dice.contact_monitor = true
-	dice.call_deferred("set_dice_selection", G_ENUM.DiceSelection.ACTIVE)
+	
+	if _phase_state != G_ENUM.PhaseState.SETUP:
+		set_phase_state(G_ENUM.PhaseState.ROLL)
+		dice.call_deferred("set_dice_selection", G_ENUM.DiceSelection.ACTIVE)
+
 	dice.call_deferred("set_dice_state", G_ENUM.DiceState.STATIONARY)
 	dice.global_position = position
 
@@ -99,6 +106,8 @@ func _on_dice_placed(dice: Dice, position: Vector2):
 	for d in _active_dice_tree_node.get_children():
 		if d.dice_state == G_ENUM.DiceState.STATIONARY:
 			_stationary_dice_count += 1
+
+	set_setup_count()	
 
 
 func _on_dice_finished_moving():

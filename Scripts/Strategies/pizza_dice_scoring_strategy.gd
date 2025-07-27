@@ -94,13 +94,11 @@ func set_course_multiplier_flags_from_global_log() -> void:
 		var dice_a = first_entry["dice"]
 		var dice_b = first_entry["other_dice"]
 
-		# Only flag dice involved in the first collision for starter bonus
 		for d in [dice_a, dice_b]:
 			if G_ENUM.Course.STARTER in d._dice_courses:
 				d._starter_bonus_applied = true
 				print("Starter bonus applied to: ", d.get_dice_name())
 
-	# Dessert logic (last collision) can be handled similarly if you want:
 	if global_collision_log.size() > 0:
 		var last_entry = global_collision_log[global_collision_log.size() - 1]
 		var dice_a = last_entry["dice"]

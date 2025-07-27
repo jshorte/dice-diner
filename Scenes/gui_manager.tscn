@@ -1,20 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://bdu3kdmck2ij3"]
+[gd_scene load_steps=8 format=3 uid="uid://dd2wgfpq4cuvq"]
 
-[ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
-[ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="3_ioopo"]
-[ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/button_state.gd" id="4_owgk4"]
-[ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="4_t1xeu"]
-[ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="5_36asn"]
-[ext_resource type="Script" uid="uid://y6taemufxrvy" path="res://Scenes/dice_score.gd" id="7_8jye8"]
-[ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="7_e1fvy"]
-[ext_resource type="Script" uid="uid://de36oj3d4kxct" path="res://Scenes/setup_panel.gd" id="8_43w4t"]
+[ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_p7hlg"]
+[ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="2_2omat"]
+[ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="3_e83ki"]
+[ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="4_bmyqf"]
+[ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/button_state.gd" id="5_2fvsk"]
+[ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="6_d08pb"]
+[ext_resource type="Script" uid="uid://y6taemufxrvy" path="res://Scenes/dice_score.gd" id="7_kosud"]
 
 [node name="GUIManager" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme = ExtResource("1_rvbjj")
+theme = ExtResource("1_p7hlg")
 
 [node name="Power Bar" type="Label" parent="."]
 visible = false
@@ -37,7 +36,7 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 100.0
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="Info_Show_Hide" type="Button" parent="Top Bar/Information Bar"]
 layout_mode = 1
@@ -87,7 +86,7 @@ horizontal_alignment = 1
 [node name="Bottom Bar" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("4_t1xeu")
+script = ExtResource("3_e83ki")
 
 [node name="Dice Area" type="Panel" parent="Bottom Bar"]
 layout_mode = 0
@@ -104,7 +103,7 @@ offset_top = 570.0
 offset_right = 1145.0
 offset_bottom = 670.0
 mouse_filter = 2
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Bottom Bar/CurrentDice"]
 layout_mode = 2
@@ -126,7 +125,7 @@ offset_left = 15.0
 offset_top = 570.0
 offset_right = 115.0
 offset_bottom = 670.0
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="Deck Text" type="Label" parent="Bottom Bar/Deck"]
 layout_mode = 2
@@ -140,7 +139,7 @@ offset_left = 16.0
 offset_top = 440.0
 offset_right = 115.0
 offset_bottom = 548.0
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="DeckHBox" type="HBoxContainer" parent="Bottom Bar/DeckPreview"]
 unique_name_in_owner = true
@@ -155,7 +154,7 @@ offset_left = 1159.0
 offset_top = 570.0
 offset_right = 1259.0
 offset_bottom = 670.0
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="Discard Text" type="Label" parent="Bottom Bar/Discard"]
 layout_mode = 2
@@ -172,7 +171,7 @@ offset_right = 1260.0
 offset_bottom = 549.0
 grow_horizontal = 0
 pivot_offset = Vector2(99, 105)
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="DiscardHBox" type="HBoxContainer" parent="Bottom Bar/DiscardPreview"]
 unique_name_in_owner = true
@@ -186,7 +185,7 @@ offset_top = 570.0
 offset_right = 584.0
 offset_bottom = 670.0
 mouse_filter = 1
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Bottom Bar/Upcoming Dice"]
 layout_mode = 2
@@ -209,7 +208,7 @@ offset_left = 592.0
 offset_top = 584.0
 offset_right = 688.0
 offset_bottom = 670.0
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Bottom Bar/NextRoundPanel"]
 layout_mode = 2
@@ -233,7 +232,7 @@ layout_mode = 0
 offset_top = 123.0
 offset_right = 200.0
 offset_bottom = 423.0
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="Current Text" type="Label" parent="Active Panel/Active"]
 layout_mode = 2
@@ -262,7 +261,7 @@ offset_left = 1080.0
 offset_top = 96.0
 offset_right = 1080.0
 offset_bottom = 96.0
-script = ExtResource("5_36asn")
+script = ExtResource("4_bmyqf")
 
 [node name="Score" type="Panel" parent="Score Panel"]
 layout_mode = 0
@@ -278,21 +277,21 @@ offset_top = 120.0
 offset_bottom = 144.0
 toggle_mode = true
 icon_alignment = 1
-script = ExtResource("4_owgk4")
+script = ExtResource("5_2fvsk")
 
 [node name="ScoreContainer" type="PanelContainer" parent="Score Panel/Score"]
 layout_mode = 0
 offset_right = 197.0
 offset_bottom = 300.0
-theme_override_styles/panel = ExtResource("3_ioopo")
+theme_override_styles/panel = ExtResource("2_2omat")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Score Panel/Score/ScoreContainer"]
 layout_mode = 2
 
 [node name="Score Title Text" type="Label" parent="Score Panel/Score/ScoreContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_rvbjj")
-theme_override_fonts/font = ExtResource("7_e1fvy")
+theme = ExtResource("1_p7hlg")
+theme_override_fonts/font = ExtResource("6_d08pb")
 text = "Score"
 horizontal_alignment = 1
 
@@ -349,8 +348,8 @@ offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(115.5, 94)
-theme_override_styles/panel = ExtResource("3_ioopo")
-script = ExtResource("7_8jye8")
+theme_override_styles/panel = ExtResource("2_2omat")
+script = ExtResource("7_kosud")
 
 [node name="DiceBreakdownVBox" type="VBoxContainer" parent="DiceScore"]
 unique_name_in_owner = true
@@ -418,29 +417,6 @@ size_flags_vertical = 0
 text = "Total: 50"
 horizontal_alignment = 1
 vertical_alignment = 3
-
-[node name="Setup Panel" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 400.0
-offset_right = 863.0
-offset_bottom = 126.0
-theme_override_styles/panel = ExtResource("3_ioopo")
-script = ExtResource("8_43w4t")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Setup Panel"]
-layout_mode = 2
-
-[node name="SetupLabel" type="Label" parent="Setup Panel/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 80
-text = "Setup Phase"
-horizontal_alignment = 1
-
-[node name="InstructionLabel" type="Label" parent="Setup Panel/VBoxContainer"]
-layout_mode = 2
-text = "Place food in the green plate area"
-horizontal_alignment = 1
 
 [connection signal="pressed" from="Bottom Bar/NextRoundPanel/VBoxContainer/NextRoundButton" to="Bottom Bar" method="_on_next_round_button_pressed"]
 [connection signal="toggled" from="Score Panel/Score/ScoreButton" to="Score Panel/Score/ScoreButton" method="_on_score_button_toggled"]

@@ -47,7 +47,7 @@ var _available_values_index: int
 @onready var input: DiceInput = $DiceInput
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _dice_radius: float = $CollisionShape2D.shape.radius
-@onready var _dice_score_panel: DiceScore = get_node("/root/main/Managers/HUD/DiceScore")
+@onready var _dice_score_panel: DiceScore = get_node("/root/main/Managers/GUIManager/DiceScore")
 
 
 func initialise_values_from_template():
@@ -85,6 +85,7 @@ func initialise_values_from_template():
 
 
 func _ready() -> void:
+	add_to_group("dice")
 	SignalManager.reset_dice_score.connect(_reset_score)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	connect("body_entered", _on_body_entered)
