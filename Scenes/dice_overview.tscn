@@ -1,0 +1,333 @@
+[gd_scene load_steps=9 format=3 uid="uid://kicyujoqbgl0"]
+
+[ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="1_1kyuq"]
+[ext_resource type="Texture2D" uid="uid://ugxpxq7r2lvt" path="res://Art/Pizza/Pizza-1.png" id="2_ro8sk"]
+[ext_resource type="Texture2D" uid="uid://dxqeq6txw8iis" path="res://Art/Neapolitan/Neapolitan.png" id="3_465d4"]
+[ext_resource type="Texture2D" uid="uid://dt5pi6m4mv5be" path="res://Art/Flat White/Flat White.png" id="4_m3q8c"]
+[ext_resource type="Texture2D" uid="uid://dqy8dliyqqant" path="res://Art/Garlic/Garlic.png" id="5_83icm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g46pi"]
+atlas = ExtResource("3_465d4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7oxjd"]
+atlas = ExtResource("4_m3q8c")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61xal"]
+atlas = ExtResource("5_83icm")
+region = Rect2(0, 0, 64, 64)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1274.0
+offset_bottom = 715.0
+theme_override_styles/panel = ExtResource("1_1kyuq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 64.0
+offset_right = 1270.0
+offset_bottom = 709.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Headers" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Food" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+text = "Food"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Headers"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Type" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.1
+text = "Type"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Headers"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+text = "Tags"
+horizontal_alignment = 1
+
+[node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.3
+text = "Quality Multiplier
+0 | 1 | 2 | 3 | 4"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Description"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Pizza" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer"]
+layout_mode = 2
+text = "Pizza"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_ro8sk")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Type" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.1
+text = "Base"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+text = "Main, Baked"
+horizontal_alignment = 1
+
+[node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.3
+text = "0 | 1 | 2 | 3 | 4"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gains +1 Score per bounce"
+autowrap_mode = 2
+
+[node name="Neapolitan" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan/VBoxContainer"]
+layout_mode = 2
+text = "Neapolitan"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_g46pi")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.1
+text = "Base"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+text = "Dessert, Sweet"
+horizontal_alignment = 1
+
+[node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.3
+text = "0 | 1 | 2 | 3 | 4"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gains +5 score on first collision with environment (Food doesn't count)"
+autowrap_mode = 2
+
+[node name="Flat White" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Food" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Text" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White/Food"]
+layout_mode = 2
+text = "Flat White"
+horizontal_alignment = 1
+
+[node name="Image" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Flat White/Food"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_7oxjd")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Type" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.1
+text = "Flat"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+text = "Bitter"
+horizontal_alignment = 1
+
+[node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.3
+text = "0 | 1 | 1 | 1 | 1"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Adds face value to collided base dice (this can happen multiple times per dice)"
+autowrap_mode = 2
+
+[node name="Galic Dip" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Food" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Text" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip/Food"]
+layout_mode = 2
+text = "Galic Dip"
+horizontal_alignment = 1
+
+[node name="Image" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip/Food"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_61xal")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Type" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.1
+text = "Multi"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip"]
+custom_minimum_size = Vector2(16, 32)
+layout_mode = 2
+
+[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+text = "Sour"
+horizontal_alignment = 1
+
+[node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.3
+text = "0 | 1 | 1 | 2 | 3"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Galic Dip"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Multiplies base dice by quality (one application per dice per turn)"
+autowrap_mode = 2

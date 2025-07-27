@@ -3,7 +3,7 @@ class_name Dice extends RigidBody2D
 
 const LERP_SPEED: float = 2.0
 const LERP_THRESHOLD: int = 30
-const MAXIMUM_STRENGTH: float = 3000.0
+const MAXIMUM_STRENGTH: float = 1000.0
 const MINIMUM_STRENGTH: float = 100.0
 const STRENGTH_MULTIPLIER: float = 10.0
 
