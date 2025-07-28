@@ -95,6 +95,7 @@ func _on_dice_placed(dice: Dice, position: Vector2):
 	dice.contact_monitor = true
 	
 	if _phase_state != G_ENUM.PhaseState.SETUP:
+		print("Setting to roll phase")
 		set_phase_state(G_ENUM.PhaseState.ROLL)
 		dice.call_deferred("set_dice_selection", G_ENUM.DiceSelection.ACTIVE)
 
@@ -107,7 +108,8 @@ func _on_dice_placed(dice: Dice, position: Vector2):
 		if d.dice_state == G_ENUM.DiceState.STATIONARY:
 			_stationary_dice_count += 1
 
-	set_setup_count()	
+	if _phase_state == G_ENUM.PhaseState.SETUP:		
+		set_setup_count()	
 
 
 func _on_dice_finished_moving():

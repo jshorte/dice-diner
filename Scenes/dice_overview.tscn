@@ -331,3 +331,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Multiplies base dice by quality (one application per dice per turn)"
 autowrap_mode = 2
+
+[node name="Information" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Text" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Information"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Starter: 2x score if this was the first food on food collision
+Dessert: 2x score if this was the last food on food collision
+"
+horizontal_alignment = 1

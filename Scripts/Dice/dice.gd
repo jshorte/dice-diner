@@ -112,6 +112,11 @@ func _on_body_entered(body: Node) -> void:
 		var impact_normal = (global_position - body.global_position).normalized()
 		var impact_strength = clamp((linear_velocity - body.linear_velocity).length() / 1000.0, 0, 1)
 		vfx.spawn_impact_particles(impact_point, impact_normal, impact_strength)
+	else:
+		# Non-dice collision
+		if _dice_type == G_ENUM.DiceType.NEAPOLITAN:
+			_score = 5
+			SignalManager.dice_score_updated.emit(self, _score)
 
 	if _dice_type == G_ENUM.DiceType.PIZZA:
 		_score += 1

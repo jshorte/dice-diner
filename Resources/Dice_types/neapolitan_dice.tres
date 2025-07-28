@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="PizzaTemplate" load_steps=2 format=3 uid="uid://d1ext8a24331w"]
+
+[ext_resource type="Script" uid="uid://cch8ohfe7e5n5" path="res://Scripts/Dice/Templates/pizza_template.gd" id="1_t6hbj"]
+
+[resource]
+script = ExtResource("1_t6hbj")
+dice_name = "Neapolitan"
+is_flat_preset = false
+is_multiplier_preset = false
+base_flat = 0
+base_multiplier = 1.0
+dice_type = 3
+dice_score_type = 0
+dice_taste = Array[int]([1])
+dice_preparation = Array[int]([0])
+dice_course = Array[int]([3])
+prepared_values = Array[int]([1, 2, 3, 4])
+dice_sprite_animation_path = "res://Animations/neapolitan_spriteframes.tres"
+score_map = Dictionary[int, float]({
+0: 0.0,
+1: 1.0,
+2: 2.0,
+3: 3.0,
+4: 4.0
+})
+multiplier_map = Dictionary[int, float]({
+0: 0.0,
+1: 1.0,
+2: 1.0,
+3: 1.0,
+4: 1.0
+})
+flat_map = Dictionary[int, float]({
+0: 1.0,
+1: 1.0,
+2: 1.0,
+3: 1.0,
+4: 1.0
+})

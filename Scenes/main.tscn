@@ -19,7 +19,7 @@ size = Vector2(32, 56)
 size = Vector2(16, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bo1nx"]
-size = Vector2(1008, 100)
+size = Vector2(1008, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8gbba"]
 size = Vector2(93, 644.5)
@@ -151,14 +151,14 @@ script = ExtResource("2_jjvhh")
 position = Vector2(0, -20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
-position = Vector2(640, 100)
+position = Vector2(640, 133)
 shape = SubResource("RectangleShape2D_bo1nx")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, 721)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
-position = Vector2(640, -113)
+position = Vector2(640, -145)
 shape = SubResource("RectangleShape2D_bo1nx")
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="Walls" groups=["Wall"]]
@@ -302,6 +302,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_6bp64")
 [node name="ActiveDice" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Dice Overview" parent="." instance=ExtResource("8_344ge")]
+[node name="Food Compendium" parent="." instance=ExtResource("8_344ge")]
 visible = false
 script = ExtResource("9_ynf5e")
