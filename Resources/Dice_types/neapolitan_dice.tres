@@ -14,7 +14,7 @@ dice_score_type = 0
 dice_taste = Array[int]([1])
 dice_preparation = Array[int]([0])
 dice_course = Array[int]([3])
-prepared_values = Array[int]([1, 2, 3, 4])
+prepared_values = Array[int]([2, 2, 3, 3])
 dice_sprite_animation_path = "res://Animations/neapolitan_spriteframes.tres"
 score_map = Dictionary[int, float]({
 0: 0.0,

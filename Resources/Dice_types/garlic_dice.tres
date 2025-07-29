@@ -14,7 +14,7 @@ dice_score_type = 2
 dice_taste = Array[int]([3])
 dice_preparation = Array[int]([0])
 dice_course = Array[int]([0])
-prepared_values = Array[int]([1, 2, 3, 4])
+prepared_values = Array[int]([1, 2, 2, 3])
 dice_sprite_animation_path = "res://Animations/garlic_spriteframe.tres"
 score_map = Dictionary[int, float]({
 0: 0.0,
@@ -26,9 +26,9 @@ score_map = Dictionary[int, float]({
 multiplier_map = Dictionary[int, float]({
 0: 0.0,
 1: 1.0,
-2: 1.0,
-3: 2.0,
-4: 3.0
+2: 2.0,
+3: 3.0,
+4: 4.0
 })
 flat_map = Dictionary[int, float]({
 0: 1.0,

@@ -14,13 +14,13 @@ dice_score_type = 0
 dice_taste = Array[int]([1])
 dice_preparation = Array[int]([0])
 dice_course = Array[int]([3])
-prepared_values = Array[int]([1, 2, 3, 4])
+prepared_values = Array[int]([1, 2, 2, 4])
 dice_sprite_animation_path = "res://Animations/cookie_spriteframes.tres"
 score_map = Dictionary[int, float]({
 0: 0.0,
 1: 1.0,
 2: 2.0,
-3: 2.0,
+3: 3.0,
 4: 4.0
 })
 multiplier_map = Dictionary[int, float]({
