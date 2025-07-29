@@ -23,6 +23,9 @@ func _on_phase_state_changed(new_phase: G_ENUM.PhaseState):
 		G_ENUM.PhaseState.ROLL:
 			_phase_label.text = "Roll Phase"
 			_phase_instruction_label.text = "Launch your food!"
+		G_ENUM.PhaseState.ROLLING:
+			_phase_label.text = "Rolling Phase"
+			_phase_instruction_label.text = "Food is rolling, wait for it to stop."
 		G_ENUM.PhaseState.SCORE:
 			_phase_label.text = "Score Phase"
 			_phase_instruction_label.text = "Press \"Next Course\" to go to the next course."

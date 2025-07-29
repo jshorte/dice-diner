@@ -14,6 +14,7 @@ const STRENGTH_MULTIPLIER: float = 10.0
 
 var strategy: ScoringStrategy = null
 var collision_log: Array[Dictionary] = []
+var environment_collision_log: Array[Dictionary] = []
 var contributions: Dictionary = {}
 var contributions_from: Dictionary = {}
 
@@ -104,7 +105,7 @@ func _physics_process(delta: float) -> void:
 
 	set_dice_state(new_state)
 
-
+# TODO: Move food specific scoring logic to strategy files (compromise: may lose live updates)
 func _on_body_entered(body: Node) -> void:
 	if body is Dice:
 		log_collision(body)
@@ -113,7 +114,7 @@ func _on_body_entered(body: Node) -> void:
 		var impact_strength = clamp((linear_velocity - body.linear_velocity).length() / 1000.0, 0, 1)
 		vfx.spawn_impact_particles(impact_point, impact_normal, impact_strength)
 	else:
-		# Non-dice collision
+		log_environment_collision(body)
 		if _dice_type == G_ENUM.DiceType.NEAPOLITAN:
 			_score = 5
 			SignalManager.dice_score_updated.emit(self, _score)
@@ -123,6 +124,9 @@ func _on_body_entered(body: Node) -> void:
 		SignalManager.dice_score_updated.emit(self, _score)
 		print("Score increased to: ", _score)
 
+	if _dice_type == G_ENUM.DiceType.COOKIE:
+		SignalManager.dice_score_updated.emit(self, _score)
+		_score = max(_score - 2, 0)
 
 func _on_phase_state_changed(new_phase: G_ENUM.PhaseState) -> void:
 	_phase_state = new_phase
@@ -232,6 +236,15 @@ func log_collision(other_dice: Dice) -> void:
 	})
 
 
+func log_environment_collision(body: Node) -> void:
+	environment_collision_log.append({
+		"name": _dice_name,
+		"other_body": body,
+		"processed": false,
+		"timestamp": Time.get_ticks_msec(),
+	})
+
+
 func roll_face():
 	if not dice_template:
 		print("Error: Dice template not set up correctly.")
@@ -277,6 +290,7 @@ func _reset_score():
 	_starter_bonus_applied = false
 	_dessert_bonus_applied = false
 	collision_log.clear()
+	environment_collision_log.clear()
 	SignalManager.clear_global_collision_log.emit()
 
 
@@ -303,6 +317,11 @@ func get_dice_type() -> G_ENUM.DiceType:
 
 func get_score() -> int:
 	return _score
+
+
+func set_score(value: int):
+	_score = value
+	SignalManager.dice_score_updated.emit(self, _score)
 
 
 func get_score_type() -> G_ENUM.ScoreType:

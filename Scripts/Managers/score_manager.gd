@@ -20,8 +20,14 @@ func _on_dice_placed(dice: Dice, position: Vector2):
 	
 
 func _on_phase_state_changed(new_state: G_ENUM.PhaseState):
+	if new_state == G_ENUM.PhaseState.ROLLING:
+		for dice in dice_to_score:
+			if dice.strategy:
+				dice.strategy.set_initial_score(dice)
+				
 	if new_state == G_ENUM.PhaseState.SCORE:
 		_calculate_score()
+		
 
 func get_global_collision_log() -> Array[Dictionary]:
 	return global_collision_log

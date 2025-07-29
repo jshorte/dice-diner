@@ -71,7 +71,7 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 		course_str = "Dessert bonus: x%.1f\n" % [get_dessert_multiplier()]
 
 	return {
-		"base": base,
+		"base": str(base),
 		"quality": quality,
 		"course": course_str,
 		"total": total,

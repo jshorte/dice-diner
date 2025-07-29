@@ -1,7 +1,17 @@
-class_name NeapolitanDiceScoringStrategy extends ScoringStrategy
+class_name CookieDiceScoringStrategy extends ScoringStrategy
+
+var cookie_initial_score: int = 8
 
 func get_score(dice: Dice) -> float:
 	return dice.get_score()
+
+
+func get_initial_score(dice: Dice) -> int:
+	return cookie_initial_score
+
+
+func set_initial_score(dice: Dice) -> void:
+	dice.set_score(cookie_initial_score)
 
 
 func get_score_map(dice: Dice) -> float:
@@ -57,12 +67,13 @@ func calculate_contributions(dice: Dice):
 	}
 
 func get_score_breakdown(dice: Dice) -> Dictionary:
-	var base = get_score(dice)
+	var base = dice.strategy.get_initial_score(dice)
 	var quality = get_score_map(dice)
 	var course_multi = get_course_multiplier(dice)
 	var total = get_reported_score(dice)
-
 	var course_str = ""
+
+
 	if dice._starter_bonus_applied and dice._dessert_bonus_applied:
 		course_str = "Starter and Dessert bonus: (x%.1f + x%.1f)\n" % [get_starter_multiplier(), get_dessert_multiplier()]
 	elif dice._starter_bonus_applied:
@@ -71,7 +82,11 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 		course_str = "Dessert bonus: x%.1f\n" % [get_dessert_multiplier()]
 
 	return {
-		"base": str(base),
+		"base": "Initial [%d] reduced per collision [%d x -2] = %d" % [
+			base,
+			(dice.collision_log.size() + dice.environment_collision_log.size()),
+			dice.get_score()
+		],
 		"quality": quality,
 		"course": course_str,
 		"total": total,

@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://byyj30j82puw2"]
+
+[ext_resource type="Texture2D" uid="uid://cjfrnjvfimpd7" path="res://Art/Cookie/Cookie.png" id="1_q4mch"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70vsi"]
+atlas = ExtResource("1_q4mch")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccxxk"]
+atlas = ExtResource("1_q4mch")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p3gww"]
+atlas = ExtResource("1_q4mch")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ao6oi"]
+atlas = ExtResource("1_q4mch")
+region = Rect2(64, 64, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70vsi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccxxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p3gww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ao6oi")
+}],
+"loop": true,
+"name": &"All",
+"speed": 5.0
+}]

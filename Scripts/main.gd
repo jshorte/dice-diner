@@ -28,6 +28,7 @@ func _ready():
 	SignalManager.dice_finished_moving.connect(_on_dice_finished_moving)
 	SignalManager.score_completed.connect(_on_score_completed)
 	SignalManager.draw_completed.connect(_on_draw_completed)
+	SignalManager.dice_launched.connect(_on_dice_launched)
 	SignalManager.emit_ready.emit() # Tell children that the main node is ready
 
 
@@ -127,3 +128,7 @@ func _on_score_completed():
 func _on_draw_completed():
 	set_phase_state(G_ENUM.PhaseState.PREPARE)
 #endregion State Management
+
+
+func _on_dice_launched():
+	set_phase_state(G_ENUM.PhaseState.ROLLING)

@@ -44,7 +44,7 @@ func update_score_labels():
 		var breakdown = _dice.strategy.get_score_breakdown(_dice)
 
 		var label_map: Dictionary = {
-			"base": [base_label, "Base: %d"],
+			"base": [base_label, "Base: %s"],
 			"flat": [flat_label, "Flat Value: +%d"],
 			"quality": [quality_label, "Quality: x%d"],
 			"multiplier": [multiplier_label, "Multiplier: x%d"],

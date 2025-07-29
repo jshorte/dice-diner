@@ -77,7 +77,7 @@ func _on_highlight_related_dice(dice: Dice, highlight: bool):
 					contributing_dice.vfx.highlight_contributing(false)
 
 	for contributed_dice in dice_to_highlight_from:
-		if contributed_dice.get_dice_type() == G_ENUM.DiceType.PIZZA:
+		if contributed_dice.get_score_type() == G_ENUM.ScoreType.BASE:
 			continue
 			
 		for label in dice_score_labels:
