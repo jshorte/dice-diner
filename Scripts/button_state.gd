@@ -9,6 +9,7 @@ func _ready():
 	var score_panel = get_parent()
 	SCORE_PANEL_SHOWN_POS = score_panel.position
 	SCORE_PANEL_HIDDEN_POS = Vector2(score_panel.position.x + score_panel.size.x, score_panel.position.y)
+	_on_score_button_toggled(true)
 
 func _on_score_button_toggled(toggled_on: bool) -> void:
 	var score_panel = get_parent()
@@ -26,7 +27,7 @@ func _on_score_button_toggled(toggled_on: bool) -> void:
 func _on_phase_state_changed(new_state: G_ENUM.PhaseState) -> void:
 	_phase_state = new_state
 
-	if _phase_state == G_ENUM.PhaseState.ROLL:
+	if _phase_state == G_ENUM.PhaseState.ROLL or _phase_state == G_ENUM.PhaseState.PREPARE:
 		_on_score_button_toggled(true)
 		return
 

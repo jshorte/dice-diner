@@ -19,6 +19,7 @@ var contributions: Dictionary = {}
 var contributions_from: Dictionary = {}
 
 var _score: int = 0
+var _banked_score: int = 0
 var _calculated_score: int = 0
 var _reported_score: int = 0
 var _face_value: int
@@ -280,6 +281,7 @@ func _create_custom_animation():
 
 
 func _reset_score():
+	_banked_score += _calculated_score
 	_score = 0
 	_flat_value = 0
 	_multiplier_value = 1.0
@@ -319,9 +321,15 @@ func get_score() -> int:
 	return _score
 
 
+func get_banked_score() -> int:
+	return _banked_score
+
 func set_score(value: int):
 	_score = value
 	SignalManager.dice_score_updated.emit(self, _score)
+
+func set_stored(value: int):
+	_banked_score += value
 
 
 func get_score_type() -> G_ENUM.ScoreType:

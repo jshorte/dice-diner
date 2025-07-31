@@ -9,11 +9,11 @@ func set_initial_score(_dice: Dice) -> void:
 func calculate_contributions(_dice: Dice):
 	pass
 
-func get_calculated_score(_dice: Dice) -> float:
-	return 0.0
+func get_calculated_score(_dice: Dice) -> int:
+	return 0
 
-func get_reported_score(_dice: Dice) -> float:
-	return 0.0
+func get_reported_score(_dice: Dice) -> int:
+	return 0
 
 func get_face_value(_dice: Dice) -> int:
 	return _dice._face_value
@@ -45,8 +45,8 @@ func get_flat_map(_dice: Dice) -> int:
 func get_flat_mapped(_dice: Dice) -> int:
 	return 0
 
-func get_score(_dice: Dice) -> float:
-	return 0.0
+func get_score(_dice: Dice) -> int:
+	return 0
 
 func get_score_map(_dice: Dice) -> float:
 	return 0.0

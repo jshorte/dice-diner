@@ -8,6 +8,7 @@ var _dice: Dice
 @onready var multiplier_label: Label = get_node("%MultiplierLabel")
 @onready var course_label: Label = get_node("%CourseLabel")
 @onready var applied_label: Label = get_node("%AppliedLabel")
+@onready var stored_label: Label = get_node("%StoredLabel")
 @onready var total_label: Label = get_node("%TotalLabel")
 @onready var vbox: VBoxContainer = get_node("%DiceBreakdownVBox")
 
@@ -38,6 +39,7 @@ func update_score_position() -> void:
 		(screen_rect.x - panel_size.x) / 2,
 		screen_rect.y * 0.75 - panel_size.y
 	)
+	
 
 func update_score_labels():
 	if _dice and _dice.strategy:        
@@ -50,6 +52,7 @@ func update_score_labels():
 			"multiplier": [multiplier_label, "Multiplier: x%d"],
 			"applied": [applied_label, "%s"],
 			"course": [course_label, "%s"],
+			"stored": [stored_label, "Stored: %d"],
 		}
 
 		for key in label_map.keys():
@@ -61,7 +64,7 @@ func update_score_labels():
 			else:
 				label.visible = false
 
-		total_label.text = "Total: %d" % breakdown["total"]
+		total_label.text = "Total: %s" % breakdown["total"]
 
 		size.x = 0
 		size.y = 0

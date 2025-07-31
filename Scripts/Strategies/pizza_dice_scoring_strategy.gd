@@ -1,6 +1,6 @@
 class_name PizzaDiceScoringStrategy extends ScoringStrategy
 
-func get_score(dice: Dice) -> float:
+func get_score(dice: Dice) -> int:
 	return dice.get_score()
 
 
@@ -29,12 +29,12 @@ func get_total_multiplier(dice: Dice) -> float:
 	return dice.get_total_multiplier()
 
 
-func get_reported_score(dice: Dice) -> float:
-	return get_score(dice) * get_score_map(dice) * get_course_multiplier(dice)
+func get_reported_score(dice: Dice) -> int:
+	return int(get_score(dice) * get_score_map(dice) * get_course_multiplier(dice))
 
 
-func get_calculated_score(dice: Dice) -> float:
-	return (get_score(dice) + get_flat(dice)) * get_course_multiplier(dice) * get_score_map(dice) * get_total_multiplier(dice)
+func get_calculated_score(dice: Dice) -> int:
+	return int((get_score(dice) + get_flat(dice)) * get_course_multiplier(dice) * get_score_map(dice) * get_total_multiplier(dice))
 
 
 func process_score(dice: Dice) -> void:
@@ -60,7 +60,7 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 	var base = get_score(dice)
 	var quality = get_score_map(dice)
 	var course_multi = get_course_multiplier(dice)
-	var total = get_reported_score(dice)
+	var total = str(get_reported_score(dice)) + " (" + str(get_calculated_score(dice)) + ")"
 
 	var course_str = ""
 	if dice._starter_bonus_applied and dice._dessert_bonus_applied:
@@ -74,7 +74,8 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 		"base": str(base),
 		"quality": quality,
 		"course": course_str,
-		"total": total,
+		"stored": dice.get_banked_score(),
+		"total": total
 	}
 
 

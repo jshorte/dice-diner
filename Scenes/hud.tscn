@@ -410,6 +410,12 @@ size_flags_vertical = 0
 text = "THIS IS A LOT OF TEXT"
 horizontal_alignment = 1
 
+[node name="StoredLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stored: 5"
+horizontal_alignment = 1
+
 [node name="TotalLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -420,6 +426,7 @@ horizontal_alignment = 1
 vertical_alignment = 3
 
 [node name="Phase Panel" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 400.0
 offset_top = 8.0
