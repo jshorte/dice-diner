@@ -1,11 +1,11 @@
 extends Node
 
 var _dice_scene = preload("res://Scenes/dice.tscn")
-var _pizza_dice_template_path = "res://Resources/Dice_types/pizza_dice.tres"
-var _garlic_dice_template_path = "res://Resources/Dice_types/garlic_dice.tres"
-var _flatwhite_dice_template_path = "res://Resources/Dice_types/flat_white_dice.tres"
-var _neapolitan_dice_template_path = "res://Resources/Dice_types/neapolitan_dice.tres"
-var _cookie_dice_template_path = "res://Resources/Dice_types/cookie_dice.tres"
+var _pizza_dice_template_path = "res://resources/dice_types/pizza_dice.tres"
+var _garlic_dice_template_path = "res://resources/dice_types/garlic_dice.tres"
+var _flatwhite_dice_template_path = "res://resources/dice_types/flat_white_dice.tres"
+var _neapolitan_dice_template_path = "res://resources/dice_types/neapolitan_dice.tres"
+var _cookie_dice_template_path = "res://resources/dice_types/cookie_dice.tres"
 
 var _deck : Array = []
 var _next : Array = []

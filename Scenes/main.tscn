@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bjkdf4cq7jghc" path="res://Art/Scenery/Plate.png" id="6_21xkr"]
 [ext_resource type="Texture2D" uid="uid://byt7dq04cwky7" path="res://Art/Scenery/Fork.aseprite" id="7_6bp64"]
 [ext_resource type="PackedScene" uid="uid://kicyujoqbgl0" path="res://Scenes/dice_overview.tscn" id="8_344ge"]
+[ext_resource type="Script" uid="uid://6t1gwq3s61k1" path="res://Scripts/Managers/customer_manager.gd" id="9_d1ilt"]
 [ext_resource type="Script" uid="uid://bo5gb3vw83e4n" path="res://Scenes/dice_overview.gd" id="9_ynf5e"]
-[ext_resource type="PackedScene" uid="uid://c8wc4wg6xv6st" path="res://Scenes/customer.tscn" id="10_hptm8"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kry3j"]
 
@@ -141,24 +141,15 @@ shape = SubResource("RectangleShape2D_ynf5e")
 
 [node name="Customers" type="Node2D" parent="."]
 
-[node name="Customer" parent="Customers" instance=ExtResource("10_hptm8")]
-position = Vector2(8, 376)
-rotation = 1.57079
-
-[node name="Customer2" parent="Customers" instance=ExtResource("10_hptm8")]
-position = Vector2(576, 0)
-rotation = -3.14159
-
-[node name="Customer3" parent="Customers" instance=ExtResource("10_hptm8")]
-position = Vector2(1272, 344)
-rotation = -1.57079
-
 [node name="Managers" type="Node" parent="."]
 
 [node name="DeckManager" type="Node" parent="Managers"]
 script = ExtResource("2_jjvhh")
 
 [node name="GUIManager" parent="Managers" instance=ExtResource("2_bo1nx")]
+
+[node name="CustomerManager" type="Node" parent="Managers"]
+script = ExtResource("9_d1ilt")
 
 [node name="Walls" type="Node2D" parent="." groups=["Wall"]]
 
@@ -320,3 +311,16 @@ unique_name_in_owner = true
 [node name="Food Compendium" parent="." instance=ExtResource("8_344ge")]
 visible = false
 script = ExtResource("9_ynf5e")
+
+[node name="SpawnPositions" type="Node" parent="."]
+
+[node name="CustomerPositions" type="Node" parent="SpawnPositions"]
+
+[node name="pos1" type="Node2D" parent="SpawnPositions/CustomerPositions"]
+position = Vector2(136, 256)
+
+[node name="pos3" type="Node2D" parent="SpawnPositions/CustomerPositions"]
+position = Vector2(1152, 448)
+
+[node name="pos2" type="Node2D" parent="SpawnPositions/CustomerPositions"]
+position = Vector2(664, 128)

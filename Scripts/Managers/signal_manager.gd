@@ -5,6 +5,7 @@ signal hud_manager_ready
 signal deck_manager_ready
 signal score_manager_ready
 signal score_bar_manager_ready
+signal customer_manager_ready
 signal emit_ready
 
 # Dice management
@@ -14,6 +15,10 @@ signal dice_launched
 signal dice_started_moving
 signal dice_finished_moving
 signal reset_dice_score
+
+# Customer management
+signal request_customer_load
+signal customer_added
 
 # Deck management
 signal remove_placed_dice

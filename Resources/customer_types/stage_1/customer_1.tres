@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CustomerTemplate" load_steps=2 format=3 uid="uid://6pwlwxy67doh"]
+
+[ext_resource type="Script" uid="uid://dbfx6v814rw5y" path="res://Scripts/Customer/customer_template.gd" id="1_f0wcq"]
+
+[resource]
+script = ExtResource("1_f0wcq")
+customer_course_preferences = Array[int]([2])
+customer_taste_preferences = Array[int]([0])
+customer_preparation_preferences = Array[int]([0])
+customer_preference_map = Dictionary[int, float]({
+1: 1.0,
+2: 1.0,
+3: 1.0
+})
+customer_taste_map = Dictionary[int, float]({
+1: 1.0,
+2: 1.0,
+3: 1.0,
+4: 1.0,
+5: 1.0
+})
+customer_preparation_map = Dictionary[int, float]({
+1: 1.0,
+2: 1.0,
+3: 1.0,
+4: 1.0
+})
+metadata/_custom_type_script = "uid://dbfx6v814rw5y"

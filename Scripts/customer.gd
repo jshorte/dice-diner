@@ -1,7 +1,17 @@
 class_name Customer extends Node2D
 
+@export var customer_template: CustomerTemplate = null
+
 var consumption_log: Array[Dictionary] = []
 var _phase_state: G_ENUM.PhaseState
+
+var _course_preferences: Array[G_ENUM.Course]
+var _taste_preferences: Array[G_ENUM.Tastes]
+var _preparation_preferences: Array[G_ENUM.Preparation]
+
+var _course_map: Dictionary[G_ENUM.Course, float]
+var _taste_map: Dictionary[G_ENUM.Tastes, float]
+var _preparation_map: Dictionary[G_ENUM.Preparation, float]
 
 @onready var _area: Area2D = $Area2D
 
@@ -35,3 +45,16 @@ func add_consumption_log_entry(dice: Dice) -> void:
 			"dice": dice,
 			"timestamp": Time.get_ticks_msec()
 		})
+
+func initialise_values_from_template() -> void:
+	if not customer_template:
+		push_error(false, "No template provided for customer initialisation.")
+		return
+
+	_course_preferences = customer_template.customer_course_preferences.duplicate()
+	_taste_preferences = customer_template.customer_taste_preferences.duplicate()
+	_preparation_preferences = customer_template.customer_preparation_preferences.duplicate()
+
+	_course_map = customer_template.customer_preference_map.duplicate()
+	_taste_map = customer_template.customer_taste_map.duplicate()
+	_preparation_map = customer_template.customer_preparation_map.duplicate()

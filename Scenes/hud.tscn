@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bdu3kdmck2ij3"]
+[gd_scene load_steps=10 format=3 uid="uid://bdu3kdmck2ij3"]
 
 [ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="3_ioopo"]
-[ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/button_state.gd" id="4_owgk4"]
+[ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/score_button.gd" id="4_owgk4"]
 [ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="4_t1xeu"]
 [ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="5_36asn"]
+[ext_resource type="Script" uid="uid://du0m7eqpuq67o" path="res://Scenes/order_button.gd" id="7_7gr8i"]
 [ext_resource type="Script" uid="uid://y6taemufxrvy" path="res://Scenes/dice_score.gd" id="7_8jye8"]
 [ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="7_e1fvy"]
 [ext_resource type="Script" uid="uid://de36oj3d4kxct" path="res://Scripts/UI/phase_panel.gd" id="8_43w4t"]
@@ -332,6 +333,79 @@ text = "Total: 0"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="Order Panel" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1.0
+offset_top = 96.0
+offset_right = 1.0
+offset_bottom = 96.0
+
+[node name="Order" type="Panel" parent="Order Panel"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 199.0
+offset_bottom = 308.0
+
+[node name="OrderButton" type="Button" parent="Order Panel/Order"]
+layout_mode = 2
+offset_left = 199.0
+offset_top = 120.0
+offset_right = 207.0
+offset_bottom = 144.0
+toggle_mode = true
+icon_alignment = 1
+script = ExtResource("7_7gr8i")
+
+[node name="OrderContainer" type="PanelContainer" parent="Order Panel/Order"]
+layout_mode = 0
+offset_right = 197.0
+offset_bottom = 300.0
+theme_override_styles/panel = ExtResource("3_ioopo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Order Panel/Order/OrderContainer"]
+layout_mode = 2
+
+[node name="Order Title Text" type="Label" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_rvbjj")
+theme_override_fonts/font = ExtResource("7_e1fvy")
+text = "Orders"
+horizontal_alignment = 1
+
+[node name="Score Space" type="Control" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="DiceScoreVBox" type="VBoxContainer" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Total Space" type="Control" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScoreTextHBox" type="VBoxContainer" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RoundScoreText" type="Label" parent="Order Panel/Order/OrderContainer/VBoxContainer/ScoreTextHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 2.0
+text = "Round: 0"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="TotalScoreText" type="Label" parent="Order Panel/Order/OrderContainer/VBoxContainer/ScoreTextHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 2.0
+text = "Total: 0"
+horizontal_alignment = 1
+vertical_alignment = 2
+
 [node name="DiceScore" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -453,3 +527,4 @@ horizontal_alignment = 1
 
 [connection signal="pressed" from="Bottom Bar/NextRoundPanel/VBoxContainer/NextRoundButton" to="Bottom Bar" method="_on_next_round_button_pressed"]
 [connection signal="toggled" from="Score Panel/Score/ScoreButton" to="Score Panel/Score/ScoreButton" method="_on_score_button_toggled"]
+[connection signal="toggled" from="Order Panel/Order/OrderButton" to="Order Panel/Order/OrderButton" method="_on_order_button_toggled"]

@@ -4,7 +4,7 @@
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="2_2omat"]
 [ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="3_e83ki"]
 [ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="4_bmyqf"]
-[ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/button_state.gd" id="5_2fvsk"]
+[ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/score_button.gd" id="5_2fvsk"]
 [ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="6_d08pb"]
 [ext_resource type="Script" uid="uid://y6taemufxrvy" path="res://Scenes/dice_score.gd" id="7_kosud"]
 

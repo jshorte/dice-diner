@@ -58,6 +58,8 @@ func _calculate_score():
 		
 	for dice in dice_to_score:
 		round_score += dice.get_calculated_score()
+
+	# TODO: Get a list of customers and process their scores (Dice they consumed = calculated score + stored score)
 	
 	total_score += round_score
 

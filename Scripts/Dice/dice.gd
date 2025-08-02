@@ -68,23 +68,6 @@ func initialise_values_from_template():
 		_face_value = _available_values[_available_values_index]
 		_create_custom_animation()
 
-		# Print enum keys for Taste, Preparation, Course
-		var taste_keys = []
-		for t in _dice_taste:
-			taste_keys.append(G_ENUM.Tastes.keys()[t])
-		var prep_keys = []
-		for p in _dice_preparation:
-			prep_keys.append(G_ENUM.Preparation.keys()[p])
-		var course_keys = []
-		for c in _dice_courses:
-			course_keys.append(G_ENUM.Course.keys()[c])
-		print("Name: %s, Taste: %s, Preparation: %s, Course: %s" % [
-			_dice_name,
-			String(", ").join(taste_keys),
-			String(", ").join(prep_keys),
-			String(", ").join(course_keys)
-		])
-
 
 func _ready() -> void:
 	add_to_group("dice")
