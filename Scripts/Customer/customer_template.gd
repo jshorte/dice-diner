@@ -2,6 +2,7 @@ class_name CustomerTemplate extends Resource
 
 var definitions = load("res://Scripts/g_enum.gd")
 
+@export var customer_appetite: int = 1
 @export var customer_course_preferences: Array[G_ENUM.Course] = []
 @export var customer_taste_preferences: Array[G_ENUM.Tastes] = []
 @export var customer_preparation_preferences: Array[G_ENUM.Preparation] = []

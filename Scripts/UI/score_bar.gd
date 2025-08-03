@@ -26,8 +26,9 @@ func _emit_ready():
 
 
 func _on_dice_placed(dice: Dice, position: Vector2):
-	dice_to_score.append(dice)
 	var label = dice_score_label_scene.instantiate()
+	
+	dice_to_score.append(dice)
 	dice_score_vbox.add_child(label)
 	dice_score_labels.append(label)
 	label.set_dice(dice)

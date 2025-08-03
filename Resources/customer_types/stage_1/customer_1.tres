@@ -4,12 +4,13 @@
 
 [resource]
 script = ExtResource("1_f0wcq")
+customer_appetite = 40
 customer_course_preferences = Array[int]([2])
 customer_taste_preferences = Array[int]([0])
 customer_preparation_preferences = Array[int]([0])
 customer_preference_map = Dictionary[int, float]({
 1: 1.0,
-2: 1.0,
+2: 2.0,
 3: 1.0
 })
 customer_taste_map = Dictionary[int, float]({

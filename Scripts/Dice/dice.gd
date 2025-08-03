@@ -307,16 +307,23 @@ func get_score() -> int:
 func get_banked_score() -> int:
 	return _banked_score
 
+
 func set_score(value: int):
 	_score = value
 	SignalManager.dice_score_updated.emit(self, _score)
+
 
 func set_stored(value: int):
 	_banked_score += value
 
 
+func get_stored_score() -> int:
+	return _banked_score
+
+
 func get_score_type() -> G_ENUM.ScoreType:
 	return _score_type
+
 
 func get_reported_score() -> int:
 	return _reported_score

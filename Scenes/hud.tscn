@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdu3kdmck2ij3"]
+[gd_scene load_steps=11 format=3 uid="uid://bdu3kdmck2ij3"]
 
 [ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="3_ioopo"]
 [ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/score_button.gd" id="4_owgk4"]
 [ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="4_t1xeu"]
 [ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="5_36asn"]
+[ext_resource type="Script" uid="uid://dw34mqjgusbj2" path="res://Scenes/customer_bar.gd" id="7_5ep0j"]
 [ext_resource type="Script" uid="uid://du0m7eqpuq67o" path="res://Scenes/order_button.gd" id="7_7gr8i"]
 [ext_resource type="Script" uid="uid://y6taemufxrvy" path="res://Scenes/dice_score.gd" id="7_8jye8"]
 [ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="7_e1fvy"]
@@ -339,12 +340,14 @@ offset_left = 1.0
 offset_top = 96.0
 offset_right = 1.0
 offset_bottom = 96.0
+script = ExtResource("7_5ep0j")
 
 [node name="Order" type="Panel" parent="Order Panel"]
 layout_mode = 0
 offset_top = 8.0
 offset_right = 199.0
 offset_bottom = 308.0
+pivot_offset = Vector2(199, 0)
 
 [node name="OrderButton" type="Button" parent="Order Panel/Order"]
 layout_mode = 2
@@ -377,7 +380,8 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="DiceScoreVBox" type="VBoxContainer" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+[node name="CustomerScoreVBox" type="VBoxContainer" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Total Space" type="Control" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
