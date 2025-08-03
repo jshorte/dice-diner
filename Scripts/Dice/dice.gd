@@ -70,6 +70,8 @@ func initialise_values_from_template():
 
 
 func _ready() -> void:
+	collision_log.clear()
+	environment_collision_log.clear()
 	add_to_group("dice")
 	SignalManager.reset_score.connect(_reset_score)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
@@ -264,7 +266,6 @@ func _create_custom_animation():
 
 
 func _reset_score():
-	_banked_score += _calculated_score
 	_score = 0
 	_flat_value = 0
 	_multiplier_value = 1.0
@@ -304,7 +305,7 @@ func get_score() -> int:
 	return _score
 
 
-func get_banked_score() -> int:
+func get_stored_score() -> int:
 	return _banked_score
 
 
@@ -313,12 +314,12 @@ func set_score(value: int):
 	SignalManager.dice_score_updated.emit(self, _score)
 
 
-func set_stored(value: int):
+func set_stored_score(value: int):
 	_banked_score += value
 
 
-func get_stored_score() -> int:
-	return _banked_score
+func reset_stored_score():
+	_banked_score = 0
 
 
 func get_score_type() -> G_ENUM.ScoreType:

@@ -74,7 +74,7 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 		"base": str(base),
 		"quality": quality,
 		"course": course_str,
-		"stored": dice.get_banked_score(),
+		"stored": dice.get_stored_score(),
 		"total": total
 	}
 

@@ -6,6 +6,10 @@ var total_score: int = 0
 var global_collision_log: Array[Dictionary] = []
 
 func _ready() -> void:
+	global_collision_log.clear()
+	dice_to_score.clear()
+	customer_to_score.clear()
+
 	SignalManager.emit_ready.connect(_emit_ready)
 	SignalManager.dice_placed.connect(_on_dice_placed)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
@@ -64,20 +68,25 @@ func _calculate_score():
 	for dice in dice_to_score:
 		round_score += dice.get_calculated_score()
 
-	for customer in customer_to_score:
-		var unique_dice := {}
-		for entry in customer.consumption_log:
-			var dice = entry["dice"]
-			unique_dice[dice] = true
+	for dice in dice_to_score:
+		var used_by_customer = false
+		for customer in customer_to_score:
+			var unique_dice := {}
+			for entry in customer.consumption_log:
+				var consumed_dice = entry["dice"]
+				unique_dice[consumed_dice] = true
 
-		for dice in unique_dice.keys():
-			if dice in dice_scores:
+			if dice in unique_dice.keys():
+				used_by_customer = true
 				if dice.get_score_type() == G_ENUM.ScoreType.BASE:
 					var mapped_score = customer.get_mapped_appetite_value(dice)
 					var appetite_sated = max(0, customer.get_appetite() - mapped_score)
-					print("Customer ", customer.name, " consumed ", dice.get_dice_name(), " with score", dice.get_calculated_score() + dice.get_stored_score(), " with mapped score", mapped_score, ". Remaining appetite: ", appetite_sated)
 					customer.set_appetite(appetite_sated)
-
+					dice.reset_stored_score()
+	
+		if not used_by_customer:
+			dice.set_stored_score(dice.get_calculated_score())
+			
 	total_score += round_score
 
 	SignalManager.score_updated.emit(round_score, total_score, dice_scores)

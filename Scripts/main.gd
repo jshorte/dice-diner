@@ -22,6 +22,10 @@ var _phase_state: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
 ####					Initialisation					####
 ############################################################
 func _ready():
+	ScoreManager.dice_to_score.clear()
+	ScoreManager.customer_to_score.clear()
+	ScoreManager.global_collision_log.clear()
+
 	SignalManager.hud_manager_ready.connect(_on_hud_manager_ready)
 	SignalManager.deck_manager_ready.connect(_on_deck_manager_ready)
 	SignalManager.score_manager_ready.connect(_on_score_manager_ready)
@@ -140,7 +144,7 @@ func _on_score_completed():
 	_current_round += 1
 
 	if _current_round >= MAX_ROUNDS:
-		get_tree().reload_current_scene()
+		get_tree().change_scene_to_file("res://Scenes/main.tscn")
 		return
 
 	set_phase_state(G_ENUM.PhaseState.DRAW)
