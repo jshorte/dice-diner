@@ -11,6 +11,7 @@ var _spawn_locations: Array[Vector2] = []
 
 var _level_one_customer_templates = [
 	("res://resources/customer_types/stage_1/customer_1.tres"),
+	("res://resources/customer_types/stage_1/customer_2.tres"),
 ]
 
 
@@ -21,12 +22,13 @@ func _ready():
 	SignalManager.request_customer_load.connect(_on_load_customer)
 	pass
 
+
 func _emit_ready():
 	SignalManager.customer_manager_ready.emit()
 
 
 func _on_load_customer() -> void: 
-	var number_to_load: int = 1
+	var number_to_load: int = 2
 	
 	for i in range(number_to_load):
 		var blank_customer: Customer = _customer_scene.instantiate()
@@ -39,11 +41,16 @@ func _on_load_customer() -> void:
 		SignalManager.customer_added.emit(blank_customer)
 		
 
-
 func _get_random_customer_template() -> CustomerTemplate:
 	if _current_stage == 1:
+		if _level_one_customer_templates.size() == 0:
+			push_error(false, "No customer templates available for the current stage.")
+			return null
+
 		var rand_index = randi() % _level_one_customer_templates.size()
-		return load(_level_one_customer_templates[rand_index])
+		var template_path = _level_one_customer_templates[rand_index]
+		_level_one_customer_templates.remove_at(rand_index)
+		return load(template_path)
 
 	push_error(false, "No customer templates available for the current stage.")
 	return null
@@ -61,4 +68,7 @@ func _get_random_spawn_location() -> Vector2:
 		push_error(false, "No spawn locations available for customers.")
 		return Vector2.ZERO
 
-	return _spawn_locations[randi() % _spawn_locations.size()]
+	var rand_index = randi() % _spawn_locations.size()
+	var location = _spawn_locations[rand_index]
+	_spawn_locations.remove_at(rand_index)
+	return location

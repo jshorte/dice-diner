@@ -9,6 +9,7 @@ var customer_score_labels: Array[CustomerScoreLabel] = []
 
 func _ready() -> void:
 	SignalManager.customer_added.connect(_on_customer_added)
+	SignalManager.score_updated.connect(_on_score_updated)
 	# SignalManager.customer_removed.connect(_on_customer_removed)
 
 func _on_customer_added(customer: Customer) -> void:
@@ -23,3 +24,9 @@ func _on_customer_added(customer: Customer) -> void:
 		var l = customer_score_labels[i]
 		l.set_customer_score(customer_to_score[i])
 		l.visible = true
+
+func _on_score_updated(_round_score: int, _total_score: int, _dice_scores: Array[Dice]) -> void:
+	for i in range(customer_score_labels.size()):
+		var label = customer_score_labels[i]
+		label.update_customer_score()
+	pass

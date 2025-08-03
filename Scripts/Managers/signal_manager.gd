@@ -14,7 +14,7 @@ signal dice_placed
 signal dice_launched
 signal dice_started_moving
 signal dice_finished_moving
-signal reset_dice_score
+signal reset_score
 
 # Customer management
 signal request_customer_load

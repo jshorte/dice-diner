@@ -71,7 +71,7 @@ func initialise_values_from_template():
 
 func _ready() -> void:
 	add_to_group("dice")
-	SignalManager.reset_dice_score.connect(_reset_score)
+	SignalManager.reset_score.connect(_reset_score)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	connect("body_entered", _on_body_entered)
 	visual._dice = self

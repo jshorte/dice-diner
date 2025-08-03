@@ -1,7 +1,9 @@
 extends Node
 
 const MAX_SETUP_DICE: int = 1
+const MAX_ROUNDS: int = 4
 
+var _current_round: int = 1
 var _total_dice_in_play: int = 0
 var _stationary_dice_count: int = 0
 var _setup_dice_count: int = 0
@@ -134,7 +136,13 @@ func _on_dice_finished_moving():
 
 
 func _on_score_completed():
-	SignalManager.reset_dice_score.emit()
+	SignalManager.reset_score.emit()
+	_current_round += 1
+
+	if _current_round >= MAX_ROUNDS:
+		get_tree().reload_current_scene()
+		return
+
 	set_phase_state(G_ENUM.PhaseState.DRAW)
 
 

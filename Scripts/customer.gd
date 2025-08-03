@@ -22,6 +22,7 @@ var _preparation_map: Dictionary[G_ENUM.Preparation, float]
 func _ready():
 	_area.body_entered.connect(_on_body_entered)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
+	SignalManager.reset_score.connect(_reset_values)
 	update_appetite_label()
 	update_course_label()
 
@@ -129,3 +130,7 @@ func get_mapped_appetite_value(dice: Dice) -> int:
 func set_appetite(value: int) -> void:
 	_appetite = value
 	update_appetite_label()
+
+
+func _reset_values() -> void:
+	consumption_log.clear()

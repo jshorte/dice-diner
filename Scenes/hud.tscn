@@ -343,56 +343,47 @@ offset_bottom = 96.0
 script = ExtResource("7_5ep0j")
 
 [node name="Order" type="Panel" parent="Order Panel"]
-layout_mode = 0
-offset_top = 8.0
-offset_right = 199.0
-offset_bottom = 308.0
+layout_mode = 1
+offset_bottom = 300.0
 pivot_offset = Vector2(199, 0)
 
-[node name="OrderButton" type="Button" parent="Order Panel/Order"]
-layout_mode = 2
-offset_left = 199.0
-offset_top = 120.0
-offset_right = 207.0
-offset_bottom = 144.0
-toggle_mode = true
-icon_alignment = 1
-script = ExtResource("7_7gr8i")
-
-[node name="OrderContainer" type="PanelContainer" parent="Order Panel/Order"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Order Panel/Order"]
 layout_mode = 0
-offset_right = 197.0
-offset_bottom = 300.0
+offset_right = 200.0
+offset_bottom = 296.0
+
+[node name="OrderContainer" type="PanelContainer" parent="Order Panel/Order/HBoxContainer"]
+layout_mode = 2
 theme_override_styles/panel = ExtResource("3_ioopo")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Order Panel/Order/OrderContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Order Panel/Order/HBoxContainer/OrderContainer"]
 layout_mode = 2
 
-[node name="Order Title Text" type="Label" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+[node name="Order Title Text" type="Label" parent="Order Panel/Order/HBoxContainer/OrderContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_rvbjj")
 theme_override_fonts/font = ExtResource("7_e1fvy")
 text = "Orders"
 horizontal_alignment = 1
 
-[node name="Score Space" type="Control" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+[node name="Score Space" type="Control" parent="Order Panel/Order/HBoxContainer/OrderContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="CustomerScoreVBox" type="VBoxContainer" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+[node name="CustomerScoreVBox" type="VBoxContainer" parent="Order Panel/Order/HBoxContainer/OrderContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Total Space" type="Control" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+[node name="Total Space" type="Control" parent="Order Panel/Order/HBoxContainer/OrderContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScoreTextHBox" type="VBoxContainer" parent="Order Panel/Order/OrderContainer/VBoxContainer"]
+[node name="ScoreTextHBox" type="VBoxContainer" parent="Order Panel/Order/HBoxContainer/OrderContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="RoundScoreText" type="Label" parent="Order Panel/Order/OrderContainer/VBoxContainer/ScoreTextHBox"]
+[node name="RoundScoreText" type="Label" parent="Order Panel/Order/HBoxContainer/OrderContainer/VBoxContainer/ScoreTextHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -401,7 +392,7 @@ text = "Round: 0"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="TotalScoreText" type="Label" parent="Order Panel/Order/OrderContainer/VBoxContainer/ScoreTextHBox"]
+[node name="TotalScoreText" type="Label" parent="Order Panel/Order/HBoxContainer/OrderContainer/VBoxContainer/ScoreTextHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
@@ -409,6 +400,14 @@ size_flags_stretch_ratio = 2.0
 text = "Total: 0"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="OrderButton" type="Button" parent="Order Panel/Order/HBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+toggle_mode = true
+icon_alignment = 1
+script = ExtResource("7_7gr8i")
 
 [node name="DiceScore" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -531,4 +530,4 @@ horizontal_alignment = 1
 
 [connection signal="pressed" from="Bottom Bar/NextRoundPanel/VBoxContainer/NextRoundButton" to="Bottom Bar" method="_on_next_round_button_pressed"]
 [connection signal="toggled" from="Score Panel/Score/ScoreButton" to="Score Panel/Score/ScoreButton" method="_on_score_button_toggled"]
-[connection signal="toggled" from="Order Panel/Order/OrderButton" to="Order Panel/Order/OrderButton" method="_on_order_button_toggled"]
+[connection signal="toggled" from="Order Panel/Order/HBoxContainer/OrderButton" to="Order Panel/Order/HBoxContainer/OrderButton" method="_on_order_button_toggled"]

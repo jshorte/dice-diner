@@ -13,21 +13,25 @@ theme = ExtResource("1_jonud")
 alignment = 1
 script = ExtResource("2_jonud")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ScoreHBox" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CustomerNameLabel" type="Label" parent="HBoxContainer"]
+[node name="CustomerNameLabel" type="Label" parent="VBoxContainer/ScoreHBox"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("1_jonud")
-text = "Course
+text = "Name:
 "
 horizontal_alignment = 1
 
-[node name="CustomerScoreLabel" type="Label" parent="HBoxContainer"]
+[node name="CustomerScoreLabel" type="Label" parent="VBoxContainer/ScoreHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -35,3 +39,76 @@ size_flags_vertical = 1
 theme = ExtResource("1_jonud")
 text = "1/1"
 horizontal_alignment = 1
+
+[node name="CourseHBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CoursePreferencesLabel" type="Label" parent="VBoxContainer/CourseHBox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_jonud")
+text = "Preferences:
+"
+horizontal_alignment = 1
+
+[node name="CoursePreferenceListLabel" type="Label" parent="VBoxContainer/CourseHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_jonud")
+text = "List Of Preferences"
+horizontal_alignment = 1
+
+[node name="TasteHBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TastePreferencesLabel" type="Label" parent="VBoxContainer/TasteHBox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_jonud")
+text = "Preferences:
+"
+horizontal_alignment = 1
+
+[node name="TastePreferenceListLabel" type="Label" parent="VBoxContainer/TasteHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_jonud")
+text = "List Of Preferences"
+horizontal_alignment = 1
+
+[node name="PreparationHBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PreparationPreferencesLabel" type="Label" parent="VBoxContainer/PreparationHBox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_jonud")
+text = "Preferences:
+"
+horizontal_alignment = 1
+
+[node name="PreparationPreferenceListLabel" type="Label" parent="VBoxContainer/PreparationHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_jonud")
+text = "List Of Preferences"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
