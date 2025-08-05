@@ -1,8 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8wc4wg6xv6st"]
+[gd_scene load_steps=10 format=3 uid="uid://c8wc4wg6xv6st"]
 
 [ext_resource type="Script" uid="uid://cvt8ja40iqm6c" path="res://Scripts/customer.gd" id="1_r8ta2"]
 [ext_resource type="Texture2D" uid="uid://b7aee8py6iipp" path="res://Art/Customer.aseprite" id="2_0v30w"]
 [ext_resource type="Texture2D" uid="uid://degqgb6ma2335" path="res://Art/Mouth.png" id="3_0v30w"]
+[ext_resource type="Texture2D" uid="uid://dmac57u3hjbvs" path="res://Art/Milkshake.png" id="4_qf3me"]
+[ext_resource type="Texture2D" uid="uid://clje5exbvgxdq" path="res://Art/lemon.aseprite" id="5_vkxjs"]
+[ext_resource type="Texture2D" uid="uid://cqudewqlj4o0r" path="res://Art/Sweet.aseprite" id="6_2o0mk"]
+[ext_resource type="Texture2D" uid="uid://bfv2lj32kioop" path="res://Art/Chilli.png" id="6_fhub2"]
+[ext_resource type="Texture2D" uid="uid://wqgo28msv43a" path="res://Art/Coffee.aseprite" id="6_q72uo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7tiyv"]
 radius = 64.0
@@ -20,6 +25,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_0v30w")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
 position = Vector2(0, 128)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -27,6 +33,7 @@ position = Vector2(0, -128)
 shape = SubResource("CircleShape2D_7tiyv")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, 128)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -35,6 +42,7 @@ shape = SubResource("CircleShape2D_7tiyv")
 
 [node name="AppetiteLabel" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 offset_left = -64.0
 offset_top = -56.0
 offset_right = 64.0
@@ -44,9 +52,85 @@ horizontal_alignment = 1
 
 [node name="CourseLabel" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 offset_left = -64.0
 offset_top = 8.0
 offset_right = 64.0
 offset_bottom = 31.0
 text = "Course"
 horizontal_alignment = 1
+
+[node name="Customer" type="Sprite2D" parent="."]
+position = Vector2(40, 24)
+texture = ExtResource("4_qf3me")
+
+[node name="Label" type="Label" parent="Customer"]
+offset_left = -8.0
+offset_top = 16.0
+offset_right = 10.0
+offset_bottom = 39.0
+text = "2x"
+
+[node name="Customer2" type="Sprite2D" parent="."]
+position = Vector2(0, 24)
+texture = ExtResource("5_vkxjs")
+
+[node name="Label2" type="Label" parent="Customer2"]
+offset_left = -8.0
+offset_top = 16.0
+offset_right = 10.0
+offset_bottom = 39.0
+text = "2x"
+
+[node name="Customer6" type="Sprite2D" parent="."]
+position = Vector2(80, 24)
+texture = ExtResource("6_q72uo")
+
+[node name="Label2" type="Label" parent="Customer6"]
+offset_left = -8.0
+offset_top = 16.0
+offset_right = 10.0
+offset_bottom = 39.0
+text = "2x"
+
+[node name="Customer3" type="Sprite2D" parent="."]
+position = Vector2(-40, 24)
+texture = ExtResource("6_2o0mk")
+
+[node name="Label2" type="Label" parent="Customer3"]
+offset_left = -8.0
+offset_top = 16.0
+offset_right = 10.0
+offset_bottom = 39.0
+text = "2x"
+
+[node name="Customer5" type="Sprite2D" parent="."]
+position = Vector2(-80, 24)
+texture = ExtResource("6_fhub2")
+
+[node name="Label2" type="Label" parent="Customer5"]
+offset_left = -8.0
+offset_top = 16.0
+offset_right = 10.0
+offset_bottom = 39.0
+text = "2x"
+
+[node name="Customer4" type="Sprite2D" parent="."]
+position = Vector2(40, -48)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_0v30w")
+
+[node name="CourseLabel2" type="Label" parent="Customer4"]
+custom_minimum_size = Vector2(32, 32)
+offset_left = -64.0
+offset_top = -80.0
+offset_right = -21.0
+offset_bottom = -37.0
+scale = Vector2(3, 3)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+text = "40"
+horizontal_alignment = 1
+vertical_alignment = 1

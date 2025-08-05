@@ -1,11 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://kicyujoqbgl0"]
+[gd_scene load_steps=15 format=3 uid="uid://kicyujoqbgl0"]
 
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="1_1kyuq"]
 [ext_resource type="Texture2D" uid="uid://ugxpxq7r2lvt" path="res://Art/Pizza/Pizza-1.png" id="2_ro8sk"]
+[ext_resource type="Texture2D" uid="uid://chx2ifl4avetv" path="res://Art/icon.svg" id="3_0nk4o"]
 [ext_resource type="Texture2D" uid="uid://dxqeq6txw8iis" path="res://Art/Neapolitan/Neapolitan.png" id="3_465d4"]
 [ext_resource type="Texture2D" uid="uid://dt5pi6m4mv5be" path="res://Art/Flat White/Flat White.png" id="4_m3q8c"]
 [ext_resource type="Texture2D" uid="uid://dqy8dliyqqant" path="res://Art/Garlic/Garlic.png" id="5_83icm"]
+[ext_resource type="Texture2D" uid="uid://cqudewqlj4o0r" path="res://Art/Sweet.aseprite" id="5_724bb"]
 [ext_resource type="Texture2D" uid="uid://cjfrnjvfimpd7" path="res://Art/Cookie/Cookie.png" id="6_545sp"]
+[ext_resource type="Texture2D" uid="uid://wqgo28msv43a" path="res://Art/Coffee.aseprite" id="7_5tev5"]
+[ext_resource type="Texture2D" uid="uid://clje5exbvgxdq" path="res://Art/lemon.aseprite" id="9_x2j12"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g46pi"]
 atlas = ExtResource("3_465d4")
@@ -139,12 +143,46 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
-[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.2
-text = "Baked, Umami"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer2/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
+text = "Baked"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer2/HBoxContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_0nk4o")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer2/HBoxContainer3/VBoxContainer2"]
+layout_mode = 2
+text = "Umami"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer2/HBoxContainer3/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_0nk4o")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
 layout_mode = 2
@@ -199,7 +237,27 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan/VBoxContainer2"]
+layout_mode = 2
+text = "Sweet"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_724bb")
+expand_mode = 1
+stretch_mode = 4
+
 [node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.2
@@ -258,12 +316,30 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
-[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Flat White/VBoxContainer3"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Flat White/VBoxContainer3/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White/VBoxContainer3/HBoxContainer3/VBoxContainer"]
+layout_mode = 2
 text = "Bitter"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Flat White/VBoxContainer3/HBoxContainer3/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_5tev5")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Flat White"]
 layout_mode = 2
@@ -318,12 +394,27 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
-[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Garlic Dip"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Garlic Dip"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Garlic Dip/VBoxContainer2"]
+layout_mode = 2
 text = "Sour"
 horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Garlic Dip/VBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Garlic Dip/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("9_x2j12")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Garlic Dip"]
 layout_mode = 2
@@ -379,12 +470,24 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
-[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Cookie"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Cookie"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Cookie/VBoxContainer2"]
+layout_mode = 2
 text = "Sweet"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Cookie/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_724bb")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Cookie"]
 layout_mode = 2

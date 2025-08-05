@@ -309,7 +309,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_6bp64")
 unique_name_in_owner = true
 
 [node name="Food Compendium" parent="." instance=ExtResource("8_344ge")]
-visible = false
 script = ExtResource("9_ynf5e")
 
 [node name="SpawnPositions" type="Node" parent="."]
