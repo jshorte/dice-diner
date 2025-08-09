@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmac57u3hjbvs"
-path="res://.godot/imported/Milkshake.png-da9eaa2ab1fd57d4d275b21c559bd077.ctex"
+uid="uid://c3ec60b4tq7cr"
+path="res://.godot/imported/umami.aseprite-c796f51a9e959af72c171529dabef1d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Milkshake.png"
-dest_files=["res://.godot/imported/Milkshake.png-da9eaa2ab1fd57d4d275b21c559bd077.ctex"]
+source_file="res://Art/Tastes/umami.aseprite"
+dest_files=["res://.godot/imported/umami.aseprite-c796f51a9e959af72c171529dabef1d8.ctex"]
 
 [params]
 

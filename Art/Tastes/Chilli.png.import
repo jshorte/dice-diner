@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clje5exbvgxdq"
-path="res://.godot/imported/lemon.aseprite-687489c0a2b896eefe892beb1f96ec24.ctex"
+uid="uid://bfv2lj32kioop"
+path="res://.godot/imported/Chilli.png-7f05f283f5048f21190d4b817c66a4fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/lemon.aseprite"
-dest_files=["res://.godot/imported/lemon.aseprite-687489c0a2b896eefe892beb1f96ec24.ctex"]
+source_file="res://Art/Tastes/Chilli.png"
+dest_files=["res://.godot/imported/Chilli.png-7f05f283f5048f21190d4b817c66a4fd.ctex"]
 
 [params]
 

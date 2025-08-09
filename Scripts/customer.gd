@@ -15,16 +15,18 @@ var _taste_map: Dictionary[G_ENUM.Tastes, float]
 var _preparation_map: Dictionary[G_ENUM.Preparation, float]
 
 @onready var _area: Area2D = $Area2D
-@onready var _appetite_label: Label = get_node("AppetiteLabel")
-@onready var _course_label: Label = get_node("CourseLabel")
+@onready var _appetite_label: Label = get_node("%AppetiteLabel")
 
+@onready var _customer_hbox = get_node("%CustomerHBox")
+@onready var _customer_icons_hbox = get_node("%CustomerIconsHBox")
 
 func _ready():
 	_area.body_entered.connect(_on_body_entered)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	SignalManager.reset_score.connect(_reset_values)
 	update_appetite_label()
-	update_course_label()
+	add_icons()
+	_customer_hbox.visible = true
 
 
 func _on_body_entered(body: Node) -> void:
@@ -81,24 +83,7 @@ func update_appetite_label() -> void:
 
 
 func get_appetite_string() -> String:
-	return str(_appetite) + "/" + str(customer_template.customer_appetite)
-
-
-func update_course_label() -> void:
-	if not _course_label:
-		push_error(false, "Course label not found.")
-		return
-
-	var course_text = ""
-
-	for course in _course_preferences:
-		var course_key = G_ENUM.Course.keys()[course]
-		var multiplier = _course_map[course] if _course_map.has(course) else 1.0
-		var course_name = str(course_key).capitalize()
-
-		course_text += "%s (x%s) " % [course_name, str(multiplier)]
-
-	_course_label.text = course_text.strip_edges()
+	return str(_appetite)
 
 		
 func get_appetite() -> int:
@@ -134,3 +119,46 @@ func set_appetite(value: int) -> void:
 
 func _reset_values() -> void:
 	consumption_log.clear()
+
+
+func add_icons() -> void:
+	for course in _course_preferences:
+		if course == G_ENUM.Course.NONE:
+			continue
+
+		if G_ENUM.COURSE_ICON_PATHS.has(course):
+			var icon = load(G_ENUM.COURSE_ICON_PATHS[course])
+			var tex_rect = TextureRect.new()
+			tex_rect.texture = icon
+			tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			_customer_icons_hbox.add_child(tex_rect)
+
+	for taste in _taste_preferences:
+		if taste == G_ENUM.Tastes.NONE:
+			continue
+
+		if G_ENUM.TASTE_ICON_PATHS.has(taste):
+			var icon = load(G_ENUM.TASTE_ICON_PATHS[taste])
+			var tex_rect = TextureRect.new()
+			tex_rect.texture = icon
+			tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			_customer_icons_hbox.add_child(tex_rect)
+
+	for prep in _preparation_preferences:
+		if prep == G_ENUM.Preparation.NONE:
+			continue
+
+		if G_ENUM.PREPARATION_ICON_PATHS.has(prep):
+			var icon = load(G_ENUM.PREPARATION_ICON_PATHS[prep])
+			var tex_rect = TextureRect.new()
+			tex_rect.texture = icon
+			tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			_customer_icons_hbox.add_child(tex_rect)
+
+
+# func _on_area_2d_mouse_entered() -> void:
+# 	_customer_hbox.visible = true
+
+
+# func _on_area_2d_mouse_exited() -> void:
+# 	_customer_hbox.visible = false

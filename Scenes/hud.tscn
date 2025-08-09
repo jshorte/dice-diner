@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdu3kdmck2ij3"]
+[gd_scene load_steps=11 format=3 uid="uid://bdu3kdmck2ij3"]
 
 [ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="3_ioopo"]
-[ext_resource type="Script" uid="uid://cmj2pu1quvuhy" path="res://Scenes/dice_options_panel.gd" id="4_4f5kr"]
 [ext_resource type="Script" uid="uid://b55hux5et4vhb" path="res://Scripts/score_button.gd" id="4_owgk4"]
 [ext_resource type="Script" uid="uid://5e8p5kf1qhoc" path="res://Scripts/UI/deck_bar.gd" id="4_t1xeu"]
 [ext_resource type="Script" uid="uid://2a387unpvvik" path="res://Scripts/UI/score_bar.gd" id="5_36asn"]
@@ -231,7 +230,6 @@ offset_left = -72.0
 offset_top = -80.0
 offset_bottom = 2.0
 theme_override_styles/panel = ExtResource("3_ioopo")
-script = ExtResource("4_4f5kr")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Bottom Bar/DiceOptionsPanel"]
 layout_mode = 2
@@ -358,6 +356,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Order Panel" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_left = 1.0
 offset_top = 96.0

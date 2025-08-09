@@ -1,15 +1,24 @@
-[gd_scene load_steps=15 format=3 uid="uid://kicyujoqbgl0"]
+[gd_scene load_steps=24 format=3 uid="uid://kicyujoqbgl0"]
 
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="1_1kyuq"]
 [ext_resource type="Texture2D" uid="uid://ugxpxq7r2lvt" path="res://Art/Pizza/Pizza-1.png" id="2_ro8sk"]
-[ext_resource type="Texture2D" uid="uid://chx2ifl4avetv" path="res://Art/icon.svg" id="3_0nk4o"]
+[ext_resource type="Texture2D" uid="uid://dap35u4ap1hsb" path="res://Art/Course/main.aseprite" id="3_0kped"]
 [ext_resource type="Texture2D" uid="uid://dxqeq6txw8iis" path="res://Art/Neapolitan/Neapolitan.png" id="3_465d4"]
+[ext_resource type="Texture2D" uid="uid://bx6bl1ai7jn21" path="res://Art/Preperation/baked.aseprite" id="3_ughld"]
 [ext_resource type="Texture2D" uid="uid://dt5pi6m4mv5be" path="res://Art/Flat White/Flat White.png" id="4_m3q8c"]
+[ext_resource type="Texture2D" uid="uid://c3ec60b4tq7cr" path="res://Art/Tastes/umami.aseprite" id="5_7trds"]
 [ext_resource type="Texture2D" uid="uid://dqy8dliyqqant" path="res://Art/Garlic/Garlic.png" id="5_83icm"]
-[ext_resource type="Texture2D" uid="uid://cqudewqlj4o0r" path="res://Art/Sweet.aseprite" id="5_724bb"]
+[ext_resource type="Texture2D" uid="uid://cqudewqlj4o0r" path="res://Art/Tastes/sweet.aseprite" id="5_724bb"]
 [ext_resource type="Texture2D" uid="uid://cjfrnjvfimpd7" path="res://Art/Cookie/Cookie.png" id="6_545sp"]
-[ext_resource type="Texture2D" uid="uid://wqgo28msv43a" path="res://Art/Coffee.aseprite" id="7_5tev5"]
-[ext_resource type="Texture2D" uid="uid://clje5exbvgxdq" path="res://Art/lemon.aseprite" id="9_x2j12"]
+[ext_resource type="Texture2D" uid="uid://wqgo28msv43a" path="res://Art/Tastes/bitter.aseprite" id="7_5tev5"]
+[ext_resource type="Texture2D" uid="uid://b5a4c428dhph6" path="res://Art/Course/dessert.aseprite" id="7_g1lnw"]
+[ext_resource type="Texture2D" uid="uid://clje5exbvgxdq" path="res://Art/Tastes/sour.aseprite" id="9_x2j12"]
+[ext_resource type="Texture2D" uid="uid://ty8kk78ladus" path="res://Art/Tastes/salty.aseprite" id="12_6fqdh"]
+[ext_resource type="Texture2D" uid="uid://bqbtj8ut622fe" path="res://Art/Tastes/sliced-mushroom.aseprite" id="13_vwqux"]
+[ext_resource type="Texture2D" uid="uid://bfv2lj32kioop" path="res://Art/Tastes/Chilli.png" id="14_0kped"]
+[ext_resource type="Texture2D" uid="uid://bnel54bbmf1f0" path="res://Art/Course/starter.aseprite" id="14_ba6bg"]
+[ext_resource type="Texture2D" uid="uid://cde7oowcwxpda" path="res://Art/Preperation/grilled.aseprite" id="15_7trds"]
+[ext_resource type="Texture2D" uid="uid://bj6aj3expeal6" path="res://Art/Preperation/fried.aseprite" id="16_g1lnw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g46pi"]
 atlas = ExtResource("3_465d4")
@@ -131,13 +140,22 @@ stretch_mode = 4
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
-[node name="Type" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.1
-text = "Base
-Main"
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer3"]
+layout_mode = 2
+text = "Main"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Pizza/VBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_0kped")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Pizza"]
 custom_minimum_size = Vector2(16, 32)
@@ -164,7 +182,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("3_0nk4o")
+texture = ExtResource("3_ughld")
 expand_mode = 1
 stretch_mode = 4
 
@@ -180,7 +198,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("3_0nk4o")
+texture = ExtResource("5_7trds")
 expand_mode = 1
 stretch_mode = 4
 
@@ -225,7 +243,25 @@ stretch_mode = 4
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
+[node name="VBoxContainer3" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan/VBoxContainer3"]
+layout_mode = 2
+text = "Dessert"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan/VBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_g1lnw")
+expand_mode = 1
+stretch_mode = 4
+
 [node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_stretch_ratio = 0.1
@@ -255,14 +291,6 @@ size_flags_horizontal = 4
 texture = ExtResource("5_724bb")
 expand_mode = 1
 stretch_mode = 4
-
-[node name="Tags" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.2
-text = "Sweet"
-horizontal_alignment = 1
 
 [node name="Quality" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Neapolitan"]
 layout_mode = 2
@@ -458,13 +486,22 @@ stretch_mode = 4
 custom_minimum_size = Vector2(16, 32)
 layout_mode = 2
 
-[node name="Type" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Cookie"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Cookie"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.1
-text = "Base
-Dessert"
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Cookie/VBoxContainer3"]
+layout_mode = 2
+text = "Dessert"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Cookie/VBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_g1lnw")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Cookie"]
 custom_minimum_size = Vector2(16, 32)
@@ -502,6 +539,280 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "+8 Score, -2 score per collision"
 autowrap_mode = 2
+
+[node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Icon Key" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer2"]
+layout_mode = 2
+text = "Starter"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("14_ba6bg")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer13" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer13"]
+layout_mode = 2
+text = "Main"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer13"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_0kped")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer12" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer12"]
+layout_mode = 2
+text = "Dessert"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer12"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_g1lnw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer11" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer11"]
+layout_mode = 2
+text = "Sweet"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer11"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_724bb")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer8" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer3"]
+layout_mode = 2
+text = "Sour"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("9_x2j12")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer7" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer4"]
+layout_mode = 2
+text = "Bitter"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer4"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_5tev5")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer6" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer10" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer10"]
+layout_mode = 2
+text = "Salty"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer10"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("12_6fqdh")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer5" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer5"]
+layout_mode = 2
+text = "Umami"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer5"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("13_vwqux")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer4" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer6"]
+layout_mode = 2
+text = "Spicy"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer6"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("14_0kped")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer3" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer7" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer7"]
+layout_mode = 2
+text = "Grilled"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer7"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("15_7trds")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer2" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer8" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer8"]
+layout_mode = 2
+text = "Baked"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer8"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_ughld")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer" type="Control" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="VBoxContainer9" type="VBoxContainer" parent="Panel/HBoxContainer/VBoxContainer/Icon Key"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.2
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer9"]
+layout_mode = 2
+text = "Fried"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer/Icon Key/VBoxContainer9"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("16_g1lnw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Spacer3" type="Control" parent="Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
 
 [node name="Information" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 64)

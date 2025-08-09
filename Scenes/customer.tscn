@@ -1,13 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8wc4wg6xv6st"]
+[gd_scene load_steps=12 format=3 uid="uid://c8wc4wg6xv6st"]
 
 [ext_resource type="Script" uid="uid://cvt8ja40iqm6c" path="res://Scripts/customer.gd" id="1_r8ta2"]
 [ext_resource type="Texture2D" uid="uid://b7aee8py6iipp" path="res://Art/Customer.aseprite" id="2_0v30w"]
 [ext_resource type="Texture2D" uid="uid://degqgb6ma2335" path="res://Art/Mouth.png" id="3_0v30w"]
-[ext_resource type="Texture2D" uid="uid://dmac57u3hjbvs" path="res://Art/Milkshake.png" id="4_qf3me"]
-[ext_resource type="Texture2D" uid="uid://clje5exbvgxdq" path="res://Art/lemon.aseprite" id="5_vkxjs"]
-[ext_resource type="Texture2D" uid="uid://cqudewqlj4o0r" path="res://Art/Sweet.aseprite" id="6_2o0mk"]
-[ext_resource type="Texture2D" uid="uid://bfv2lj32kioop" path="res://Art/Chilli.png" id="6_fhub2"]
-[ext_resource type="Texture2D" uid="uid://wqgo28msv43a" path="res://Art/Coffee.aseprite" id="6_q72uo"]
+[ext_resource type="Texture2D" uid="uid://dmac57u3hjbvs" path="res://Art/Tastes/Milkshake.png" id="4_qf3me"]
+[ext_resource type="Texture2D" uid="uid://clje5exbvgxdq" path="res://Art/Tastes/sour.aseprite" id="5_vkxjs"]
+[ext_resource type="Texture2D" uid="uid://cqudewqlj4o0r" path="res://Art/Tastes/sweet.aseprite" id="6_2o0mk"]
+[ext_resource type="Texture2D" uid="uid://bfv2lj32kioop" path="res://Art/Tastes/Chilli.png" id="6_fhub2"]
+[ext_resource type="Texture2D" uid="uid://wqgo28msv43a" path="res://Art/Tastes/bitter.aseprite" id="6_q72uo"]
+[ext_resource type="Texture2D" uid="uid://b2rnd65rbbvhw" path="res://Art/customer_score.aseprite" id="10_o6oka"]
+[ext_resource type="Texture2D" uid="uid://dacx2aspb5inh" path="res://Art/Tastes/redcap-mushroom.aseprite" id="10_t5tqw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7tiyv"]
 radius = 64.0
@@ -17,6 +19,75 @@ script = ExtResource("1_r8ta2")
 
 [node name="Person" type="Sprite2D" parent="."]
 texture = ExtResource("2_0v30w")
+
+[node name="PanelContainer" type="PanelContainer" parent="Person"]
+visible = false
+offset_left = 72.0
+offset_top = -128.0
+offset_right = 134.0
+offset_bottom = 114.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Person/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="Person/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_2o0mk")
+
+[node name="TextureRect2" type="TextureRect" parent="Person/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_fhub2")
+
+[node name="TextureRect3" type="TextureRect" parent="Person/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_q72uo")
+
+[node name="TextureRect4" type="TextureRect" parent="Person/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_vkxjs")
+
+[node name="TextureRect5" type="TextureRect" parent="Person/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_qf3me")
+
+[node name="TextureRect6" type="TextureRect" parent="Person/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("10_t5tqw")
+
+[node name="CustomerHBox" type="HBoxContainer" parent="Person"]
+unique_name_in_owner = true
+visible = false
+offset_left = -136.0
+offset_top = -112.0
+offset_right = 136.0
+offset_bottom = -74.0
+pivot_offset = Vector2(72, 0)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Person/CustomerHBox"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Person/CustomerHBox/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer2" type="Control" parent="Person/CustomerHBox/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(4, 38)
+layout_mode = 2
+
+[node name="CustomerIconsHBox" type="HBoxContainer" parent="Person/CustomerHBox/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Person/CustomerHBox/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(4, 38)
+layout_mode = 2
 
 [node name="Mouth" type="Sprite2D" parent="."]
 visible = false
@@ -33,22 +104,16 @@ position = Vector2(0, -128)
 shape = SubResource("CircleShape2D_7tiyv")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, 128)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -128)
 shape = SubResource("CircleShape2D_7tiyv")
 
-[node name="AppetiteLabel" type="Label" parent="."]
-unique_name_in_owner = true
+[node name="Sour" type="Sprite2D" parent="Area2D"]
 visible = false
-offset_left = -64.0
-offset_top = -56.0
-offset_right = 64.0
-offset_bottom = -33.0
-text = "1/1"
-horizontal_alignment = 1
+position = Vector2(0, -96)
+texture = ExtResource("5_vkxjs")
 
 [node name="CourseLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -60,77 +125,19 @@ offset_bottom = 31.0
 text = "Course"
 horizontal_alignment = 1
 
-[node name="Customer" type="Sprite2D" parent="."]
-position = Vector2(40, 24)
-texture = ExtResource("4_qf3me")
+[node name="CustomerScore" type="Sprite2D" parent="."]
+position = Vector2(0, 40)
+texture = ExtResource("10_o6oka")
 
-[node name="Label" type="Label" parent="Customer"]
-offset_left = -8.0
-offset_top = 16.0
-offset_right = 10.0
-offset_bottom = 39.0
-text = "2x"
-
-[node name="Customer2" type="Sprite2D" parent="."]
-position = Vector2(0, 24)
-texture = ExtResource("5_vkxjs")
-
-[node name="Label2" type="Label" parent="Customer2"]
-offset_left = -8.0
-offset_top = 16.0
-offset_right = 10.0
-offset_bottom = 39.0
-text = "2x"
-
-[node name="Customer6" type="Sprite2D" parent="."]
-position = Vector2(80, 24)
-texture = ExtResource("6_q72uo")
-
-[node name="Label2" type="Label" parent="Customer6"]
-offset_left = -8.0
-offset_top = 16.0
-offset_right = 10.0
-offset_bottom = 39.0
-text = "2x"
-
-[node name="Customer3" type="Sprite2D" parent="."]
-position = Vector2(-40, 24)
-texture = ExtResource("6_2o0mk")
-
-[node name="Label2" type="Label" parent="Customer3"]
-offset_left = -8.0
-offset_top = 16.0
-offset_right = 10.0
-offset_bottom = 39.0
-text = "2x"
-
-[node name="Customer5" type="Sprite2D" parent="."]
-position = Vector2(-80, 24)
-texture = ExtResource("6_fhub2")
-
-[node name="Label2" type="Label" parent="Customer5"]
-offset_left = -8.0
-offset_top = 16.0
-offset_right = 10.0
-offset_bottom = 39.0
-text = "2x"
-
-[node name="Customer4" type="Sprite2D" parent="."]
-position = Vector2(40, -48)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_0v30w")
-
-[node name="CourseLabel2" type="Label" parent="Customer4"]
-custom_minimum_size = Vector2(32, 32)
-offset_left = -64.0
-offset_top = -80.0
-offset_right = -21.0
-offset_bottom = -37.0
-scale = Vector2(3, 3)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-text = "40"
+[node name="AppetiteLabel" type="Label" parent="CustomerScore"]
+unique_name_in_owner = true
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

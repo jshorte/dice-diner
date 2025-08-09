@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wqgo28msv43a"
-path="res://.godot/imported/Coffee.aseprite-bffc74187775fb532ffcfaf3115c192b.ctex"
+uid="uid://bnel54bbmf1f0"
+path="res://.godot/imported/starter.aseprite-471200b1efe483beff369d66d8c1e2da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Coffee.aseprite"
-dest_files=["res://.godot/imported/Coffee.aseprite-bffc74187775fb532ffcfaf3115c192b.ctex"]
+source_file="res://Art/Course/starter.aseprite"
+dest_files=["res://.godot/imported/starter.aseprite-471200b1efe483beff369d66d8c1e2da.ctex"]
 
 [params]
 

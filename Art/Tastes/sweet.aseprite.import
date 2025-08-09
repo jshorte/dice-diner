@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfv2lj32kioop"
-path="res://.godot/imported/Chilli.png-fbc2b396019325ee58ecf6d0fc399894.ctex"
+uid="uid://cqudewqlj4o0r"
+path="res://.godot/imported/sweet.aseprite-ba7c3a008167832d5f11bce04aeaaabe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Chilli.png"
-dest_files=["res://.godot/imported/Chilli.png-fbc2b396019325ee58ecf6d0fc399894.ctex"]
+source_file="res://Art/Tastes/sweet.aseprite"
+dest_files=["res://.godot/imported/sweet.aseprite-ba7c3a008167832d5f11bce04aeaaabe.ctex"]
 
 [params]
 
