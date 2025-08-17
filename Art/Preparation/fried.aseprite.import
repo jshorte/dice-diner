@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx6bl1ai7jn21"
-path="res://.godot/imported/baked.aseprite-9c3b0357249f04e95e2a1a42fae56e05.ctex"
+uid="uid://bj6aj3expeal6"
+path="res://.godot/imported/fried.aseprite-0ada6fdec37d3f04ce38ba36607c24b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Preperation/baked.aseprite"
-dest_files=["res://.godot/imported/baked.aseprite-9c3b0357249f04e95e2a1a42fae56e05.ctex"]
+source_file="res://Art/Preparation/fried.aseprite"
+dest_files=["res://.godot/imported/fried.aseprite-0ada6fdec37d3f04ce38ba36607c24b9.ctex"]
 
 [params]
 

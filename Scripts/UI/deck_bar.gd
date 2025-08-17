@@ -154,7 +154,18 @@ func _on_add_to_deck_panel(area: int, dice: Dice) -> void:
 	var sprite_frame = dice.get_sprite_frame()
 	dice_sprite.texture = dice.get_icon_texture(sprite_frame)
 	dice_sprite.mouse_filter = Control.MOUSE_FILTER_STOP
+
+	var dice_preferences_scene = preload("res://Scenes/dice_preferences.tscn")
+	var preferences_panel = dice_preferences_scene.instantiate()
+	preferences_panel._dice = dice
+	preferences_panel.visible = false
+	preferences_panel.add_dice_icons()
+	dice_sprite.add_child(preferences_panel)
+	preferences_panel.position = Vector2(dice._dice_radius, dice._dice_radius) # Position above the sprite
+
 	dice_sprite.gui_input.connect(_on_dice_sprite_input.bind(dice_sprite, dice, area))
+	dice_sprite.mouse_entered.connect(_on_dice_sprite_mouse_entered.bind(dice_sprite, dice, preferences_panel))
+	dice_sprite.mouse_exited.connect(_on_dice_sprite_mouse_exited.bind(dice_sprite, dice, preferences_panel))
 	match area:
 		G_ENUM.DeckArea.CURRENT:
 			_current_hbox.add_child(dice_sprite)
@@ -166,6 +177,16 @@ func _on_add_to_deck_panel(area: int, dice: Dice) -> void:
 			_discard_hbox.add_child(dice_sprite)
 	_sprite_to_dice[dice_sprite] = dice
 	_dice_to_sprite[dice] = dice_sprite
+
+
+func _on_dice_sprite_mouse_entered(sprite: TextureRect, dice: Dice, preferences_panel: Node) -> void:
+	preferences_panel.visible = true
+	# preferences_panel.position = Vector2(0, -sprite.size.y) # Adjust as needed
+	# preferences_panel._dice = dice
+	# preferences_panel.add_dice_icons()
+
+func _on_dice_sprite_mouse_exited(sprite: TextureRect, dice: Dice, preferences_panel: Node) -> void:
+	preferences_panel.visible = false
 
 
 func _is_over_setup_area(pos: Vector2) -> bool:

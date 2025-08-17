@@ -47,6 +47,7 @@ var _available_values_index: int
 @onready var visual: DiceVisual = $DiceVisual
 @onready var vfx: DiceVFX = $DiceVFX
 @onready var input: DiceInput = $DiceInput
+@onready var preferences: DicePreferences = $DicePreferences
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _dice_radius: float = $CollisionShape2D.shape.radius
 @onready var _dice_score_panel: DiceScore = get_node("/root/main/Managers/GUIManager/DiceScore")
@@ -79,6 +80,8 @@ func _ready() -> void:
 	visual._dice = self
 	vfx._dice = self
 	input._dice = self
+	preferences._dice = self
+	preferences.add_dice_icons()
 
 
 func _physics_process(delta: float) -> void:
@@ -122,19 +125,24 @@ func _on_phase_state_changed(new_phase: G_ENUM.PhaseState) -> void:
 
 
 func _on_mouse_entered() -> void:
-	if _phase_state != G_ENUM.PhaseState.SCORE:
-		return
+	var show_score_panel: bool = false
+	preferences.visible = true
 
-	_dice_score_panel._dice = self
-	_dice_score_panel.update_score_display()
-	_dice_score_panel.global_position = global_position + Vector2(0, -50)
-	_dice_score_panel.show()
+	if _phase_state == G_ENUM.PhaseState.SCORE:
+		show_score_panel = true
+	elif _score_type == G_ENUM.ScoreType.BASE:
+		show_score_panel = true
+
+	if show_score_panel:
+		_dice_score_panel._dice = self
+		_dice_score_panel.update_score_display()
+		_dice_score_panel.show()
+	else:
+		_dice_score_panel.hide()
 
 
 func _on_mouse_exited() -> void:
-	if _phase_state != G_ENUM.PhaseState.SCORE:
-		return
-
+	preferences.visible = false
 	_dice_score_panel.hide()
 
 

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ugxpxq7r2lvt" path="res://Art/Pizza/Pizza-1.png" id="2_ro8sk"]
 [ext_resource type="Texture2D" uid="uid://dap35u4ap1hsb" path="res://Art/Course/main.aseprite" id="3_0kped"]
 [ext_resource type="Texture2D" uid="uid://dxqeq6txw8iis" path="res://Art/Neapolitan/Neapolitan.png" id="3_465d4"]
-[ext_resource type="Texture2D" uid="uid://bx6bl1ai7jn21" path="res://Art/Preperation/baked.aseprite" id="3_ughld"]
+[ext_resource type="Texture2D" uid="uid://bx6bl1ai7jn21" path="res://Art/Preparation/baked.aseprite" id="3_ughld"]
 [ext_resource type="Texture2D" uid="uid://dt5pi6m4mv5be" path="res://Art/Flat White/Flat White.png" id="4_m3q8c"]
 [ext_resource type="Texture2D" uid="uid://c3ec60b4tq7cr" path="res://Art/Tastes/umami.aseprite" id="5_7trds"]
 [ext_resource type="Texture2D" uid="uid://dqy8dliyqqant" path="res://Art/Garlic/Garlic.png" id="5_83icm"]
@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://bqbtj8ut622fe" path="res://Art/Tastes/sliced-mushroom.aseprite" id="13_vwqux"]
 [ext_resource type="Texture2D" uid="uid://bfv2lj32kioop" path="res://Art/Tastes/Chilli.png" id="14_0kped"]
 [ext_resource type="Texture2D" uid="uid://bnel54bbmf1f0" path="res://Art/Course/starter.aseprite" id="14_ba6bg"]
-[ext_resource type="Texture2D" uid="uid://cde7oowcwxpda" path="res://Art/Preperation/grilled.aseprite" id="15_7trds"]
-[ext_resource type="Texture2D" uid="uid://bj6aj3expeal6" path="res://Art/Preperation/fried.aseprite" id="16_g1lnw"]
+[ext_resource type="Texture2D" uid="uid://cde7oowcwxpda" path="res://Art/Preparation/grilled.aseprite" id="15_7trds"]
+[ext_resource type="Texture2D" uid="uid://bj6aj3expeal6" path="res://Art/Preparation/fried.aseprite" id="16_g1lnw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g46pi"]
 atlas = ExtResource("3_465d4")

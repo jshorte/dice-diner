@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://cavuuvgj6b0et"]
+
+[ext_resource type="Script" uid="uid://bxgj2h0wj5hg4" path="res://Scenes/dice_preferences.gd" id="1_ma4tk"]
+
+[node name="DicePreferences" type="Node2D"]
+script = ExtResource("1_ma4tk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = -136.0
+offset_top = -80.0
+offset_right = 136.0
+offset_bottom = -42.0
+pivot_offset = Vector2(72, 0)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer2" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(4, 38)
+layout_mode = 2
+
+[node name="DiceIconsHBox" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(4, 38)
+layout_mode = 2

@@ -22,13 +22,11 @@ func _ready():
 	
 
 func _process(delta: float) -> void:
-	if _current_phase == G_ENUM.PhaseState.SCORE:
-		update_score_position()
+	update_score_position()
 
 
 func update_score_display() -> void:
-	if _current_phase == G_ENUM.PhaseState.SCORE:
-		update_score_labels()
+	update_score_labels()
 
 
 func update_score_position() -> void:
@@ -42,8 +40,25 @@ func update_score_position() -> void:
 	
 
 func update_score_labels():
-	if _dice and _dice.strategy:        
+	if _dice and _dice.strategy:
 		var breakdown = _dice.strategy.get_score_breakdown(_dice)
+
+		if _current_phase != G_ENUM.PhaseState.SCORE:
+			stored_label.visible = breakdown.has("stored")
+			if breakdown.has("stored"):
+				stored_label.text = "Stored: %d" % breakdown["stored"]
+
+			base_label.visible = false
+			flat_label.visible = false
+			quality_label.visible = false
+			multiplier_label.visible = false
+			applied_label.visible = false
+			course_label.visible = false
+			total_label.visible = false
+			size.x = 0
+			size.y = 0
+			vbox.queue_sort()
+			return
 
 		var label_map: Dictionary = {
 			"base": [base_label, "Base: %s"],

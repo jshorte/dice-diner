@@ -25,7 +25,7 @@ func _ready():
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	SignalManager.reset_score.connect(_reset_values)
 	update_appetite_label()
-	add_icons()
+	_add_icons()
 	_customer_hbox.visible = true
 
 
@@ -121,7 +121,7 @@ func _reset_values() -> void:
 	consumption_log.clear()
 
 
-func add_icons() -> void:
+func _add_icons() -> void:
 	for course in _course_preferences:
 		if course == G_ENUM.Course.NONE:
 			continue
