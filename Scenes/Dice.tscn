@@ -131,6 +131,7 @@ color_ramp = SubResource("GradientTexture1D_jwepb")
 radius = 72.0
 
 [node name="Dice" type="RigidBody2D"]
+z_index = 1
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_wpqjs")
 continuous_cd = 2
@@ -203,6 +204,7 @@ shape = SubResource("CircleShape2D_b27ex")
 
 [node name="DicePreferences" parent="." instance=ExtResource("6_7wmyd")]
 unique_name_in_owner = true
+visible = false
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

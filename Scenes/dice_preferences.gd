@@ -10,8 +10,6 @@ func add_dice_icons() -> void:
 	var icons_hbox = get_node("%DiceIconsHBox")
 
 	for course in _dice._dice_courses:
-		print("Adding course icon for: ", course)
-
 		if course == G_ENUM.Course.NONE:
 			continue
 
@@ -21,7 +19,6 @@ func add_dice_icons() -> void:
 			tex_rect.texture = icon
 			tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icons_hbox.add_child(tex_rect)
-			print("Added course icon for: ", course)
 
 	for taste in _dice._dice_taste:
 		if taste == G_ENUM.Tastes.NONE:

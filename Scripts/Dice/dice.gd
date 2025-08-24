@@ -3,7 +3,7 @@ class_name Dice extends RigidBody2D
 
 const LERP_SPEED: float = 2.0
 const LERP_THRESHOLD: int = 30
-const MAXIMUM_STRENGTH: float = 1000.0
+const MAXIMUM_STRENGTH: float = 2000.0
 const MINIMUM_STRENGTH: float = 100.0
 const STRENGTH_MULTIPLIER: float = 10.0
 
@@ -136,6 +136,8 @@ func _on_mouse_entered() -> void:
 	if show_score_panel:
 		_dice_score_panel._dice = self
 		_dice_score_panel.update_score_display()
+		# TODO: This should be a signal which we then update the position of the score panel,
+		# setting its position to the top/bottom of the sceen depending on the location of the dice.
 		_dice_score_panel.show()
 	else:
 		_dice_score_panel.hide()

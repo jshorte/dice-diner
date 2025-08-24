@@ -19,7 +19,7 @@ var _discard_preview_locked: bool = false
 @onready var _play_area_boundary: Node = get_node("/root/main/PlayBoundary")
 @onready var _setup_area_boundary: Node = get_node("/root/main/SetupBoundary")
 var _play_area_panels: Array = []
-var _setup_area_panels: Array = []
+var _drop_area_panels: Array = []
 
 ## Deck Panels
 @onready var _deck_panel: PanelContainer = get_node("%Deck")
@@ -33,6 +33,7 @@ var _setup_area_panels: Array = []
 func _ready():
 	SignalManager.add_to_deck_panel.connect(_on_add_to_deck_panel)
 	SignalManager.remove_from_deck_panel.connect(_on_remove_from_deck_panel)
+	SignalManager.add_to_play_area.connect(_on_add_to_play_area)
 	SignalManager.phase_state_changed.connect(_on_phase_state_changed)
 	SignalManager.score_updated.connect(_on_score_updated)
 	SignalManager.emit_ready.connect(_emit_ready)
@@ -55,7 +56,7 @@ func _ready():
 
 	for child in _setup_area_boundary.get_children():
 		if child is Panel:
-			_setup_area_panels.append(child)
+			_drop_area_panels.append(child)
 
 func _emit_ready():
 	SignalManager.hud_manager_ready.emit()
@@ -69,29 +70,34 @@ func _input(event):
 		return
 
 	if _selected_dice_sprite and \
-		event is InputEventMouseButton and \
-		event.pressed:
-		if not _is_overlapping_other_dice(get_global_mouse_position()):
-			if _phase_state == G_ENUM.PhaseState.SETUP:				
-				if _is_over_setup_area(get_global_mouse_position()):
-					_place_dice()
-					_update_sprite_selection()
-				elif _is_over_play_area(get_global_mouse_position()):
-					print("Error: Cannot place dice in play area during setup phase")
-				else:
-					_update_sprite_selection()
+	event is InputEventMouseButton and \
+	event.pressed:
+		if not _is_overlapping_other_dice(get_global_mouse_position()):		
+			if _is_over_setup_area(get_global_mouse_position()):
+				_place_dice()				
+	
+			_update_sprite_selection()
+
+
+func _get_random_play_area_panel() -> Panel:
+	if _play_area_panels.size() == 0:
+		return null
+	return _play_area_panels[randi() % _play_area_panels.size()]
+
+
+func _on_add_to_play_area(dice: Dice) -> void:
+	var panel = _get_random_play_area_panel()
+	if panel:
+		for i in range(100):
+			var rect = panel.get_global_rect()
+			var pos = Vector2(
+				randf_range(rect.position.x, rect.position.x + rect.size.x),
+				randf_range(rect.position.y, rect.position.y + rect.size.y)
+			)
+			if not _is_overlapping_other_dice(pos) and not _is_over_setup_area(pos):
+				SignalManager.dice_placed.emit(dice, pos)
 				return
-
-			if _is_over_play_area(get_global_mouse_position()):
-				if _is_overlapping_other_dice(get_global_mouse_position()):
-					print("Error: Cannot place dice over other dice in play area")
-					return
-
-				_place_dice()
-			else:
-				_update_sprite_selection()
-
-			set_process(false)
+		print("Could not find a valid spot for dice: ", dice)
 
 
 func _place_dice():
@@ -120,6 +126,8 @@ func _is_overlapping_other_dice(pos: Vector2) -> bool:
 				if pos.distance_to(center) <= radius:
 					return true
 	return false
+
+
 
 func _update_sprite_selection():
 	remove_child(_selected_dice_sprite)
@@ -194,7 +202,7 @@ func _is_over_setup_area(pos: Vector2) -> bool:
 		print("Setup area boundary not initialized.")
 		return false
 
-	for panel in _setup_area_panels:
+	for panel in _drop_area_panels:
 		if panel.get_global_rect().has_point(pos):
 			return true
 	return false
@@ -236,11 +244,11 @@ func _on_phase_state_changed(new_state: G_ENUM.PhaseState) -> void:
 	_input_enabled = (new_state == G_ENUM.PhaseState.PREPARE or new_state == G_ENUM.PhaseState.SETUP)
 
 	match new_state:
-		G_ENUM.PhaseState.SETUP:
-			for panel in _setup_area_panels:
+		G_ENUM.PhaseState.SETUP, G_ENUM.PhaseState.PREPARE:
+			for panel in _drop_area_panels:
 				panel.visible = true
 		_:
-			for panel in _setup_area_panels:
+			for panel in _drop_area_panels:
 				panel.visible = false
 
 ## DECK PANEL FUNCTIONS

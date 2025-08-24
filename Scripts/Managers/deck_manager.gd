@@ -1,5 +1,8 @@
 extends Node
 
+const INITIAL_DICE_TO_ADD: int = 3
+const DRAW_AMOUNT: int = 3
+
 var _dice_scene = preload("res://Scenes/dice.tscn")
 var _pizza_dice_template_path = "res://resources/dice_types/pizza_dice.tres"
 var _garlic_dice_template_path = "res://resources/dice_types/garlic_dice.tres"
@@ -11,7 +14,6 @@ var _deck : Array = []
 var _next : Array = []
 var _current : Array = []
 var _discard : Array = []
-var _draw_amount : int = 3
 
 var _player_inventory : Array = [
 	G_ENUM.DiceType.PIZZA, 
@@ -42,6 +44,7 @@ func _emit_ready():
 
 
 func _on_phase_state_changed(new_state: G_ENUM.PhaseState):
+	print("Deck State changed to: ", new_state)
 	if new_state == G_ENUM.PhaseState.DRAW:
 		_transfer_current_to_discard()
 		_transfer_next_to_current()
@@ -49,17 +52,29 @@ func _on_phase_state_changed(new_state: G_ENUM.PhaseState):
 		SignalManager.draw_completed.emit()
 
 
-func _transfer_draw_to_next():
-	if _deck.size() < _draw_amount and _discard.size() > 0:
+func _add_initial_dice_to_play_area(number_to_add: int):
+	for i in number_to_add:
+		_transfer_deck_to_play_area()		
+
+func _transfer_deck_to_play_area():
+	if _deck.size() == 0:
 		_reshuffle_discard_into_deck()
-	var drawn = []
-	for i in min(_draw_amount, _deck.size()):
+	if _deck.size() == 0:
+		print("No dice available to add to play area")
+		return
+	var dice = _deck.pop_back()
+	SignalManager.remove_from_deck_panel.emit(G_ENUM.DeckArea.DECK, dice)
+	SignalManager.add_to_play_area.emit(dice)
+
+
+func _transfer_draw_to_next():
+	if _deck.size() < DRAW_AMOUNT and _discard.size() > 0:
+		_reshuffle_discard_into_deck()
+	for i in min(DRAW_AMOUNT, _deck.size()):
 		var dice = _deck.pop_back()
 		SignalManager.remove_from_deck_panel.emit(G_ENUM.DeckArea.DECK, dice)
 		_next.append(dice)
-		drawn.append(dice)
 		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.NEXT, dice)
-	return drawn
 
 
 func _transfer_next_to_current():
@@ -132,8 +147,8 @@ func _on_load_deck():
 		blank_dice.preferences.add_dice_icons()
 		_deck.append(blank_dice)
 		SignalManager.add_to_deck_panel.emit(G_ENUM.DeckArea.DECK, blank_dice)
-	# TODO: Dice which have face values need to have new random values assigned when going into discard/draw pile
 	_deck.shuffle()
+	_add_initial_dice_to_play_area(INITIAL_DICE_TO_ADD)
 	_on_request_deck_draw()
 
 

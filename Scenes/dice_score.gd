@@ -79,6 +79,7 @@ func update_score_labels():
 			else:
 				label.visible = false
 
+		total_label.visible = true
 		total_label.text = "Total: %s" % breakdown["total"]
 
 		size.x = 0

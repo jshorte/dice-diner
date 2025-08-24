@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c2chpl83qlbgg"]
+[gd_scene load_steps=18 format=3 uid="uid://c2chpl83qlbgg"]
 
 [ext_resource type="Script" uid="uid://dr3k335nwyl6p" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="Texture2D" uid="uid://ddg6u7u07ymxv" path="res://Art/Scenery/tablecloth-tilable.png" id="2_6bp64"]
@@ -18,6 +18,9 @@ size = Vector2(32, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ynf5e"]
 size = Vector2(16, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hptm8"]
+size = Vector2(1008, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bo1nx"]
 size = Vector2(1008, 34)
@@ -92,21 +95,6 @@ shape = SubResource("RectangleShape2D_344ge")
 position = Vector2(0, 28)
 shape = SubResource("RectangleShape2D_ynf5e")
 
-[node name="Fork2" type="Sprite2D" parent="Scenery"]
-position = Vector2(1040, 448)
-scale = Vector2(0.75, 1)
-texture = ExtResource("7_6bp64")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Scenery/Fork2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/Fork2/StaticBody2D"]
-position = Vector2(0, -36)
-shape = SubResource("RectangleShape2D_344ge")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Scenery/Fork2/StaticBody2D"]
-position = Vector2(0, 28)
-shape = SubResource("RectangleShape2D_ynf5e")
-
 [node name="Fork3" type="Sprite2D" parent="Scenery"]
 position = Vector2(816, 240)
 rotation = -3.14159
@@ -123,23 +111,10 @@ shape = SubResource("RectangleShape2D_344ge")
 position = Vector2(0, 28)
 shape = SubResource("RectangleShape2D_ynf5e")
 
-[node name="Fork4" type="Sprite2D" parent="Scenery"]
-position = Vector2(272, 240)
-rotation = -3.14159
-scale = Vector2(0.75, 1)
-texture = ExtResource("7_6bp64")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Scenery/Fork4"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Scenery/Fork4/StaticBody2D"]
-position = Vector2(0, -36)
-shape = SubResource("RectangleShape2D_344ge")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Scenery/Fork4/StaticBody2D"]
-position = Vector2(0, 28)
-shape = SubResource("RectangleShape2D_ynf5e")
-
 [node name="Customers" type="Node2D" parent="."]
+
+[node name="ActiveDice" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="Managers" type="Node" parent="."]
 
@@ -156,9 +131,9 @@ script = ExtResource("9_d1ilt")
 [node name="StaticBody2D" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, -20)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
-position = Vector2(640, 133)
-shape = SubResource("RectangleShape2D_bo1nx")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(640, 100)
+shape = SubResource("RectangleShape2D_hptm8")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Walls" groups=["Wall"]]
 position = Vector2(0, 721)
@@ -181,32 +156,12 @@ position = Vector2(1300, 20)
 position = Vector2(-108, 329.75)
 shape = SubResource("RectangleShape2D_8gbba")
 
-[node name="PendingDice" type="Node2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(-275, -7)
-
 [node name="PlayBoundary" type="Node" parent="."]
-
-[node name="PlayArea" type="Panel" parent="PlayBoundary"]
-unique_name_in_owner = true
-visible = false
-offset_left = 172.0
-offset_top = 161.0
-offset_right = 224.0
-offset_bottom = 336.0
 
 [node name="PlayArea7" type="Panel" parent="PlayBoundary"]
 unique_name_in_owner = true
 visible = false
 offset_left = 320.0
-offset_top = 320.0
-offset_right = 448.0
-offset_bottom = 336.0
-
-[node name="PlayArea8" type="Panel" parent="PlayBoundary"]
-unique_name_in_owner = true
-visible = false
-offset_left = 544.0
 offset_top = 320.0
 offset_right = 776.0
 offset_bottom = 336.0
@@ -216,46 +171,22 @@ unique_name_in_owner = true
 visible = false
 offset_left = 864.0
 offset_top = 320.0
-offset_right = 984.0
+offset_right = 1104.0
 offset_bottom = 336.0
-
-[node name="PlayArea10" type="Panel" parent="PlayBoundary"]
-unique_name_in_owner = true
-visible = false
-offset_left = 448.0
-offset_top = 320.0
-offset_right = 544.0
-offset_bottom = 336.0
-
-[node name="PlayArea11" type="Panel" parent="PlayBoundary"]
-unique_name_in_owner = true
-visible = false
-offset_left = 984.0
-offset_top = 320.0
-offset_right = 1088.0
-offset_bottom = 336.0
-
-[node name="PlayArea6" type="Panel" parent="PlayBoundary"]
-unique_name_in_owner = true
-visible = false
-offset_left = 1088.0
-offset_top = 160.0
-offset_right = 1120.0
-offset_bottom = 519.0
 
 [node name="PlayArea2" type="Panel" parent="PlayBoundary"]
 unique_name_in_owner = true
 visible = false
-offset_left = 168.0
+offset_left = 176.0
 offset_top = 336.0
 offset_right = 448.0
-offset_bottom = 528.0
+offset_bottom = 520.0
 
 [node name="PlayArea4" type="Panel" parent="PlayBoundary"]
 unique_name_in_owner = true
 visible = false
 offset_left = 320.0
-offset_top = 160.0
+offset_top = 168.0
 offset_right = 776.0
 offset_bottom = 320.0
 
@@ -264,7 +195,7 @@ unique_name_in_owner = true
 visible = false
 offset_left = 864.0
 offset_top = 160.0
-offset_right = 1088.0
+offset_right = 1104.0
 offset_bottom = 320.0
 
 [node name="PlayArea3" type="Panel" parent="PlayBoundary"]
@@ -272,8 +203,8 @@ unique_name_in_owner = true
 visible = false
 offset_left = 544.0
 offset_top = 336.0
-offset_right = 984.0
-offset_bottom = 528.0
+offset_right = 992.0
+offset_bottom = 520.0
 
 [node name="SetupBoundary" type="Node" parent="."]
 
@@ -305,8 +236,9 @@ offset_right = 976.0
 offset_bottom = 496.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_6bp64")
 
-[node name="ActiveDice" type="Node2D" parent="."]
+[node name="PendingDice" type="Node2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(-275, -7)
 
 [node name="Food Compendium" parent="." instance=ExtResource("8_344ge")]
 visible = false

@@ -25,6 +25,7 @@ signal remove_placed_dice
 signal request_deck_load
 signal request_deck_draw
 signal draw_completed
+signal add_to_play_area
 
 # GUI management
 signal add_to_deck_panel

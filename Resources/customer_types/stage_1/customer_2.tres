@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_xrd5h")
-customer_appetite = 40
+customer_appetite = 100
 customer_course_preferences = Array[int]([3])
 customer_taste_preferences = Array[int]([0])
 customer_preparation_preferences = Array[int]([0])

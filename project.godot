@@ -38,6 +38,10 @@ enabled=PackedStringArray("res://addons/nklbdev.aseprite_importers/plugin.cfg")
 
 Wall=""
 
+[gui]
+
+theme/custom_font="uid://bpsgtwrbuacih"
+
 [physics]
 
 common/physics_ticks_per_second=120

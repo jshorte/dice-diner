@@ -1,6 +1,6 @@
 extends Node
 
-const MAX_SETUP_DICE: int = 1
+const MAX_SETUP_DICE: int = 3 # TODO: Setup dice should be determined by passed in parameters
 const MAX_ROUNDS: int = 4
 
 var _current_round: int = 1
@@ -12,7 +12,7 @@ var _isDeckReady: bool = false
 var _isCustomerReady: bool = false
 var _isScoreReady: bool = false
 var _isScoreBarReady: bool = false
-var _phase_state: G_ENUM.PhaseState = G_ENUM.PhaseState.PREPARE
+var _phase_state: G_ENUM.PhaseState 
 
 @onready var _active_dice_tree_node = get_node("%ActiveDice")
 @onready var _pending_dice_node = get_node("%PendingDice")
@@ -38,7 +38,6 @@ func _ready():
 	SignalManager.draw_completed.connect(_on_draw_completed)
 	SignalManager.dice_launched.connect(_on_dice_launched)
 	SignalManager.emit_ready.emit() # Tell children that the main node is ready
-
 
 func _on_hud_manager_ready():
 	_isHUDReady = true

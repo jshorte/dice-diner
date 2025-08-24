@@ -69,5 +69,6 @@ func update_arrow(radius: float = 0.0, angle: float = 0.0, offset: Vector2 = Vec
 	_arrow.global_position = point_on_circle
 	_arrow.rotation = current_angle - rotation
 
+
 func _exit_tree():
 	reset_ghost_sprite()
