@@ -117,35 +117,28 @@ func _on_body_entered(body: Node) -> void:
 		SignalManager.dice_score_updated.emit(self, _score)
 		_score = max(_score - 2, 0)
 
+
 func _on_phase_state_changed(new_phase: G_ENUM.PhaseState) -> void:
 	_phase_state = new_phase
 
-	if _phase_state == G_ENUM.PhaseState.DRAW:
+	if _phase_state == G_ENUM.PhaseState.DRAW or _phase_state == G_ENUM.PhaseState.ROLL:
 		_dice_score_panel.hide()
 
 
 func _on_mouse_entered() -> void:
-	var show_score_panel: bool = false
-	preferences.visible = true
-
-	if _phase_state == G_ENUM.PhaseState.SCORE:
-		show_score_panel = true
-	elif _score_type == G_ENUM.ScoreType.BASE:
-		show_score_panel = true
-
-	if show_score_panel:
+	if _phase_state == G_ENUM.PhaseState.SCORE or _score_type == G_ENUM.ScoreType.BASE:
 		_dice_score_panel._dice = self
 		_dice_score_panel.update_score_display()
 		# TODO: This should be a signal which we then update the position of the score panel,
 		# setting its position to the top/bottom of the sceen depending on the location of the dice.
 		_dice_score_panel.show()
-	else:
-		_dice_score_panel.hide()
-
+		_dice_score_panel.visible = true
+	preferences.visible = true
 
 func _on_mouse_exited() -> void:
 	preferences.visible = false
-	_dice_score_panel.hide()
+	if(_phase_state == G_ENUM.PhaseState.ROLL):
+		_dice_score_panel.hide()
 
 
 func stop_slow_dice(delta: float) -> void:

@@ -213,7 +213,6 @@ alignment = 1
 
 [node name="NextRoundPanel" type="PanelContainer" parent="Bottom Bar"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
 offset_left = 592.0
 offset_top = 584.0
@@ -227,7 +226,9 @@ alignment = 1
 
 [node name="NextRoundButton" type="Button" parent="Bottom Bar/NextRoundPanel/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+theme_override_font_sizes/font_size = 22
 text = "Next Round"
 autowrap_mode = 2
 
