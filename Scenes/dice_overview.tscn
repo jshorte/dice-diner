@@ -37,6 +37,7 @@ atlas = ExtResource("6_545sp")
 region = Rect2(0, 0, 64, 64)
 
 [node name="Control" type="Control"]
+z_index = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

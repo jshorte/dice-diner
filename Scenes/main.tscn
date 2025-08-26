@@ -113,9 +113,6 @@ shape = SubResource("RectangleShape2D_ynf5e")
 
 [node name="Customers" type="Node2D" parent="."]
 
-[node name="ActiveDice" type="Node2D" parent="."]
-unique_name_in_owner = true
-
 [node name="Managers" type="Node" parent="."]
 
 [node name="DeckManager" type="Node" parent="Managers"]
@@ -242,6 +239,7 @@ position = Vector2(-275, -7)
 
 [node name="Food Compendium" parent="." instance=ExtResource("8_344ge")]
 visible = false
+z_index = 11
 script = ExtResource("9_ynf5e")
 
 [node name="SpawnPositions" type="Node" parent="."]
@@ -256,3 +254,6 @@ position = Vector2(1152, 448)
 
 [node name="pos2" type="Node2D" parent="SpawnPositions/CustomerPositions"]
 position = Vector2(664, 128)
+
+[node name="ActiveDice" type="Node2D" parent="."]
+unique_name_in_owner = true

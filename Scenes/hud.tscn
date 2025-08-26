@@ -20,6 +20,7 @@ texture_margin_right = 15.0
 texture_margin_bottom = 15.0
 
 [node name="GUIManager" type="Control"]
+z_index = 10
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -213,6 +214,7 @@ alignment = 1
 
 [node name="NextRoundPanel" type="PanelContainer" parent="Bottom Bar"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 592.0
 offset_top = 584.0
@@ -220,13 +222,8 @@ offset_right = 688.0
 offset_bottom = 670.0
 theme_override_styles/panel = ExtResource("3_ioopo")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Bottom Bar/NextRoundPanel"]
-layout_mode = 2
-alignment = 1
-
-[node name="NextRoundButton" type="Button" parent="Bottom Bar/NextRoundPanel/VBoxContainer"]
+[node name="NextRoundButton" type="Button" parent="Bottom Bar/NextRoundPanel"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "Next Round"
@@ -289,6 +286,7 @@ toggle_mode = true
 icon_alignment = 1
 
 [node name="Score Panel" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_left = 1080.0
 offset_top = 96.0
@@ -440,33 +438,55 @@ toggle_mode = true
 icon_alignment = 1
 script = ExtResource("7_7gr8i")
 
-[node name="DiceScore" type="PanelContainer" parent="."]
-unique_name_in_owner = true
+[node name="DiceData" type="Control" parent="."]
 visible = false
-z_index = 100
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -55.0
-offset_top = -28.0
-offset_right = -25.0
-offset_bottom = 2.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(115.5, 94)
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DiceDataVBox" type="VBoxContainer" parent="DiceData"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 2.0
+offset_right = 216.0
+offset_bottom = 246.0
+
+[node name="DiceOptions" type="Control" parent="DiceData/DiceDataVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DiceData/DiceDataVBox/DiceOptions"]
+layout_mode = 0
+offset_left = -141.0
+offset_top = -64.0
+offset_right = 131.0
+offset_bottom = -3.0
+alignment = 1
+
+[node name="IncreaseQualityPanel" type="PanelContainer" parent="DiceData/DiceDataVBox/DiceOptions/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_ioopo")
+
+[node name="IncreaseQualityButton" type="Button" parent="DiceData/DiceDataVBox/DiceOptions/HBoxContainer/IncreaseQualityPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Bump"
+
+[node name="DiceScore" type="PanelContainer" parent="DiceData/DiceDataVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_styles/panel = ExtResource("3_ioopo")
 script = ExtResource("7_8jye8")
 
-[node name="DiceBreakdownVBox" type="VBoxContainer" parent="DiceScore"]
+[node name="DiceBreakdownVBox" type="VBoxContainer" parent="DiceData/DiceDataVBox/DiceScore"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="BaseLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="BaseLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -475,7 +495,7 @@ text = "Base: 5"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[node name="FlatLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="FlatLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -484,7 +504,7 @@ text = "Flat: 2"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[node name="QualityLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="QualityLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -493,7 +513,7 @@ text = "Quality: 5"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[node name="CourseLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="CourseLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -502,7 +522,7 @@ text = "Bonus: 0"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[node name="MultiplierLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="MultiplierLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -511,7 +531,7 @@ text = "Multi: 4"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[node name="AppliedLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="AppliedLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -520,7 +540,7 @@ text = "THIS IS A LOT OF TEXT"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[node name="TotalLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="TotalLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -529,7 +549,7 @@ text = "Total: 50"
 horizontal_alignment = 1
 vertical_alignment = 3
 
-[node name="StoredLabel" type="Label" parent="DiceScore/DiceBreakdownVBox"]
+[node name="StoredLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Stored: 0"
@@ -561,6 +581,6 @@ layout_mode = 2
 text = "Place food in the green plate area"
 horizontal_alignment = 1
 
-[connection signal="pressed" from="Bottom Bar/NextRoundPanel/VBoxContainer/NextRoundButton" to="Bottom Bar" method="_on_next_round_button_pressed"]
+[connection signal="pressed" from="Bottom Bar/NextRoundPanel/NextRoundButton" to="Bottom Bar" method="_on_next_round_button_pressed"]
 [connection signal="toggled" from="Score Panel/Score/ScoreButton" to="Score Panel/Score/ScoreButton" method="_on_score_button_toggled"]
 [connection signal="toggled" from="Order Panel/Order/HBoxContainer/OrderButton" to="Order Panel/Order/HBoxContainer/OrderButton" method="_on_order_button_toggled"]

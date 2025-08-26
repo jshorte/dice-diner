@@ -50,7 +50,8 @@ var _available_values_index: int
 @onready var preferences: DicePreferences = $DicePreferences
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _dice_radius: float = $CollisionShape2D.shape.radius
-@onready var _dice_score_panel: DiceScore = get_node("/root/main/Managers/GUIManager/DiceScore")
+@onready var _dice_options_panel: Control = get_node("/root/main/Managers/GUIManager/DiceData")
+@onready var _dice_score_panel: DiceScore = get_node("/root/main/Managers/GUIManager/DiceData/DiceDataVBox/DiceScore")
 
 
 func initialise_values_from_template():
@@ -122,23 +123,24 @@ func _on_phase_state_changed(new_phase: G_ENUM.PhaseState) -> void:
 	_phase_state = new_phase
 
 	if _phase_state == G_ENUM.PhaseState.DRAW or _phase_state == G_ENUM.PhaseState.ROLL:
-		_dice_score_panel.hide()
+		_dice_options_panel.hide()
 
 
 func _on_mouse_entered() -> void:
 	if _phase_state == G_ENUM.PhaseState.SCORE or _score_type == G_ENUM.ScoreType.BASE:
 		_dice_score_panel._dice = self
 		_dice_score_panel.update_score_display()
+		_dice_options_panel.visible = true
+		_dice_options_panel.show()
 		# TODO: This should be a signal which we then update the position of the score panel,
 		# setting its position to the top/bottom of the sceen depending on the location of the dice.
-		_dice_score_panel.show()
-		_dice_score_panel.visible = true
 	preferences.visible = true
 
 func _on_mouse_exited() -> void:
 	preferences.visible = false
 	if(_phase_state == G_ENUM.PhaseState.ROLL):
-		_dice_score_panel.hide()
+		_dice_options_panel.hide()
+		_dice_score_panel.update_score_display()
 
 
 func stop_slow_dice(delta: float) -> void:

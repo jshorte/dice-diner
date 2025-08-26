@@ -22,7 +22,7 @@ func _ready():
 	
 
 func _process(delta: float) -> void:
-	update_score_position()
+	update_score_position()	
 
 
 func update_score_display() -> void:
@@ -32,8 +32,7 @@ func update_score_display() -> void:
 func update_score_position() -> void:
 	var screen_rect = get_viewport_rect().size
 	var panel_size = size
-	# Center the panel in the viewport
-	global_position = Vector2(
+	get_parent().global_position = Vector2(
 		(screen_rect.x - panel_size.x) / 2,
 		screen_rect.y * 0.75 - panel_size.y
 	)
@@ -55,9 +54,6 @@ func update_score_labels():
 			applied_label.visible = false
 			course_label.visible = false
 			total_label.visible = false
-			size.x = 0
-			size.y = 0
-			vbox.queue_sort()
 			return
 
 		var label_map: Dictionary = {
@@ -81,10 +77,6 @@ func update_score_labels():
 
 		total_label.visible = true
 		total_label.text = "Total: %s" % breakdown["total"]
-
-		size.x = 0
-		size.y = 0
-		vbox.queue_sort()
 
 
 func _on_phase_state_changed(new_state: G_ENUM.PhaseState) -> void:
