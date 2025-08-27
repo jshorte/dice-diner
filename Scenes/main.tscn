@@ -50,7 +50,7 @@ position = Vector2(640, 360)
 
 [node name="TextureRect" type="TextureRect" parent="Scenery"]
 material = SubResource("CanvasItemMaterial_kry3j")
-offset_right = 1920.0
+offset_right = 1280.0
 offset_bottom = 712.0
 texture = ExtResource("2_344ge")
 stretch_mode = 1

@@ -10,7 +10,7 @@ var _dice: Dice
 @onready var applied_label: Label = get_node("%AppliedLabel")
 @onready var stored_label: Label = get_node("%StoredLabel")
 @onready var total_label: Label = get_node("%TotalLabel")
-@onready var vbox: VBoxContainer = get_node("%DiceBreakdownVBox")
+@onready var vbox: VBoxContainer = get_node("%DiceDataVBox")
 
 const ABOVE_OFFSET: float = 50
 const BELOW_OFFSET: float = 50
@@ -31,12 +31,13 @@ func update_score_display() -> void:
 
 func update_score_position() -> void:
 	var screen_rect = get_viewport_rect().size
-	var panel_size = size
-	get_parent().global_position = Vector2(
-		(screen_rect.x - panel_size.x) / 2,
-		screen_rect.y * 0.75 - panel_size.y
+	var group_size = vbox.size
+	var parent = vbox.get_parent()
+
+	parent.global_position = Vector2(
+		(screen_rect.x - group_size.x) / 2,
+		screen_rect.y * 0.75 - group_size.y
 	)
-	
 
 func update_score_labels():
 	if _dice and _dice.strategy:

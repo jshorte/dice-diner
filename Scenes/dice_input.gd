@@ -49,6 +49,6 @@ func handle_prediction_input(event) -> bool:
 func handle_mouse_click(event) -> bool:
 	if event is InputEventMouseButton and \
 	event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_dice._dice_options_panel.hide()
+		_dice._dice_data_panel.hide()
 		return true
 	return false

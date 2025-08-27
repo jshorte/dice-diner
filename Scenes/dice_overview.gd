@@ -1,6 +1,9 @@
 extends Control
 
-var is_visible: bool = false
+var is_visible: bool
+
+func _ready():
+	is_visible = visible
 
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:

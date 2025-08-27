@@ -441,42 +441,38 @@ script = ExtResource("7_7gr8i")
 [node name="DiceData" type="Control" parent="."]
 visible = false
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="DiceDataVBox" type="VBoxContainer" parent="DiceData"]
 unique_name_in_owner = true
-layout_mode = 2
-offset_left = 2.0
-offset_right = 216.0
-offset_bottom = 246.0
-
-[node name="DiceOptions" type="Control" parent="DiceData/DiceDataVBox"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="HBoxContainer" type="HBoxContainer" parent="DiceData/DiceDataVBox/DiceOptions"]
 layout_mode = 0
-offset_left = -141.0
-offset_top = -64.0
-offset_right = 131.0
-offset_bottom = -3.0
+offset_right = 210.0
+mouse_filter = 2
 alignment = 1
 
-[node name="IncreaseQualityPanel" type="PanelContainer" parent="DiceData/DiceDataVBox/DiceOptions/HBoxContainer"]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("3_ioopo")
-
-[node name="IncreaseQualityButton" type="Button" parent="DiceData/DiceDataVBox/DiceOptions/HBoxContainer/IncreaseQualityPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="DiceData/DiceDataVBox"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="DiceOptions" type="PanelContainer" parent="DiceData/DiceDataVBox/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("3_ioopo")
+
+[node name="IncreaseQualityButton" type="Button" parent="DiceData/DiceDataVBox/HBoxContainer/DiceOptions"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Bump"
 
 [node name="DiceScore" type="PanelContainer" parent="DiceData/DiceDataVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 0
 theme_override_styles/panel = ExtResource("3_ioopo")
 script = ExtResource("7_8jye8")
 
@@ -485,6 +481,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+alignment = 1
 
 [node name="BaseLabel" type="Label" parent="DiceData/DiceDataVBox/DiceScore/DiceBreakdownVBox"]
 unique_name_in_owner = true
