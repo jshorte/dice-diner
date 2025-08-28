@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bdu3kdmck2ij3"]
+[gd_scene load_steps=14 format=3 uid="uid://bdu3kdmck2ij3"]
 
 [ext_resource type="Theme" uid="uid://clny4maioyt6j" path="res://Fonts/font_theme.tres" id="1_rvbjj"]
 [ext_resource type="StyleBox" uid="uid://dmful4r8udbfr" path="res://Art/Blackboard.tres" id="3_ioopo"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://y6taemufxrvy" path="res://Scenes/dice_score.gd" id="7_8jye8"]
 [ext_resource type="FontFile" uid="uid://bkx5bbg0gevvk" path="res://Fonts/Bellfoods.otf" id="7_e1fvy"]
 [ext_resource type="Script" uid="uid://de36oj3d4kxct" path="res://Scripts/UI/phase_panel.gd" id="8_43w4t"]
+[ext_resource type="Script" uid="uid://dg8nrfky1max8" path="res://Scenes/dice_options.gd" id="10_piegi"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_piegi"]
 texture = ExtResource("6_4f5kr")
@@ -446,26 +447,29 @@ anchors_preset = 0
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 210.0
-mouse_filter = 2
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DiceData/DiceDataVBox"]
+[node name="DiceOptions" type="HBoxContainer" parent="DiceData/DiceDataVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
+script = ExtResource("10_piegi")
 
-[node name="DiceOptions" type="PanelContainer" parent="DiceData/DiceDataVBox/HBoxContainer"]
+[node name="BumpPanel" type="PanelContainer" parent="DiceData/DiceDataVBox/DiceOptions"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = ExtResource("3_ioopo")
 
-[node name="IncreaseQualityButton" type="Button" parent="DiceData/DiceDataVBox/HBoxContainer/DiceOptions"]
+[node name="BumpButton" type="Button" parent="DiceData/DiceDataVBox/DiceOptions/BumpPanel"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_default_cursor_shape = 1
 text = "Bump"
 
 [node name="DiceScore" type="PanelContainer" parent="DiceData/DiceDataVBox"]
@@ -581,3 +585,6 @@ horizontal_alignment = 1
 [connection signal="pressed" from="Bottom Bar/NextRoundPanel/NextRoundButton" to="Bottom Bar" method="_on_next_round_button_pressed"]
 [connection signal="toggled" from="Score Panel/Score/ScoreButton" to="Score Panel/Score/ScoreButton" method="_on_score_button_toggled"]
 [connection signal="toggled" from="Order Panel/Order/HBoxContainer/OrderButton" to="Order Panel/Order/HBoxContainer/OrderButton" method="_on_order_button_toggled"]
+[connection signal="mouse_entered" from="DiceData/DiceDataVBox/DiceOptions/BumpPanel/BumpButton" to="DiceData/DiceDataVBox/DiceOptions" method="_on_bump_button_mouse_entered"]
+[connection signal="mouse_exited" from="DiceData/DiceDataVBox/DiceOptions/BumpPanel/BumpButton" to="DiceData/DiceDataVBox/DiceOptions" method="_on_bump_button_mouse_exited"]
+[connection signal="pressed" from="DiceData/DiceDataVBox/DiceOptions/BumpPanel/BumpButton" to="DiceData/DiceDataVBox/DiceOptions" method="_on_bump_button_pressed"]

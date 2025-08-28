@@ -48,6 +48,8 @@ func get_calculated_score(dice: Dice) -> int:
 
 
 func process_score(dice: Dice) -> void:
+	dice.set_flat_value(0)
+	dice.set_total_multiplier(1.0)
 	var collision_log = create_ordered_log(dice)
 
 	# set_course_multiplier_flags(dice, collision_log)
@@ -89,7 +91,7 @@ func get_score_breakdown(dice: Dice) -> Dictionary:
 		],
 		"quality": quality,
 		"course": course_str,
-		"stored": dice.get_stored_score(),
+		"stored": dice.get_total_stored_score(),
 		"total": total
 	}
 

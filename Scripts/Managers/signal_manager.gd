@@ -26,6 +26,7 @@ signal request_deck_load
 signal request_deck_draw
 signal draw_completed
 signal add_to_play_area
+signal dice_quality_changed
 
 # GUI management
 signal add_to_deck_panel
@@ -34,6 +35,7 @@ signal update_highlight_related_dice
 
 # Game management
 signal phase_state_changed
+signal round_incremented
 
 # Scoring management
 signal score_updated

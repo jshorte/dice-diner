@@ -47,8 +47,10 @@ func handle_prediction_input(event) -> bool:
 
 
 func handle_mouse_click(event) -> bool:
-	if event is InputEventMouseButton and \
-	event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_dice._dice_data_panel.hide()
-		return true
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var options_hbox: HBoxContainer = _dice._dice_options
+		var mouse_pos: Vector2 = options_hbox.get_global_mouse_position()
+		if not options_hbox.get_global_rect().has_point(mouse_pos):
+			_dice._dice_data_panel.hide()
+			return true
 	return false

@@ -146,6 +146,7 @@ func _on_score_completed():
 		get_tree().change_scene_to_file("res://Scenes/main.tscn")
 		return
 
+	SignalManager.round_incremented.emit(_current_round)
 	set_phase_state(G_ENUM.PhaseState.DRAW)
 
 

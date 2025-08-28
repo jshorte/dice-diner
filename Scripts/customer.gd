@@ -6,6 +6,8 @@ var consumption_log: Array[Dictionary] = []
 var _phase_state: G_ENUM.PhaseState
 
 var _appetite: int
+var _original_appetite: int = -1
+var _last_mapped_scores := {}
 var _course_preferences: Array[G_ENUM.Course]
 var _taste_preferences: Array[G_ENUM.Tastes]
 var _preparation_preferences: Array[G_ENUM.Preparation]
@@ -50,6 +52,13 @@ func _on_phase_state_changed(new_state: G_ENUM.PhaseState) -> void:
 			consumption_log.clear()
 
 
+func snapshot_appetite():
+	_original_appetite = get_appetite()
+
+func restore_appetite():
+	if _original_appetite != -1:
+		set_appetite(_original_appetite)
+
 func add_consumption_log_entry(dice: Dice) -> void:
 	if dice:
 		consumption_log.append({
@@ -57,6 +66,14 @@ func add_consumption_log_entry(dice: Dice) -> void:
 			"timestamp": Time.get_ticks_msec()
 		})
 
+func update_last_mapped_score(dice: Dice, score: int) -> void:
+	_last_mapped_scores[dice] = score
+
+func get_last_mapped_score(dice: Dice) -> int:
+	return _last_mapped_scores.get(dice, 0)
+
+func reset_last_mapped_scores():
+	_last_mapped_scores.clear()
 
 func initialise_values_from_template() -> void:
 	if not customer_template:
@@ -91,7 +108,7 @@ func get_appetite() -> int:
 
 
 func get_mapped_appetite_value(dice: Dice) -> int:
-	var base_value = dice.get_calculated_score() + dice.get_stored_score()
+	var base_value = dice.get_calculated_score() + dice.get_total_stored_score()
 	var course_multi = 1.0
 	var taste_multi = 1.0
 	var prep_multi = 1.0
@@ -154,11 +171,3 @@ func _add_icons() -> void:
 			tex_rect.texture = icon
 			tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			_customer_icons_hbox.add_child(tex_rect)
-
-
-# func _on_area_2d_mouse_entered() -> void:
-# 	_customer_hbox.visible = true
-
-
-# func _on_area_2d_mouse_exited() -> void:
-# 	_customer_hbox.visible = false

@@ -17,9 +17,9 @@ var collision_log: Array[Dictionary] = []
 var environment_collision_log: Array[Dictionary] = []
 var contributions: Dictionary = {}
 var contributions_from: Dictionary = {}
+var stored_scores: Dictionary[int, int] = {}
 
 var _score: int = 0
-var _banked_score: int = 0
 var _calculated_score: int = 0
 var _reported_score: int = 0
 var _face_value: int
@@ -43,6 +43,8 @@ var _dice_preparation: Array[G_ENUM.Preparation]
 var _dice_courses: Array[G_ENUM.Course]
 var _available_values: Array[G_ENUM.FoodQuality]
 var _available_values_index: int
+var _preview_original_quality: G_ENUM.FoodQuality = G_ENUM.FoodQuality.INEDIBLE
+var _is_previewing_quality: bool = false
 
 @onready var visual: DiceVisual = $DiceVisual
 @onready var vfx: DiceVFX = $DiceVFX
@@ -51,6 +53,7 @@ var _available_values_index: int
 @onready var roll_animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _dice_radius: float = $CollisionShape2D.shape.radius
 @onready var _dice_data_panel: Control = get_node("/root/main/Managers/GUIManager/DiceData")
+@onready var _dice_options: DiceOptions = get_node("/root/main/Managers/GUIManager/DiceData/DiceDataVBox/DiceOptions")
 @onready var _dice_score_panel: DiceScore = get_node("/root/main/Managers/GUIManager/DiceData/DiceDataVBox/DiceScore")
 
 
@@ -131,6 +134,7 @@ func _on_phase_state_changed(new_phase: G_ENUM.PhaseState) -> void:
 func _on_mouse_entered() -> void:
 	if _phase_state == G_ENUM.PhaseState.SCORE or _score_type == G_ENUM.ScoreType.BASE:
 		_dice_score_panel._dice = self
+		_dice_options._dice = self
 		_dice_data_panel.visible = true
 		_dice_data_panel.show()
 		_dice_score_panel.update_score_display()
@@ -207,9 +211,61 @@ func set_dice_state(new_state):
 
 	visual.queue_redraw()
 
+# TODO: Put repeated logic into helper functions
+func increase_quality():
+	var current_quality = _face_value
+	var current_index = _available_values.find(current_quality)
+	
+	if current_index == -1 or current_index == _available_values.size() - 1:
+		print("Already at maximum quality")
+		return
+	
+	var next_index = current_index + 1
+	while next_index < _available_values.size() and _available_values[next_index] == current_quality:
+		next_index += 1
+	
+	if next_index >= _available_values.size():
+		print("Already at maximum quality")
+		return
+	
+	var new_quality = _available_values[next_index]
+	print("Increased quality from %s to %s" % [str(current_quality), str(new_quality)])
+	_face_value = new_quality
+	roll_animation.frame = get_sprite_frame()
+	SignalManager.dice_quality_changed.emit()
+
+
+func start_quality_preview():
+	if not _is_previewing_quality:
+		_preview_original_quality = _face_value
+		_is_previewing_quality = true
+		var current_index = _available_values.find(_face_value)
+		if current_index == -1 or current_index == _available_values.size() - 1:
+			return
+		var next_index = current_index + 1
+		while next_index < _available_values.size() and _available_values[next_index] == _face_value:
+			next_index += 1
+		if next_index >= _available_values.size():
+			return
+		_face_value = _available_values[next_index]
+		roll_animation.frame = get_sprite_frame()
+
+func end_quality_preview():
+	if _is_previewing_quality:
+		_face_value = _preview_original_quality 
+		roll_animation.frame = get_sprite_frame()
+		_is_previewing_quality = false
+
+
+func commit_quality_preview():
+	if _is_previewing_quality:
+		_is_previewing_quality = false
+		_preview_original_quality = _face_value
+		SignalManager.dice_quality_changed.emit()
+
 
 func get_sprite_frame() -> int:
-	return _face_value - 1
+	return _available_values.find(_face_value)
 
 
 func get_icon_texture(sprite_frame: int = 0) -> Texture2D:
@@ -289,6 +345,32 @@ func _reset_score():
 	SignalManager.clear_global_collision_log.emit()
 
 
+func recalulate_score():
+	_flat_value = 0
+	_multiplier_value = 1.0
+	_course_multiplier = 1.0
+	_total_multiplier = 1.0
+	_reported_score = 0
+	_calculated_score = 0
+	_starter_bonus_applied = false
+	_dessert_bonus_applied = false
+
+
+func add_stored_score(round_num: int, score: int) -> void:
+	stored_scores[round_num] = score
+
+
+func get_total_stored_score() -> int:
+	var total = 0
+	for s in stored_scores.values():
+		total += s
+	return total
+
+
+func reset_stored_scores():
+	stored_scores.clear()
+
+
 #region Getters and Setters
 func get_food_quality() -> String:
 	match self._face_value:
@@ -314,21 +396,14 @@ func get_score() -> int:
 	return _score
 
 
-func get_stored_score() -> int:
-	return _banked_score
-
-
 func set_score(value: int):
 	_score = value
 	SignalManager.dice_score_updated.emit(self, _score)
 
 
-func set_stored_score(value: int):
-	_banked_score += value
 
 
-func reset_stored_score():
-	_banked_score = 0
+
 
 
 func get_score_type() -> G_ENUM.ScoreType:
@@ -361,17 +436,8 @@ func get_multiplier_map() -> Dictionary[G_ENUM.FoodQuality, float]:
 func set_course_multiplier(value: float) -> void:
 	_course_multiplier = value
 
-func set_applied_courses(courses: Array[G_ENUM.Course]) -> void:
-	_starter_bonus_applied = G_ENUM.Course.STARTER in courses
-	_dessert_bonus_applied = G_ENUM.Course.DESSERT in courses
 
-func get_applied_courses() -> Array[G_ENUM.Course]:
-	var courses = []
-	if _starter_bonus_applied:
-		courses.append(G_ENUM.Course.STARTER)
-	if _dessert_bonus_applied:
-		courses.append(G_ENUM.Course.DESSERT)
-	return courses
+
 
 
 func get_total_multiplier() -> float:
